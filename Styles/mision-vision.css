@@ -1,0 +1,38 @@
+
+#seccion-mision-vision {
+    background-color: #FFFFFF; 
+    padding: 60px 0;
+}
+
+#seccion-mision-vision .card {
+    background-color: #F8F9FA; 
+    border: 2px solid;
+    border-radius: 15px; 
+    overflow: hidden; 
+    transition: all 0.3s ease; 
+}
+#seccion-mision-vision .card-mision {
+    border-color: #2E7D32; 
+}
+#seccion-mision-vision .card-mision .card-title {
+    color: #2E7D32; 
+}
+
+#seccion-mision-vision .card-vision {
+    border-color: #EF5350;
+}
+#seccion-mision-vision .card-vision .card-title {
+    color: #EF5350; 
+}
+
+#seccion-mision-vision .card-text {
+    color: #263238; 
+}
+
+#seccion-mision-vision .card:hover {
+    transform: scale(1.05); 
+    
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); 
+    
+    z-index: 10; 
+}
