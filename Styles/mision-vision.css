@@ -1,0 +1,55 @@
+/* ======================================================= */
+/* ESTILOS ADICIONALES COMPONENTE: SECCIÓN MISIÓN Y VISIÓN */
+/* ======================================================= */
+
+/* 1. Fondo de la sección completa (usa blanco) */
+#seccion-mision-vision {
+    background-color: #FFFFFF; 
+    padding: 60px 0;
+}
+
+/* 2. Estilo base de todas las cards */
+#seccion-mision-vision .card {
+    background-color: #F8F9FA; /* Cards con fondo gris suave */
+    border: 2px solid; /* Borde visible */
+    border-radius: 15px; 
+    overflow: hidden; 
+    transition: all 0.3s ease; /* !!! IMPORTANTE !!! Esta línea permite las animaciones suaves */
+}
+
+/* 3. Estilo específico de la Card de MISIÓN (usamos verde claro) */
+#seccion-mision-vision .card-mision {
+    border-color: #2E7D32; /* Borde verde */
+}
+#seccion-mision-vision .card-mision .card-title {
+    color: #2E7D32; /* Título verde */
+}
+
+/* 4. Estilo específico de la Card de VISIÓN (usamos el coral/rojo) */
+#seccion-mision-vision .card-vision {
+    border-color: #EF5350; /* Borde coral */
+}
+#seccion-mision-vision .card-vision .card-title {
+    color: #EF5350; /* Título coral */
+}
+
+/* 5. Estilo general del texto */
+#seccion-mision-vision .card-text {
+    color: #263238; 
+}
+
+/* ------------------------------------------------------- */
+/* !!! EFECTO HOVER: EL EFECTO QUE BUSCAS !!!              */
+/* ------------------------------------------------------- */
+
+/* 6. Cuando el cursor está sobre la card (.card:hover) */
+#seccion-mision-vision .card:hover {
+    /* Efecto "Agrandado": Escala la card un 5% */
+    transform: scale(1.05); 
+    
+    /* Efecto "Levantado": Hacemos una sombra notable pero suave */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); 
+    
+    /* Asegura que la card animada se vea por encima de las demás */
+    z-index: 10; 
+}
