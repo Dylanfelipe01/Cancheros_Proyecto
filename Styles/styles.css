@@ -1,0 +1,35 @@
+*{
+    margin: 0;         /*el margin es el espacio fuera de la credencial, elimina margenes automaticos del navegador*/
+    padding: 0;         /* elimina espacios automaticos internos*/
+    box-sizing: border-box;
+}
+
+
+
+/*parte nuestro equipo Dannis*/
+
+.tarjeta-equipo{    /*aplica estos cambios a mi clase llamda tarjetaequipo*/
+    border: none;   /*eliminar el borde*/
+    border-radius: 8px;   /*redondear esquinas*/
+    transition: .3s;    /*con esto la tarjeta sube y baja suave al pasar el cursor y no de manera brusca*/
+    box-shadow: 1px 2px 20px #2E7D32;   /*1px con este fondo horizontal 2px con este fono vertical 20px y con este el desefoque*/
+}
+
+.tarjeta-equipo:hover{
+    transform: translateY(-50px);  /*para que suban y bajen al pasar el cursor*/
+}
+
+.card-img-top{
+    height: 230px;   /*para que las imagenes tengan la misma altura*/
+    object-fit: cover  /*para que la foto si es mas grande se ajuste al tamaño que es, sin que se modifique o las caras se vean anchas o alargadas*/
+}
+
+.card-title{
+    font-size:20px;   /*tamaño de la card*/
+    font-weight:bold;  /*texto mas grueso, en negrita*/
+}
+
+.subtitulo-equipo{
+    color: #2E7D32;
+    font-weight:bold;  /*para que el subtitlo sea en negrita*/
+}
