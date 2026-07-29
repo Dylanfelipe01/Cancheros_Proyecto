@@ -1,3 +1,22 @@
+/*=================================
+        RESET
+==================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+
+    width:100%;
+    overflow-x:hidden;
+
+}
+
+
 /*==================================================
 =            PALETA DE COLORES
 ==================================================*/
@@ -237,6 +256,255 @@ body{
         width:180px;
 
         margin-top:15px;
+
+    }
+
+}
+
+/*==================================================
+=                    FOOTER
+==================================================*/
+
+.footer{
+
+    /* Fondo con el mismo estilo de la navbar */
+    background: linear-gradient(
+        90deg,
+        var(--verde-oscuro),
+        var(--verde)
+    );
+
+    color: var(--blanco);
+
+    padding: 35px 0 15px;
+
+    box-shadow: 0 -4px 12px rgba(0,0,0,.15);
+
+}
+
+
+/*==================================================
+=                    LOGO
+==================================================*/
+
+.footer-logo{
+
+    color: var(--amarillo);
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+
+}
+
+.footer-logo i{
+
+    margin-right: 10px;
+
+}
+
+
+/*==================================================
+=                   TÍTULOS
+==================================================*/
+
+.footer-title{
+
+    color: var(--amarillo);
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+}
+
+
+/*==================================================
+=                TEXTO DESCRIPTIVO
+==================================================*/
+
+.footer-text{
+
+    color: #EAEAEA;
+
+    line-height: 1.8;
+
+    text-align: justify;
+
+}
+
+
+/*==================================================
+=               MENÚ DE NAVEGACIÓN
+==================================================*/
+
+.footer-links{
+
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+
+}
+
+.footer-links li{
+
+    margin-bottom: 12px;
+
+}
+
+.footer-links a{
+
+    display: block;
+
+    color: var(--blanco);
+
+    text-decoration: none;
+
+    transition: .3s;
+
+}
+
+.footer-links a:hover{
+
+    color: var(--amarillo);
+
+    padding-left: 8px;
+
+}
+
+.footer-links i{
+
+    margin-right: 10px;
+
+}
+
+
+/*==================================================
+=               REDES SOCIALES
+==================================================*/
+
+.social-icon{
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.15);
+
+    color: var(--blanco);
+
+    text-decoration: none;
+
+    transition: .3s;
+
+}
+
+.social-icon i{
+
+    margin: 0;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+}
+
+.social-icon:hover{
+
+    background: var(--amarillo);
+
+    color: var(--gris);
+
+    transform: translateY(-5px) scale(1.08);
+
+}
+
+
+/*==================================================
+=                LÍNEA SEPARADORA
+==================================================*/
+
+.footer-line{
+
+    border-color: rgba(255,255,255,.20);
+
+    margin: 25px 0 15px;
+
+}
+
+
+/*==================================================
+=                 COPYRIGHT
+==================================================*/
+
+.footer-copy{
+
+    text-align: center;
+
+    color: #EAEAEA;
+
+    font-size: 5px;
+
+}
+
+.footer-copy strong{
+
+    color: var(--amarillo);
+
+}
+
+
+/*==================================================
+=                 RESPONSIVE
+==================================================*/
+
+@media (max-width:991px){
+
+    /* Centra todo el contenido */
+
+    .footer{
+
+        text-align: center;
+
+    }
+
+    /* Centra los enlaces */
+
+    .footer-links a{
+
+        padding-left: 0;
+
+    }
+
+    .footer-links a:hover{
+
+        padding-left: 0;
+
+    }
+
+    /* Centra los iconos */
+
+    .social-icons{
+
+        justify-content: center;
+
+    }
+
+    .footer-logo{
+
+        font-size: 1.8rem;
 
     }
 
