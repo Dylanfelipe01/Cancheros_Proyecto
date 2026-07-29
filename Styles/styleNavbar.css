@@ -262,250 +262,123 @@ body{
 }
 
 /*==================================================
-=                    FOOTER
+=               FOOTER ESTRUCTURA NUEVA
 ==================================================*/
 
-.footer{
-
-    /* Fondo con el mismo estilo de la navbar */
-    background: linear-gradient(
-        90deg,
-        var(--verde-oscuro),
-        var(--verde)
-    );
-
+.footer-moderno {
+    background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
     color: var(--blanco);
-
-    padding: 35px 0 15px;
-
-    box-shadow: 0 -4px 12px rgba(0,0,0,.15);
-
+    padding: 50px 0 25px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
 }
 
-
-/*==================================================
-=                    LOGO
-==================================================*/
-
-.footer-logo{
-
+/* Marca y Lead */
+.footer-logo {
     color: var(--amarillo);
-
-    font-size: 1.8rem;
-
-    font-weight: 700;
-
-    margin-bottom: 15px;
-
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
-.footer-logo i{
-
-    margin-right: 10px;
-
-}
-
-
-/*==================================================
-=                   TÍTULOS
-==================================================*/
-
-.footer-title{
-
+.footer-logo i {
     color: var(--amarillo);
-
-    font-weight: 700;
-
-    margin-bottom: 20px;
-
+    margin-right: 8px;
 }
 
-
-/*==================================================
-=                TEXTO DESCRIPTIVO
-==================================================*/
-
-.footer-text{
-
-    color: #EAEAEA;
-
-    line-height: 1.8;
-
-    text-align: justify;
-
+.footer-lead {
+    color: #E0E0E0;
+    font-size: 1rem;
+    max-width: 500px;
+    text-align: left; /* Evita que Bootstrap fuerce un justify */
 }
 
-
-/*==================================================
-=               MENÚ DE NAVEGACIÓN
-==================================================*/
-
-.footer-links{
-
-    list-style: none;
-
-    padding: 0;
-
-    margin: 0;
-
-}
-
-.footer-links li{
-
-    margin-bottom: 12px;
-
-}
-
-.footer-links a{
-
-    display: block;
-
-    color: var(--blanco);
-
-    text-decoration: none;
-
-    transition: .3s;
-
-}
-
-.footer-links a:hover{
-
+.footer-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
     color: var(--amarillo);
-
-    padding-left: 8px;
-
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
-.footer-links i{
-
-    margin-right: 10px;
-
-}
-
-
-/*==================================================
-=               REDES SOCIALES
-==================================================*/
-
-.social-icon{
-
-    width: 52px;
-
-    height: 52px;
-
+/* Navegación Horizontal */
+.footer-nav {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 
-    justify-content: center;
-
-    align-items: center;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,.15);
-
-    color: var(--blanco);
-
+.footer-nav a {
+    color: #FFFFFF;
     text-decoration: none;
-
-    transition: .3s;
-
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.social-icon i{
-
-    margin: 0;
-
-    font-size: 22px;
-
-    line-height: 1;
-
-}
-
-.social-icon:hover{
-
-    background: var(--amarillo);
-
-    color: var(--gris);
-
-    transform: translateY(-5px) scale(1.08);
-
-}
-
-
-/*==================================================
-=                LÍNEA SEPARADORA
-==================================================*/
-
-.footer-line{
-
-    border-color: rgba(255,255,255,.20);
-
-    margin: 25px 0 15px;
-
-}
-
-
-/*==================================================
-=                 COPYRIGHT
-==================================================*/
-
-.footer-copy{
-
-    text-align: center;
-
-    color: #EAEAEA;
-
-    font-size: 5px;
-
-}
-
-.footer-copy strong{
-
+.footer-nav a:hover {
     color: var(--amarillo);
-
+    transform: translateY(-2px);
 }
 
+/* Redes Sociales en línea */
+.social-group {
+    display: inline-flex;
+    gap: 12px;
+}
 
-/*==================================================
-=                 RESPONSIVE
-==================================================*/
+.social-pill {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px; /* Esquinas suavemente redondeadas en lugar de círculo completo */
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
 
-@media (max-width:991px){
+.social-pill:hover {
+    background: var(--amarillo);
+    color: var(--verde-oscuro);
+    transform: translateY(-3px);
+}
 
-    /* Centra todo el contenido */
+/* Líneas divisoras delgadas */
+.footer-line {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin: 0;
+}
 
-    .footer{
+/* Copyright */
+.footer-copy {
+    color: #B0BEC5;
+    font-size: 0.85rem;
+}
 
+.footer-copy strong {
+    color: var(--amarillo);
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+    .footer-lead {
         text-align: center;
-
+        margin: 0 auto;
     }
-
-    /* Centra los enlaces */
-
-    .footer-links a{
-
-        padding-left: 0;
-
-    }
-
-    .footer-links a:hover{
-
-        padding-left: 0;
-
-    }
-
-    /* Centra los iconos */
-
-    .social-icons{
-
+    .footer-nav {
         justify-content: center;
-
     }
-
-    .footer-logo{
-
-        font-size: 1.8rem;
-
+    .social-group {
+        justify-content: center;
     }
-
+    .footer-moderno {
+        text-align: center;
+    }
 }
