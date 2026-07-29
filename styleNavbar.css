@@ -1,0 +1,140 @@
+/* ==========================
+   Variables
+========================== */
+
+:root{
+
+    --verde:#2E7D32;
+    --verde-claro:#66BB6A;
+    --amarillo:#FBC02D;
+    --gris:#263238;
+    --blanco:#FFFFFF;
+
+}
+
+/* ==========================
+   General
+========================== */
+
+body{
+
+    font-family:'Source Sans 3',sans-serif;
+    background:#fff;
+
+}
+
+/* ==========================
+   Navbar
+========================== */
+
+.navbar{
+
+    background:var(--blanco);
+    border-bottom:2px solid #f1f1f1;
+    transition:.3s;
+
+}
+
+.logo-text{
+
+    color:var(--verde);
+    font-weight:700;
+    letter-spacing:1px;
+
+}
+
+/* ==========================
+   Links
+========================== */
+
+.nav-link{
+
+    color:var(--gris);
+    font-size:1.15rem;
+    font-weight:600;
+    margin:0 10px;
+    position:relative;
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    color:var(--verde);
+
+}
+
+.nav-link::after{
+
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:3px;
+    background:var(--amarillo);
+    transition:.3s;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+.nav-link.active{
+
+    color:var(--verde);
+
+}
+
+/* ==========================
+   Botón Login
+========================== */
+
+.login-btn{
+
+    background:var(--verde);
+    color:#fff;
+    padding:10px 24px;
+    border-radius:30px;
+    font-weight:600;
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    background:var(--amarillo);
+    color:var(--gris);
+
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media(max-width:991px){
+
+    .navbar-nav{
+
+        margin-top:20px;
+        text-align:center;
+
+    }
+
+    .nav-link{
+
+        margin:10px 0;
+
+    }
+
+    .login-btn{
+
+        margin-top:15px;
+        width:180px;
+
+    }
+
+}
