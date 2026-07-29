@@ -1,0 +1,32 @@
+*{
+    margin: 0;         
+    padding: 0;         
+    box-sizing: border-box;
+}
+
+
+.tarjeta-equipo{    
+    border: none;  
+    border-radius: 8px;   
+    transition: .3s;    
+    box-shadow: 1px 2px 20px #2E7D32;   
+}
+
+.tarjeta-equipo:hover{
+    transform: translateY(-50px);  
+}
+
+.card-img-top{
+    height: 230px;   
+    object-fit: cover  
+}
+
+.card-title{
+    font-size:20px;   
+    font-weight:bold;  
+}
+
+.subtitulo-equipo{
+    color: #2E7D32;
+    font-weight:bold;  
+}
