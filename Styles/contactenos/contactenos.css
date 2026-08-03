@@ -1,79 +1,239 @@
-/* ===========================
-   RESET
-=========================== */
+/*=================================
+        RESET Y VARIABLES
+==================================*/
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
 }
 
-/* ===========================
-   BODY
-=========================== */
+:root{
+
+    --verde:#2E7D32;
+    --verde-oscuro:#1B5E20;
+    --verde-claro:#66BB6A;
+    --amarillo:#FBC02D;
+    --gris:#263238;
+    --blanco:#FFFFFF;
+
+}
+
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+}
 
 body{
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    padding:40px 20px;
+
+    font-family:'Source Sans 3', sans-serif;
+    background:#F8F9FA;
+    color:var(--gris);
+
 }
 
-/* ===========================
-   CONTENEDOR
-=========================== */
+/*==================================================
+                    NAVBAR
+==================================================*/
+
+.navbar{
+
+    background:linear-gradient(
+        90deg,
+        var(--verde-oscuro),
+        var(--verde)
+    );
+
+    padding:16px 0;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+}
+
+.logo-text{
+
+    color:var(--blanco);
+
+    font-size:2rem;
+
+    font-weight:700;
+
+}
+
+.logo-text:hover{
+
+    color:var(--amarillo);
+
+}
+
+.nav-link{
+
+    color:var(--blanco);
+
+    font-weight:600;
+
+    margin:0 15px;
+
+    position:relative;
+
+}
+
+.nav-link:hover{
+
+    color:var(--amarillo);
+
+}
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:3px;
+
+    background:var(--amarillo);
+
+    transform:translateX(-50%);
+
+    transition:.3s;
+
+}
+
+.nav-link:hover::after{
+
+    width:70%;
+
+}
+
+.nav-link.active{
+
+    color:var(--amarillo);
+
+}
+
+.login-btn{
+
+    background:var(--amarillo);
+
+    color:var(--gris);
+
+    border-radius:30px;
+
+    padding:10px 25px;
+
+    font-weight:700;
+
+}
+
+.login-btn:hover{
+
+    background:white;
+
+    color:var(--verde);
+
+}
+
+.navbar-toggler{
+
+    border:2px solid var(--amarillo);
+
+}
+
+.navbar-toggler:focus{
+
+    box-shadow:none;
+
+}
+
+/*==================================================
+                    FORMULARIO
+==================================================*/
 
 main{
-    width:100%;
-    max-width:600px;
-}
 
-/* ===========================
-   FORMULARIO
-=========================== */
+    padding:70px 20px;
+
+}
 
 .fs-form{
-    background:#fff;
-    padding:35px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+    max-width:650px;
+
+    margin:auto;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
 }
 
-/* ===========================
-   CAMPOS
-=========================== */
+.titulo-contacto{
+
+    text-align:center;
+
+    color:var(--verde);
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.subtitulo-contacto{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:30px;
+
+}
 
 .fs-field{
+
     display:flex;
+
     flex-direction:column;
+
     margin-bottom:20px;
+
 }
 
 .fs-field label{
-    font-weight:bold;
-    margin-bottom:8px;
-    color:#333;
-}
 
-/* ===========================
-   INPUTS
-=========================== */
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
 
 .fs-field input,
 .fs-field textarea{
 
     width:100%;
+
     padding:12px;
 
     border:1px solid #ccc;
+
     border-radius:8px;
+
+    transition:.3s;
 
     font-size:16px;
 
-    transition:.3s;
 }
 
 .fs-field input:focus,
@@ -81,35 +241,27 @@ main{
 
     outline:none;
 
-    border-color:#0d6efd;
+    border-color:var(--verde);
 
-    box-shadow:0 0 5px rgba(13,110,253,.4);
+    box-shadow:0 0 0 .2rem rgba(46,125,50,.20);
 
 }
-
-/* ===========================
-   TEXTAREA
-=========================== */
 
 textarea{
 
-    resize:vertical;
+    resize:none;
 
-    min-height:140px;
+    min-height:150px;
 
 }
 
-/* ===========================
-   BOTÓN
-=========================== */
-
-button{
+.fs-form button{
 
     width:100%;
 
     padding:14px;
 
-    background:#0d6efd;
+    background:var(--verde);
 
     color:white;
 
@@ -119,21 +271,189 @@ button{
 
     font-size:18px;
 
+    font-weight:600;
+
     cursor:pointer;
 
     transition:.3s;
 
 }
 
-button:hover{
+.fs-form button:hover{
 
-    background:#0b5ed7;
+    background:var(--verde-oscuro);
 
 }
 
-/* ===========================
-   RESPONSIVE
-=========================== */
+/*==================================================
+                    FOOTER
+==================================================*/
+
+.footer-moderno{
+
+    margin-top:70px;
+
+    background:linear-gradient(
+        135deg,
+        var(--verde-oscuro),
+        var(--verde)
+    );
+
+    color:white;
+
+    padding:50px 0 25px;
+
+}
+
+.footer-logo{
+
+    color:var(--amarillo);
+
+    font-size:2rem;
+
+    font-weight:700;
+
+}
+
+.footer-lead{
+
+    color:#E0E0E0;
+
+}
+
+.footer-nav{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:18px;
+
+}
+
+.footer-nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+}
+
+.footer-nav a:hover{
+
+    color:var(--amarillo);
+
+}
+
+.social-group{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.social-pill{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.15);
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.social-pill:hover{
+
+    background:var(--amarillo);
+
+    color:var(--verde-oscuro);
+
+}
+
+.footer-line{
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+    margin:30px 0;
+
+}
+
+.footer-copy{
+
+    color:#ddd;
+
+    text-align:center;
+
+}
+
+.footer-copy strong{
+
+    color:var(--amarillo);
+
+}
+
+/*==================================================
+                    RESPONSIVE
+==================================================*/
+
+@media(max-width:991px){
+
+    .navbar-nav{
+
+        margin-top:20px;
+
+        text-align:center;
+
+    }
+
+    .nav-link{
+
+        margin:12px 0;
+
+    }
+
+    .login-btn{
+
+        width:180px;
+
+        margin-top:15px;
+
+    }
+
+    .footer-nav{
+
+        justify-content:center;
+
+    }
+
+    .social-group{
+
+        justify-content:center;
+
+    }
+
+    .footer-moderno{
+
+        text-align:center;
+
+    }
+
+}
 
 @media(max-width:768px){
 
@@ -145,30 +465,11 @@ button:hover{
 
 }
 
-@media(max-width:480px){
-
-    body{
-
-        padding:20px;
-
-    }
+@media(max-width:576px){
 
     .fs-form{
 
         padding:20px;
-
-    }
-
-    .fs-field input,
-    .fs-field textarea{
-
-        font-size:15px;
-
-    }
-
-    button{
-
-        font-size:16px;
 
     }
 
