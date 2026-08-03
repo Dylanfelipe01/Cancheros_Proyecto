@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/Cancheros_Proyecto/Styles/contactenos/contactenos.css">
+</head>
+<body>
+    <main>
+        <form
+            action="https://formspree.io/f/{FORM_ID}"
+            class="fs-form fs-layout__2-column"
+            target="_top"
+            method="POST"
+            >
+            <fieldset>
+                <legend class="fs-fieldset-title">Personal details</legend>
+                <div class="fs-field">
+                <label class="fs-label" for="name">Full Name</label>
+                <input class="fs-input" id="name" name="name" required />
+                </div>
+                <div class="fs-field">
+                <label class="fs-label" for="dob">Date of Birth</label>
+                <input
+                    class="fs-input"
+                    id="dob"
+                    name="dob"
+                    placeholder="MM-DD-YYYY"
+                    required
+                />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend class="fs-fieldset-title">Address details</legend>
+                <div class="fs-field">
+                <label class="fs-label" for="address-1">Address line 1</label>
+                <input class="fs-input" id="address-1" name="address-1" />
+                </div>
+                <div class="fs-field">
+                <label class="fs-label" for="address-2">Address line 2</label>
+                <input class="fs-input" id="address-2" name="address-2" />
+                </div>
+                <div class="fs-field">
+                <label class="fs-label" for="city">City</label>
+                <input class="fs-input" id="city" name="city" />
+                </div>
+                <div class="fs-field">
+                <label class="fs-label" for="state">State / Province</label>
+                <input class="fs-input" id="state" name="state" />
+                </div>
+                <div class="fs-field">
+                <label class="fs-label" for="zip-code">Postal / Zip Code</label>
+                <input class="fs-input" id="zip-code" name="zip-code" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend class="fs-fieldset-title">Contact information</legend>
+                <div class="fs-field">
+                <label class="fs-label" for="email">Email</label>
+                <input class="fs-input" id="email" name="email" required />
+                </div>
+                <div class="fs-field">
+                <label class="fs-label" for="number">Contact Number</label>
+                <input
+                    class="fs-input"
+                    id="number"
+                    name="number"
+                    placeholder="(000) 000-0000"
+                    required
+                />
+                </div>
+            </fieldset>
+            <div class="fs-button-group">
+                <button class="fs-button" type="submit">Submit</button>
+            </div>
+            </form>
+    </main>
+</body>
+</html>
