@@ -304,24 +304,25 @@ body{
 }
 
 /* Navegación Horizontal */
-.footer-nav {
+.footer-nav{
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    justify-content: center;
+    gap: 18px;
 }
 
-.footer-nav a {
-    color: #FFFFFF;
+.footer-nav a{
+    color: white;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.2s ease, transform 0.2s ease;
+      transition: .3s;
 }
 
-.footer-nav a:hover {
+.footer-nav a:hover{
     color: var(--amarillo);
-    transform: translateY(-2px);
 }
+
+
+
 
 /* Redes Sociales en línea */
 .social-group {
