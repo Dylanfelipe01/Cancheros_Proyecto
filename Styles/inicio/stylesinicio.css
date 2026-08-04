@@ -1,0 +1,155 @@
+.hero-section {
+  position: relative;
+  width: 100%;
+  /* Importante: Un alto mínimo para asegurar que todo quepa y se centre verticalmente */
+  min-height: calc(100vh - 120px); /* Ajusta 120px según el alto real de tu Navbar + Footer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+/* Fondo con imagen de balones */
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../imagenes/fondo_balones.png'); 
+  background-size: cover;
+  background-position: center;
+  z-index: 1; /* Fondo detrás de todo */
+  opacity: 0.7;
+}
+
+/* Contenedor de la mascota */
+.hero-card-container {
+  position: relative;
+  z-index: 2; /* Sobre el fondo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 650px;
+}
+
+
+.hero-mascot {
+  width: 320px;
+  height: auto;
+  margin-top: -60px; 
+  z-index: 4; 
+  margin-bottom: -1px; 
+}
+
+
+.hero-card {
+  position: relative;
+  z-index: 3; 
+  background: rgba(0, 0, 0, 0.65); 
+  backdrop-filter: blur(8px); 
+  border-radius: 40px;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+
+.hero-card-content {
+  
+  padding: 40px 30px; 
+}
+
+
+.hero-title {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 900;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  margin: 5px 0 20px 0;
+  line-height: 1;
+}
+
+
+.hero-description {
+  font-family: 'Arial', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 auto;
+  max-width: 500px;
+  color: #e0e0e0;
+}
+
+.sidebar-contact {
+  position: absolute;
+  right: -85px; /* Ajuste para el eje de rotación */
+  top: 50%;
+  
+  /* Cambiamos la rotación a 90deg para dar la vuelta completa a la orientación del texto */
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center center;
+
+  background-color: rgba(235, 235, 235, 0.9);
+  padding: 8px 20px;
+  /* El redondeado va abajo porque al rotar a 90deg esa parte queda hacia la izquierda */
+  border-radius: 0 0 12px 12px; 
+  z-index: 10;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #222222;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-contact .separator {
+  display: inline-block;
+  margin: 0 5px;
+  color: #666;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+  .hero-mascot {
+    width: 160px;
+    margin-top: -40px;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+  
+  .hero-subtitle {
+    font-size: 2.2rem;
+    letter-spacing: 6px;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+  
+  .sidebar-contact {
+    display: none; /* Se oculta en móviles para mejorar espacio */
+  }
+}
