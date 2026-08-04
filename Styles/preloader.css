@@ -1,0 +1,119 @@
+/* Estilos Base del Preloader Interactivo Cancheros */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0b0f19;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  overflow: hidden;
+}
+
+/* Canvas de partículas de fondo */
+#preloader-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Contenido Principal (Agrandado) */
+.preloader-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  width: 85%;
+  max-width: 650px; /* Ancho máximo aumentado */
+}
+
+.preloader-title {
+  font-size: 4.5rem; /* Título más grande */
+  font-weight: 900;
+  letter-spacing: 6px;
+  margin: 0;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+}
+
+.preloader-subtitle {
+  font-size: 1.4rem; /* Subtítulo agrandado */
+  color: #a0aec0;
+  margin-top: 8px;
+  margin-bottom: 35px;
+  letter-spacing: 2px;
+}
+
+/* Contenedor de la Barra de Carga (Agrandada) */
+.preloader-bar-container {
+  position: relative;
+  width: 100%;
+  height: 14px; /* Barra más gruesa */
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  margin: 0 auto 35px auto;
+}
+
+/* La Barra de Progreso */
+.preloader-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #00E676;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #00E676;
+  width: 0%;
+}
+
+/* El Balón en la punta con Font Awesome (Agrandado) */
+.preloader-ball {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 45px;
+  height: 45px;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preloader-ball i {
+  font-size: 42px; /* Balón de mayor tamaño */
+  color: #ffffff;
+  filter: drop-shadow(0 0 10px #00E676);
+}
+
+/* Instrucciones Interactivas */
+.preloader-instructions {
+  position: relative;
+  z-index: 2;
+  margin-top: 25px;
+  text-align: center;
+  width: 100%;
+}
+
+.instruction-text {
+  font-size: 1.2rem; /* Texto secundario más visible */
+  color: #e2e8f0;
+  opacity: 0.9;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Transición al ocultar */
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
