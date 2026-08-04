@@ -304,24 +304,30 @@ body{
 }
 
 /* Navegación Horizontal */
-.footer-nav {
+.footer-nav{
     display: flex;
+<<<<<<< HEAD:Styles/quienes_somos/styleNavbar.css
     flex-wrap: nowrap;
     gap: 15px;
+=======
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+>>>>>>> 9c6e5b78d0589fa0d800297b149bf7c766777017:Styles/pagina_inicio/styleNavbar.css
 }
 
-.footer-nav a {
-    color: #FFFFFF;
+.footer-nav a{
+    color: white;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.2s ease, transform 0.2s ease;
+      transition: .3s;
 }
 
-.footer-nav a:hover {
+.footer-nav a:hover{
     color: var(--amarillo);
-    transform: translateY(-2px);
 }
+
+
+
 
 /* Redes Sociales en línea */
 .social-group {
