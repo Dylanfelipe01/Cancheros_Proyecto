@@ -51,6 +51,7 @@ function validarCorreo(correo) {
     return true;
 }
 
+
 function validarTelefono(telefono) {
 
     const regex = /^[0-9]{10}$/;
