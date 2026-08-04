@@ -79,6 +79,7 @@ function validarCorreo(correo) {
     return true;
 }
 
+
 function validarTelefono(telefono) {
 
     if(telefono === ""){

@@ -328,6 +328,7 @@ textarea{
     flex-wrap:wrap;
 
     gap:18px;
+    justify-content:center;
 
 }
 
@@ -411,13 +412,13 @@ textarea{
                     RESPONSIVE
 ==================================================*/
 
-@media(max-width:991px){
+@media(max-width:992px){
 
     .navbar-nav{
 
-        margin-top:20px;
-
-        text-align:center;
+       .footer-nav{
+        justify-content:flex-start;
+    }
 
     }
 
@@ -436,8 +437,16 @@ textarea{
     }
 
     .footer-nav{
+         display:flex;
 
-        justify-content:center;
+    flex-direction:column;
+
+    gap:12px;
+
+    padding:0;
+
+    margin:0;
+
 
     }
 
@@ -474,3 +483,5 @@ textarea{
     }
 
 }
+
+
