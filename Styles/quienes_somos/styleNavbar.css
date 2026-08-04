@@ -306,8 +306,8 @@ body{
 /* Navegación Horizontal */
 .footer-nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-wrap: nowrap;
+    gap: 15px;
 }
 
 .footer-nav a {

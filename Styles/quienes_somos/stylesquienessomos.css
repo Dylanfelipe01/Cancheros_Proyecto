@@ -11,10 +11,9 @@
   --font-family: 'SN Pro', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--bg-light);
-  color: var(--dark-text);
+body{
+    background-color: var(--bg-light);
+    color: var(--dark-text);
 }
 
 .main-title {
