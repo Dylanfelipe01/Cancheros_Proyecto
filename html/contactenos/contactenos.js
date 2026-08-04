@@ -19,32 +19,60 @@ function validarFormulario(event) {
 
     if (!validarMensaje(mensaje)) return;
 
-    formulario.submit();
+    fetch(formulario.action, {
+        method: "POST",
+        body: new FormData(formulario),
+        headers: {
+            "Accept": "application/json"
+        }
+    }).then(response => {
+        if(response.ok){
+            Swal.fire({
+                title: "Mensaje enviado.",
+                text: "Tu mensaje se envió correctamente.",
+                icon: "success",
+                confirmButtonText:"Aceptar",
+                allowOutsideClick: true
+            }).then(() => {
+                formulario.reset();
+            });
+        }
+    });
 }
-
 
 function validarNombre(nombre) {
 
     if (nombre === "") {
-        alert("El nombre es obligatorio.");
+        Swal.fire({
+            icon: "error",
+            title: "El nombre es requerido",
+            text: "Debes ingresar tu nombre antes de continuar."
+        });
         return false;
     }
 
     if (nombre.length < 3) {
-        alert("El nombre debe tener mínimo 3 caracteres.");
+        Swal.fire({
+            icon: "error",
+            title: "Nombre inválido",
+            text: "El nombre debe tener al menos 3 caracteres."
+        });
         return false;
     }
 
     return true;
 }
 
-
 function validarCorreo(correo) {
 
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!regex.test(correo)) {
-        alert("Correo electrónico inválido.");
+        Swal.fire({
+            icon: "error",
+            title: "Correo electrónico inválido",
+            text: "Ingresa un correo electrónico válido."
+        });
         return false;
     }
 
@@ -54,27 +82,46 @@ function validarCorreo(correo) {
 
 function validarTelefono(telefono) {
 
+    if(telefono === ""){
+        Swal.fire({
+            icon: "error",
+            title: "Teléfono requerido",
+            text: "Debes ingresar un número de teléfono."
+        });
+        return false;
+    }
+
     const regex = /^[0-9]{10}$/;
 
     if (!regex.test(telefono)) {
-        alert("El teléfono debe tener 10 dígitos.");
+        Swal.fire({
+            icon: "error",
+            title: "Teléfono es inválido.",
+            text: "El teléfono debe contener únicamente números y tener exactamente 10 dígitos."
+        });
         return false;
     }
 
     return true;
 }
 
-
-
 function validarMensaje(mensaje){
 
     if(mensaje === ""){
-        alert("Debe escribir un mensaje.");
+        Swal.fire({
+            icon: "error",
+            title: "Mensaje es requerido.",
+            text: "Debes escribir un mensaje."
+        });
         return false;
     }
 
     if(mensaje.length < 10){
-        alert("El mensaje debe tener al menos 10 caracteres.");
+        Swal.fire({
+            icon: "error",
+            title: "Mensaje muy corto.",
+            text: "El mensaje debe tener al menos 10 caracteres."
+        });
         return false;
     }
 
