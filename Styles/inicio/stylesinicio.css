@@ -80,13 +80,7 @@ body {
   max-width: 650px;
 }
 
-.hero-mascot {
-  width: 320px;
-  height: auto;
-  margin-top: -60px; 
-  z-index: 4; 
-  margin-bottom: -1px; 
-}
+
 
 .hero-card {
   position: relative;
@@ -115,7 +109,7 @@ body {
   line-height: 1.1;
 }
 
-/* Subtítulo en Amarillo */
+
 .hero-subtitle {
   font-family: 'Arial Black', sans-serif;
   font-size: 3.2rem;
@@ -137,36 +131,10 @@ body {
   color: #e0e0e0;
 }
 
-.sidebar-contact {
-  position: absolute;
-  right: -85px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  transform-origin: center center;
-  background-color: rgba(248, 249, 250, 0.9);
-  padding: 8px 20px;
-  border-radius: 0 0 12px 12px; 
-  z-index: 10;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: #222222;
-  white-space: nowrap;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
 
-.sidebar-contact .separator {
-  display: inline-block;
-  margin: 0 5px;
-  color: #666;
-}
 
 .btn-success-cancheros {
-  background-color: var(--brand-green) !important;
+  background-color: var(--brand-yellow) !important;
   color: var(--text-light) !important;
   border: none;
   transition: all 0.3s ease;
@@ -213,6 +181,13 @@ body {
   transition: transform 0.3s ease;
 }
 
+
+.step-card p,
+.step-card .text-muted {
+  color: #FFFFFF !important; 
+  opacity: 0.9;             
+}
+
 .step-card:hover {
   transform: translateY(-5px);
   border-color: var(--brand-green-light);
@@ -245,7 +220,14 @@ body {
 }
 
 .promo-card {
-  background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-light) 100%);
+  background: 
+    linear-gradient(
+      135deg, 
+      rgba(46, 125, 50, 0.92) 0%,      
+      rgba(102, 187, 106, 0.70) 60%,   
+      rgba(38, 50, 56, 0.85) 100%      
+    ),
+    url('../../imagenes/cancha_ejemplo4.png') no-repeat center center / cover;
   box-shadow: 0 10px 30px rgba(46, 125, 50, 0.3);
 }
 
@@ -263,7 +245,7 @@ body {
 }
 
 .text-success, .text-success-cancheros {
-  color: var(--brand-green-light) !important;
+  color: var(--brand-yellow) !important;
 }
 
 .badge.bg-success {
@@ -283,10 +265,7 @@ body {
   color: var(--brand-yellow) !important;
 }
 
-.footer-moderno {
-  background-color: var(--bg-darker) !important;
-  border-top: 1px solid rgba(248, 249, 250, 0.08);
-}
+
 
 @media (max-width: 768px) {
   .hero-mascot {
@@ -393,3 +372,24 @@ body {
   line-height: 1.5;
   padding: 18px 24px;
 }
+
+
+.pitch-card .badge,
+.pitch-card .tag,
+.pitch-card .amenity-badge,
+.pitch-card .badge-secondary {
+  background-color: rgba(255, 255, 255, 0.1) !important; 
+  color: #F8F9FA !important;                            
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+
+.pitch-card .badge-type {
+  background-color: rgba(46, 125, 50, 0.25) !important;
+  color: var(--brand-green-light) !important;
+  border: 1px solid var(--brand-green) !important;
+}
+
