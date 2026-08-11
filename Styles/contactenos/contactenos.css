@@ -514,7 +514,7 @@ textarea{
 /*logo cancheros footer*/
 
 .footer-logo {
-     width: 200px;
+     width: 300px;
     height: auto;
 }
 
@@ -525,4 +525,15 @@ textarea{
         margin: 0 auto;
     }
 
+}
+
+
+.footer-seccion {
+    padding-top: 70px;
+}
+
+@media (max-width: 991px) {
+    .footer-seccion {
+        padding-top: 20px;
+    }
 }

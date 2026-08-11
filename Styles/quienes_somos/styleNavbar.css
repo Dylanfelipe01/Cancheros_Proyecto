@@ -299,8 +299,15 @@ body{
     color: var(--amarillo);
 }
 
+.footer-seccion {
+    padding-top: 70px;
+}
 
-
+@media (max-width: 991px) {
+    .footer-seccion {
+        padding-top: 20px;
+    }
+}
 
 /* Redes Sociales en línea */
 .social-group {
@@ -383,7 +390,7 @@ body{
 /*logo cancheros footer*/
 
 .footer-logo {
-     width: 200px;
+     width: 300px;
     height: auto;
 }
 
@@ -397,17 +404,3 @@ body{
 }
 
 
-.footer-logo-container {
-    width: 100%;
-    max-width: 220px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer-logo {
-    width: 220px;
-    height: auto;
-    display: block;
-}
