@@ -8,28 +8,36 @@
     box-sizing:border-box;
 }
 
-:root{
+/*==================================================
+=            PALETA DE COLORES
+==================================================*/
 
+:root{
+    /* Color principal */
     --verde:#263238;
+    
+    /*Color Negro */
     --verde-oscuro:#263238;
+     /* Verde claro */
     --verde-claro:#66BB6A;
+      /* Color de acento */
     --amarillo:#FBC02D;
+     /* Texto oscuro */
     --gris:#263238;
+       /* Blanco */
     --blanco:#FFFFFF;
 
 }
 
-html,
-body{
-    width:100%;
-    overflow-x:hidden;
-}
+/*==================================================
+=            ESTILOS GENERALES
+==================================================*/
+
 
 body{
 
     font-family:'Source Sans 3', sans-serif;
     background:#F8F9FA;
-    color:var(--gris);
 
 }
 
@@ -59,6 +67,10 @@ body{
 
     font-weight:700;
 
+    letter-spacing:1px;
+
+    transition:.3s;
+
 }
 
 .logo-text:hover{
@@ -67,9 +79,17 @@ body{
 
 }
 
+
+/*==================================================
+=            LINKS DEL MENÚ
+==================================================*/
+
 .nav-link{
 
     color:var(--blanco);
+
+    
+    font-size:1.1rem;
 
     font-weight:600;
 
@@ -77,13 +97,26 @@ body{
 
     position:relative;
 
+    
+    transition:.3s;
+
+
 }
+
+
+/*==================================================
+=            EFECTO HOVER
+==================================================*/
+
+
 
 .nav-link:hover{
 
     color:var(--amarillo);
 
 }
+
+/* Línea inferior animada */
 
 .nav-link::after{
 
@@ -101,6 +134,8 @@ body{
 
     background:var(--amarillo);
 
+     border-radius:20px;
+
     transform:translateX(-50%);
 
     transition:.3s;
@@ -113,11 +148,21 @@ body{
 
 }
 
+
+
+/*==================================================
+=            LINK ACTIVO
+==================================================*/
 .nav-link.active{
 
     color: var(--amarillo) !important;
 
 }
+
+
+/*==================================================
+=            BOTÓN LOGIN
+==================================================*/
 
 .login-btn{
 
@@ -131,6 +176,10 @@ body{
 
     font-weight:700;
 
+    transition:.3s;
+
+     box-shadow:0 4px 12px rgba(251,192,45,.35)
+
 }
 
 .login-btn:hover{
@@ -139,7 +188,13 @@ body{
 
     color:var(--verde);
 
+    transform:translateY(-2px);
+
 }
+
+/*==================================================
+=            BOTÓN HAMBURGUESA
+==================================================*/
 
 .navbar-toggler{
 
@@ -152,6 +207,41 @@ body{
     box-shadow:none;
 
 }
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/*==================================================
+=            RESPONSIVE
+==================================================*/
+
+@media(max-width:991px){
+
+    .navbar-nav{
+
+        margin-top:20px;
+
+        text-align:center;
+
+    }
+
+    .nav-link{
+
+        margin:12px 0;
+
+    }
+
+    .login-btn{
+
+        width:180px;
+
+        margin-top:15px;
+
+    }
+
+}
+
 
 /*==================================================
                     FORMULARIO
@@ -424,7 +514,7 @@ textarea{
 /*logo cancheros footer*/
 
 .footer-logo {
-     width: 200px;
+     width: 300px;
     height: auto;
 }
 
@@ -435,4 +525,15 @@ textarea{
         margin: 0 auto;
     }
 
+}
+
+
+.footer-seccion {
+    padding-top: 70px;
+}
+
+@media (max-width: 991px) {
+    .footer-seccion {
+        padding-top: 20px;
+    }
 }

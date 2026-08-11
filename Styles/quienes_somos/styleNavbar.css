@@ -20,7 +20,7 @@ body{
     /* Color principal */
     --verde:#263238;
 
-    /* Verde oscuro para degradados */
+    /* Color Negro */
     --verde-oscuro:#263238;
 
     /* Verde claro */
@@ -203,6 +203,10 @@ body{
 
 }
 
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 .navbar-toggler:focus{
 
     box-shadow:none;
@@ -295,8 +299,15 @@ body{
     color: var(--amarillo);
 }
 
+.footer-seccion {
+    padding-top: 70px;
+}
 
-
+@media (max-width: 991px) {
+    .footer-seccion {
+        padding-top: 20px;
+    }
+}
 
 /* Redes Sociales en línea */
 .social-group {
@@ -367,6 +378,8 @@ body{
     transform-origin: left center; 
 }
 
+/* resposive logo cancheros*/
+
 @media (max-width: 576px) {
     .logo-cancheros {
         width: 130px;
@@ -377,7 +390,7 @@ body{
 /*logo cancheros footer*/
 
 .footer-logo {
-     width: 200px;
+     width: 300px;
     height: auto;
 }
 
@@ -389,3 +402,5 @@ body{
     }
 
 }
+
+
