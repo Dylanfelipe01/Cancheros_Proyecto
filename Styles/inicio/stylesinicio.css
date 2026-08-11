@@ -1,15 +1,40 @@
+:root {
+  --bg-dark: #263238;
+  --bg-darker: #1c272c;
+  --text-light: #F8F9FA;
+  --brand-green: #2E7D32;
+  --brand-green-light: #66BB6A;
+  --brand-yellow: #FBC02D;
+  --brand-red: #EF5350;
+}
+
+html, body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: 'Source Sans 3', sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: radial-gradient(circle at top, #31424a 0%, var(--bg-dark) 70%);
+  background-attachment: fixed;
+}
+
 .hero-section {
   position: relative;
   width: 100%;
-  /* Importante: Un alto mínimo para asegurar que todo quepa y se centre verticalmente */
-  min-height: calc(100vh - 120px); /* Ajusta 120px según el alto real de tu Navbar + Footer */
+  min-height: 85vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  box-sizing: border-box;
+  overflow: visible;
+  padding-bottom: 60px;
 }
-/* Fondo con imagen de balones */
+
 .hero-background {
   position: absolute;
   top: 0;
@@ -19,21 +44,41 @@
   background-image: url('../../imagenes/fondo_balones.png'); 
   background-size: cover;
   background-position: center;
-  z-index: 1; /* Fondo detrás de todo */
-  opacity: 0.7;
+  z-index: 1;
+  opacity: 0.75;
 }
 
-/* Contenedor de la mascota */
+.hero-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(to bottom, var(--bg-dark) 0%, rgba(38, 50, 56, 0) 100%);
+  z-index: 2;
+}
+
+.hero-background::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(to top, var(--bg-dark) 0%, rgba(38, 50, 56, 0.85) 60%, rgba(38, 50, 56, 0) 100%);
+  z-index: 2;
+}
+
 .hero-card-container {
   position: relative;
-  z-index: 2; /* Sobre el fondo */
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 90%;
   max-width: 650px;
 }
-
 
 .hero-mascot {
   width: 320px;
@@ -43,25 +88,22 @@
   margin-bottom: -1px; 
 }
 
-
 .hero-card {
   position: relative;
   z-index: 3; 
-  background: rgba(0, 0, 0, 0.65); 
+  background: rgba(28, 39, 44, 0.75); 
   backdrop-filter: blur(8px); 
+  border: 1px solid rgba(248, 249, 250, 0.1);
   border-radius: 40px;
   width: 100%;
   text-align: center;
-  color: #ffffff;
+  color: var(--text-light);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-
 .hero-card-content {
-  
   padding: 40px 30px; 
 }
-
 
 .hero-title {
   font-family: 'Arial Black', sans-serif;
@@ -73,6 +115,7 @@
   line-height: 1.1;
 }
 
+/* Subtítulo en Amarillo */
 .hero-subtitle {
   font-family: 'Arial Black', sans-serif;
   font-size: 3.2rem;
@@ -81,8 +124,8 @@
   text-transform: uppercase;
   margin: 5px 0 20px 0;
   line-height: 1;
+  color: var(--brand-yellow);
 }
-
 
 .hero-description {
   font-family: 'Arial', sans-serif;
@@ -96,24 +139,18 @@
 
 .sidebar-contact {
   position: absolute;
-  right: -85px; /* Ajuste para el eje de rotación */
+  right: -85px;
   top: 50%;
-  
-  /* Cambiamos la rotación a 90deg para dar la vuelta completa a la orientación del texto */
   transform: translateY(-50%) rotate(90deg);
   transform-origin: center center;
-
-  background-color: rgba(235, 235, 235, 0.9);
+  background-color: rgba(248, 249, 250, 0.9);
   padding: 8px 20px;
-  /* El redondeado va abajo porque al rotar a 90deg esa parte queda hacia la izquierda */
   border-radius: 0 0 12px 12px; 
   z-index: 10;
-  
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 15px;
-  
   font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 0.9rem;
@@ -128,7 +165,129 @@
   color: #666;
 }
 
-/* Adaptación para pantallas pequeñas */
+.btn-success-cancheros {
+  background-color: var(--brand-green) !important;
+  color: var(--text-light) !important;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-success-cancheros:hover {
+  background-color: var(--brand-green-light) !important;
+  color: var(--text-light) !important;
+  transform: translateY(-2px);
+}
+
+.booking-filter-section {
+  position: relative;
+  z-index: 10;
+  margin-top: -80px;
+  margin-bottom: 40px;
+}
+
+.filter-card {
+  background: rgba(28, 39, 44, 0.88) !important;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(248, 249, 250, 0.12) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+.custom-input {
+  background-color: rgba(38, 50, 56, 0.8) !important;
+  border: 1px solid rgba(248, 249, 250, 0.2) !important;
+  color: var(--text-light) !important;
+  border-radius: 10px;
+}
+
+.custom-input:focus {
+  background-color: var(--bg-dark) !important;
+  border-color: var(--brand-green-light) !important;
+  color: var(--text-light) !important;
+  box-shadow: 0 0 10px rgba(102, 187, 106, 0.3) !important;
+}
+
+.step-card {
+  background-color: rgba(248, 249, 250, 0.03);
+  border: 1px solid rgba(248, 249, 250, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--brand-green-light);
+}
+
+.pitch-card {
+  background-color: var(--bg-darker) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pitch-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6) !important;
+}
+
+.pitch-img-wrapper {
+  height: 200px;
+  overflow: hidden;
+  background-color: #1a2327;
+}
+
+.pitch-img {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.pitch-card:hover .pitch-img {
+  transform: scale(1.08);
+}
+
+.promo-card {
+  background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-light) 100%);
+  box-shadow: 0 10px 30px rgba(46, 125, 50, 0.3);
+}
+
+.custom-accordion .accordion-button {
+  box-shadow: none !important;
+}
+
+.custom-accordion .accordion-button:not(.collapsed) {
+  background-color: var(--bg-darker) !important;
+  color: var(--brand-green-light) !important;
+}
+
+.custom-accordion .accordion-button::after {
+  filter: invert(1);
+}
+
+.text-success, .text-success-cancheros {
+  color: var(--brand-green-light) !important;
+}
+
+.badge.bg-success {
+  background-color: var(--brand-green) !important;
+}
+
+.badge.bg-warning {
+  background-color: var(--brand-yellow) !important;
+  color: #121212 !important;
+}
+
+.badge.bg-danger {
+  background-color: var(--brand-red) !important;
+}
+
+.stars {
+  color: var(--brand-yellow) !important;
+}
+
+.footer-moderno {
+  background-color: var(--bg-darker) !important;
+  border-top: 1px solid rgba(248, 249, 250, 0.08);
+}
+
 @media (max-width: 768px) {
   .hero-mascot {
     width: 160px;
@@ -150,6 +309,87 @@
   }
   
   .sidebar-contact {
-    display: none; /* Se oculta en móviles para mejorar espacio */
+    display: none;
   }
+}
+
+.faq-section {
+  background-color: #182226;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.faq-title {
+  font-family: 'Arial Black', sans-serif;
+  font-weight: 900;
+  color: #FFFFFF;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+
+.text-brand-red {
+  color: var(--brand-red) !important; 
+}
+
+.faq-subtitle {
+  color: #90a4ae;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+
+
+.custom-accordion {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.custom-accordion .accordion-item {
+  background-color: #1e2a30 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+
+.custom-accordion .accordion-item:hover {
+  border-color: rgba(239, 83, 80, 0.5) !important;
+}
+
+
+.custom-accordion .accordion-button {
+  background-color: #1e2a30 !important;
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: none !important;
+  padding: 18px 24px;
+}
+
+
+.custom-accordion .accordion-button::after {
+  filter: invert(1) brightness(2);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+
+.custom-accordion .accordion-button:not(.collapsed) {
+  background-color: #263238 !important;
+  color: var(--brand-red) !important; 
+  border-bottom: 1px solid rgba(239, 83, 80, 0.2);
+}
+
+
+.custom-accordion .accordion-button:not(.collapsed)::after {
+  filter: invert(42%) sepia(85%) saturate(1480%) hue-rotate(320deg) brightness(98%) contrast(92%);
+}
+
+
+.custom-accordion .accordion-body {
+  background-color: #1e2a30;
+  color: #cfd8dc;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 18px 24px;
 }
