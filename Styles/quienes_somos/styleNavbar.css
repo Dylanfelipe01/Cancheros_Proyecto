@@ -26,7 +26,7 @@ body{
     /* Color principal */
     --verde:#263238;
 
-    /* Verde oscuro para degradados */
+    /* Color Negro */
     --verde-oscuro:#263238;
 
     /* Verde claro */
@@ -384,6 +384,8 @@ body{
     }
 }
 
+
+/* resposive logo cancheros*/
 
 @media (max-width: 576px) {
     .logo-cancheros {
