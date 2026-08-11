@@ -24,10 +24,10 @@ body{
 :root{
 
     /* Color principal */
-    --verde:#2E7D32;
+    --verde:#263238;
 
     /* Verde oscuro para degradados */
-    --verde-oscuro:#1B5E20;
+    --verde-oscuro:#263238;
 
     /* Verde claro */
     --verde-claro:#66BB6A;
@@ -176,7 +176,7 @@ body{
 
 .nav-link.active{
 
-    color:var(--amarillo);
+   color: var(--amarillo) !important;
 
 }
 
@@ -382,4 +382,17 @@ body{
     .footer-moderno {
         text-align: center;
     }
+}
+
+
+@media (max-width: 576px) {
+    .logo-cancheros {
+        width: 130px;
+    }
+}
+
+.logo-cancheros {
+    width: 140px;
+    height: auto;
+    display: block;
 }
