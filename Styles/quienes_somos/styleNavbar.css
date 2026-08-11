@@ -1,0 +1,385 @@
+/*=================================
+        RESET
+==================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+
+    width:100%;
+    overflow-x:hidden;
+
+}
+
+
+/*==================================================
+=            PALETA DE COLORES
+==================================================*/
+
+:root{
+
+    /* Color principal */
+    --verde:#2E7D32;
+
+    /* Verde oscuro para degradados */
+    --verde-oscuro:#1B5E20;
+
+    /* Verde claro */
+    --verde-claro:#66BB6A;
+
+    /* Color de acento */
+    --amarillo:#FBC02D;
+
+    /* Texto oscuro */
+    --gris:#263238;
+
+    /* Blanco */
+    --blanco:#FFFFFF;
+
+}
+
+
+/*==================================================
+=            ESTILOS GENERALES
+==================================================*/
+
+body{
+
+    font-family:'Source Sans 3', sans-serif;
+
+    background-color:#F8F9FA;
+
+}
+
+
+/*==================================================
+=            NAVBAR
+==================================================*/
+
+.navbar{
+
+    /* Degradado principal */
+
+    background:linear-gradient(
+        90deg,
+        var(--verde-oscuro),
+        var(--verde)
+    );
+
+    padding:16px 0;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+    transition:.3s;
+
+}
+
+
+/*==================================================
+=            LOGO
+==================================================*/
+
+.logo-text{
+
+    color:var(--blanco);
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    transition:.3s;
+
+}
+
+.logo-text:hover{
+
+    color:var(--amarillo);
+
+}
+
+
+/*==================================================
+=            LINKS DEL MENÚ
+==================================================*/
+
+.nav-link{
+
+    color:var(--blanco);
+
+    font-size:1.1rem;
+
+    font-weight:600;
+
+    margin:0 15px;
+
+    position:relative;
+
+    transition:.3s;
+
+}
+
+
+/*==================================================
+=            EFECTO HOVER
+==================================================*/
+
+.nav-link:hover{
+
+    color:var(--amarillo);
+
+}
+
+
+/* Línea inferior animada */
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:3px;
+
+    background:var(--amarillo);
+
+    border-radius:20px;
+
+    transform:translateX(-50%);
+
+    transition:.3s;
+
+}
+
+.nav-link:hover::after{
+
+    width:70%;
+
+}
+
+
+/*==================================================
+=            LINK ACTIVO
+==================================================*/
+
+.nav-link.active{
+
+    color:var(--amarillo);
+
+}
+
+
+/*==================================================
+=            BOTÓN LOGIN
+==================================================*/
+
+.login-btn{
+
+    background:var(--amarillo);
+
+    color:var(--gris);
+
+    padding:10px 25px;
+
+    border-radius:30px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+    box-shadow:0 4px 12px rgba(251,192,45,.35);
+
+}
+
+.login-btn:hover{
+
+    background:var(--blanco);
+
+    color:var(--verde);
+
+    transform:translateY(-2px);
+
+}
+
+
+/*==================================================
+=            BOTÓN HAMBURGUESA
+==================================================*/
+
+.navbar-toggler{
+
+    border:2px solid var(--amarillo);
+
+}
+
+.navbar-toggler:focus{
+
+    box-shadow:none;
+
+}
+
+
+/*==================================================
+=            RESPONSIVE
+==================================================*/
+
+@media(max-width:991px){
+
+    .navbar-nav{
+
+        margin-top:20px;
+
+        text-align:center;
+
+    }
+
+    .nav-link{
+
+        margin:12px 0;
+
+    }
+
+    .login-btn{
+
+        width:180px;
+
+        margin-top:15px;
+
+    }
+
+}
+
+/*==================================================
+=               FOOTER ESTRUCTURA NUEVA
+==================================================*/
+
+.footer-moderno {
+    background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
+    color: var(--blanco);
+    padding: 50px 0 25px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Marca y Lead */
+.footer-logo {
+    color: var(--amarillo);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.footer-logo i {
+    color: var(--amarillo);
+    margin-right: 8px;
+}
+
+.footer-lead {
+    color: #E0E0E0;
+    font-size: 1rem;
+    max-width: 500px;
+    text-align: left; /* Evita que Bootstrap fuerce un justify */
+}
+
+.footer-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--amarillo);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Navegación Horizontal */
+.footer-nav{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+}
+
+.footer-nav a{
+    color: white;
+    text-decoration: none;
+      transition: .3s;
+}
+
+.footer-nav a:hover{
+    color: var(--amarillo);
+}
+
+
+
+
+/* Redes Sociales en línea */
+.social-group {
+    display: inline-flex;
+    gap: 12px;
+}
+
+.social-pill {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px; /* Esquinas suavemente redondeadas en lugar de círculo completo */
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.social-pill:hover {
+    background: var(--amarillo);
+    color: var(--verde-oscuro);
+    transform: translateY(-3px);
+}
+
+/* Líneas divisoras delgadas */
+.footer-line {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin: 0;
+}
+
+/* Copyright */
+.footer-copy {
+    color: #B0BEC5;
+    font-size: 0.85rem;
+}
+
+.footer-copy strong {
+    color: var(--amarillo);
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+    .footer-lead {
+        text-align: center;
+        margin: 0 auto;
+    }
+    .footer-nav {
+        justify-content: center;
+    }
+    .social-group {
+        justify-content: center;
+    }
+    .footer-moderno {
+        text-align: center;
+    }
+}
