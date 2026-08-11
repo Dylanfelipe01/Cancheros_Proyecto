@@ -10,8 +10,8 @@
 
 :root{
 
-    --verde:#2E7D32;
-    --verde-oscuro:#1B5E20;
+    --verde:#263238;
+    --verde-oscuro:#263238;
     --verde-claro:#66BB6A;
     --amarillo:#FBC02D;
     --gris:#263238;
@@ -115,7 +115,7 @@ body{
 
 .nav-link.active{
 
-    color:var(--amarillo);
+    color: var(--amarillo) !important;
 
 }
 
@@ -405,4 +405,17 @@ textarea{
     .footer-moderno {
         text-align: center;
     }
+}
+
+/* resposive logo cancheros*/
+@media (max-width: 576px) {
+    .logo-cancheros {
+        width: 130px;
+    }
+}
+
+.logo-cancheros {
+    width: 140px;
+    height: auto;
+    display: block;
 }
