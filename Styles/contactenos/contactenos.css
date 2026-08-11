@@ -507,32 +507,18 @@ textarea{
 }
 
 
-.footer-copy {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
+/*logo cancheros footer*/
 
-    color: #B0BEC5;
-    font-size: 0.85rem;
-}
-
-.footer-logo-copy {
-    width: 70px;
+.footer-logo {
+     width: 200px;
     height: auto;
 }
 
-
-
 @media (max-width: 576px) {
 
-    .footer-copy {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .footer-logo-copy {
-        width: 65px;
+    .footer-logo {
+        width: 120px;
+        margin: 0 auto;
     }
 
 }
