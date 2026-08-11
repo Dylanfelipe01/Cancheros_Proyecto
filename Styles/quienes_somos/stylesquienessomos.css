@@ -92,3 +92,19 @@ body{
     padding: 1.5rem 1.25rem;
   }
 }
+
+/*logo cancheros footer*/
+
+.footer-logo {
+     width: 200px;
+    height: auto;
+}
+
+@media (max-width: 576px) {
+
+    .footer-logo {
+        width: 120px;
+        margin: 0 auto;
+    }
+
+}

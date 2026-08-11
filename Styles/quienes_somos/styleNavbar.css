@@ -358,7 +358,7 @@ body{
     }
 }
 
-
+/*logo cancheros navbar*/
 .logo-cancheros {
     width: 180px;
     height: auto;
@@ -372,4 +372,20 @@ body{
         width: 130px;
         transform: scale(1.15); 
     }
+}
+
+/*logo cancheros footer*/
+
+.footer-logo {
+     width: 200px;
+    height: auto;
+}
+
+@media (max-width: 576px) {
+
+    .footer-logo {
+        width: 120px;
+        margin: 0 auto;
+    }
+
 }
