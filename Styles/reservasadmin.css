@@ -161,3 +161,9 @@ body {
 .tarjeta-canceladas .icono-resumen {
     color: #EF5350;
 }
+
+textarea{
+    resize: none;
+    height: 50px;
+    max-height: 100px;
+}
