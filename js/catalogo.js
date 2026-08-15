@@ -53,3 +53,9 @@ function cargarCanchasAdmin() {
         contenedor.appendChild(card);
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    cargarCanchasAdmin();
+
+});
