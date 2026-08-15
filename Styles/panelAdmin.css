@@ -68,7 +68,7 @@ body {
     border-right: none;
 }
 
-.mensaje-sin-reservas {
+.mensaje-sin-canchas {
     text-align: center;
     font-size: 14px;
 }
@@ -166,4 +166,15 @@ textarea{
     resize: none;
     height: 50px;
     max-height: 100px;
+}
+
+.trash-logo{
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.trash-logo:hover{
+    color: red;
+    transform: scale(1.2);
 }
