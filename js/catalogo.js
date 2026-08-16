@@ -12,8 +12,8 @@ function cargarCanchasAdmin() {
                 <div class="cancha-card w-100">
                     <div class="card-img-wrapper">
                     <img
-                        src="../imagenes/cancha_ejemplo4.png"
-                        alt="Complejo Deportivo Modelia"
+                        src="${cancha.imagen}"
+                        alt="${cancha.nombreCancha}"
                     />
 
                     <span class="badge-rating"

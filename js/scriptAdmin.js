@@ -2,29 +2,133 @@
 const formCancha = document.getElementById("formCancha");
 const tablaCanchas = document.getElementById("tablaCanchas");
 
+const obtenerCanchas = () => {
+    return JSON.parse(localStorage.getItem("canchas")) || [];
+};
+
+const agregarCancha = async (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana, mensajeSinCanchas) => {
+    const canchas = obtenerCanchas();
+    const archivoImagen = imagenCancha.files[0];
+    const imagen = await convertirImagen(archivoImagen);
+
+    const nuevoId = canchas.length > 0
+        ? Math.max(...canchas.map(cancha => cancha.id)) + 1
+        : 1
+    ;
+    
+    const otraCancha = {
+        id:nuevoId,
+        disponible: disponible.value,
+        descripcion: descripcion.value,
+        nombreCancha: nombreCancha.value,
+        precio: precio.value,
+        ubicacion: ubicacion.value,
+        imagen: imagen
+    }
+
+    canchas.push(otraCancha)
+    guardarCanchas(canchas);
+    renderizar();
+
+    localStorage.setItem("canchas", JSON.stringify(canchas))
+
+}
+
+const guardarCanchas = (canchas) => {
+    localStorage.setItem("canchas", JSON.stringify(canchas));
+};
+
 const mostrarMensajeSinCancha = () => {
     tablaCanchas.innerHTML = `
         <tr id="sinCanchas">
-            <td id="mensajeSinCanchas" colspan="7" class="mensaje-sin-canchas">
+            <td colspan="8" id="mensajeSinCanchas" colspan="7" class="mensaje-sin-canchas">
                 No hay canchas agregadas todavía.
             </td>
         </tr>
     `
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const guardado = localStorage.getItem("tablas");
+const renderizar = () => {
+    const canchas = obtenerCanchas();
+    
+    tablaCanchas.innerHTML = "";
 
-    if (guardado && guardado.trim() !== "") {
-        tablaCanchas.innerHTML = guardado;
-    }else{
-        mostrarMensajeSinCancha()
+    if (canchas.length === 0) {
+        mostrarMensajeSinCancha();
+        return;
     }
+
+    canchas.forEach(cancha => {
+
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td>${cancha.id}</td>
+            <td>${cancha.disponible ? "Si" : "No"}</td>
+            <td>${cancha.descripcion}</td>
+            <td>${cancha.nombreCancha}</td>
+            <td>$${cancha.precio}</td>
+            <td>${cancha.ubicacion}</td>
+            <td>
+                <img class="imagenPanel" src="${cancha.imagen}" alt="${cancha.nombreCancha}" width="60" height="60" />
+            </td>
+            <td><i class="trash-logo bi bi-trash fs-3" data-id="${cancha.id}"></i></td>
+        `;
+
+        tablaCanchas.appendChild(fila);
+    })
+}
+
+const eliminarCancha = (id) => {
+
+    Swal.fire({
+        title: "¿Eliminar cancha?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33"
+    }).then((resultado) => {
+
+        if (!resultado.isConfirmed) {
+            return;
+        }
+
+        const canchas = obtenerCanchas();
+        const nuevasCanchas = canchas.filter(
+            cancha => cancha.id !== id
+        );
+
+        guardarCanchas(nuevasCanchas);
+
+        renderizar();
+
+        Swal.fire({
+            title: "Cancha eliminada",
+            icon: "success"
+        });
+    });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderizar();
 });
 
-//Validaciones para el formular agregar cancha donde no le permite al usuario agregar una cancha hasta
-//completar todo el formulario
-const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana, mensajeSinCanchas) => {
+tablaCanchas.addEventListener("click", (event) => {
+
+    const botonEliminar = event.target.closest(".trash-logo");
+
+    if (!botonEliminar) {
+        return;
+    }
+
+    const id = Number(botonEliminar.dataset.id);
+
+    eliminarCancha(id);
+});
+
+const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion) => {
     
     if(!validarNombreCancha(nombreCancha)){
         Swal.fire({
@@ -34,7 +138,7 @@ const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubica
         });
         return false;
     }
-
+    
     if(!validarPrecioCancha(precio)){
         Swal.fire({
             title: "Precio inválido",
@@ -88,104 +192,58 @@ const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubica
         });
         return false
     }
-
     return true
-
 }
 
 const validarNombreCancha = (nombreCancha) => {
-    if(nombreCancha.value.trim() === ""){
-        return false
-    }
-    return true;
+    return nombreCancha.value.trim() !== "";
 }
 
 const validarPrecioCancha = (precio) => {
-    if(precio.value.trim() === ""){
-        
-        return false;
-    }
-    return true
+    return precio.value.trim() !== "";
 }
 
 const validarNumero = (precio) => {
-    if (isNaN(precio.value)) {
-        return false
-    }
-    return true;
+    return !isNaN(precio.value)
 }
 
 const validarDisponibleCancha = (disponible) => {
-    if(!disponible){
-        
-        return false;
-    }
-    return true
+    return !disponible !== null;
 }
 
 const validarImagenCancha = (imagenCancha) => {
-    if(imagenCancha.files.length === 0){
-        
-        return false;
-    }
-    return true
-}
+    return imagenCancha.files.length > 0;
+};
 
 const validarUbicacionCancha = (ubicacion) => {
-    if(ubicacion.value.trim() === ""){
-        
-        return false;
-    }
-    return true
+    return ubicacion.value.trim() !== ""
 }
 
 const validarDescripcionCancha = (descripcion) => {
-    if(descripcion.value.trim() === ""){
-        
-        return false;
-    }
-
-    return true
+    return descripcion.value.trim() !== ""
 }
 
-const agregarCancha = (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana, mensajeSinCanchas) => {
-    document.activeElement.blur();
+const convertirImagen = (archivo) => {
 
-    const archivoImagen = imagenCancha.files[0];
+    return new Promise((resolve, reject) => {
 
-    const url = URL.createObjectURL(archivoImagen);
+        const reader = new FileReader();
 
-    let contador = Number(localStorage.getItem("contadorCanchas")) || 0;
-    contador++;
+        reader.onload = () => {
+            resolve(reader.result);
+        };
 
-    localStorage.setItem("contadorCanchas", contador);
-    
-    const tablas = `
-        <tr>
-            <td>${contador}</td>
-            <td>${disponible.value ? "Si" : "No"}</td>
-            <td>${descripcion.value}</td>
-            <td>${nombreCancha.value}</td>
-            <td>${precio.value}</td>
-            <td>${ubicacion.value}</td>
-            <td>
-                <img src="${url}" alt="${nombreCancha.value}" width="60" height="60" />
-            </td>
-            <td><i class="trash-logo bi bi-trash fs-3"></i></td>
-        </tr>
-    `
-    const guardado = localStorage.getItem("tablas");
-    if(guardado){
-        tablaCanchas.innerHTML = guardado + tablas
-    }else{
-        tablaCanchas.innerHTML += tablas
-    }
+        reader.onerror = () => {
+            reject(reader.error);
+        };
 
-    localStorage.setItem("tablas", tablaCanchas.innerHTML);
+        reader.readAsDataURL(archivo);
+    });
+};
 
-}
+formCancha.addEventListener("submit", async (event) => {
 
-formCancha.addEventListener("submit", (event) => {
+    event.preventDefault();
     
     const nombreCancha = document.getElementById("nombreCancha");
     const precio = document.getElementById("precio");
@@ -196,9 +254,7 @@ formCancha.addEventListener("submit", (event) => {
     const cerrarVentana = document.getElementById("cerrarVentana");
     const sinCanchas = document.getElementById("sinCanchas");
     const modal = document.getElementById("agregarCancha");
-
-    event.preventDefault();
-
+    
     if(!validarFormulario(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana)){
         return;
     }
@@ -207,23 +263,9 @@ formCancha.addEventListener("submit", (event) => {
         sinCanchas.remove();
     }
     
-    agregarCancha(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana);
-    
-    
+    await agregarCancha(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana);
     
     document.activeElement.blur();
-    /*
-    document.getElementById("cerrarVentana").click()
-
-    nombreCancha.value = ""
-    precio.value = "";
-    imagenCancha.value = "";
-    ubicacion.value = "";
-    descripcion.value = "";
-
-    if (disponible) {
-        disponible.checked = false;
-    }*/
 
     formCancha.reset();
 
@@ -235,7 +277,3 @@ formCancha.addEventListener("submit", (event) => {
         icon: "success"
     });
 })
-
-
-
-

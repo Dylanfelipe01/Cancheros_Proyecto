@@ -178,3 +178,26 @@ textarea{
     color: red;
     transform: scale(1.2);
 }
+
+.imagenPanel{
+    border-radius: 5px;
+}
+
+.btn-agregar{
+    color: rgb(255, 255, 255);
+    background-color: #2E7D32;
+}
+
+.btn-agregar:hover{
+    color: rgb(255, 255, 255);
+    background-color: #184d1b;
+}
+
+.modal-title{
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+}
+
+.headerModal{
+    background-color: #2E7D32;
+}
