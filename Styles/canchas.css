@@ -236,5 +236,89 @@
             color: #000000;
         }
 
+/* ==========================================
+   CARDS CREADAS POR EL ADMIN
+   ========================================== */
 
-        
+#canchasAdmin {
+    width: 100%;
+}
+
+#canchasAdmin > div {
+    display: flex;
+}
+
+#canchasAdmin .cancha-card {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ==========================================
+   IMÁGENES
+   ========================================== */
+
+#canchasAdmin .card-img-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+#canchasAdmin .card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* ==========================================
+   PANTALLAS GRANDES
+   ========================================== */
+
+@media (min-width: 1200px) {
+
+    #canchasAdmin .card-img-wrapper {
+        height: 230px;
+    }
+
+}
+
+
+/* ==========================================
+   PANTALLAS MUY GRANDES
+   ========================================== */
+
+@media (min-width: 1400px) {
+
+    #canchasAdmin .card-img-wrapper {
+        height: 250px;
+    }
+
+}
+
+
+/* ==========================================
+   TABLET
+   ========================================== */
+
+@media (min-width: 768px) and (max-width: 1199px) {
+
+    #canchasAdmin .card-img-wrapper {
+        height: 220px;
+    }
+
+}
+
+
+/* ==========================================
+   CELULAR
+   ========================================== */
+
+@media (max-width: 767px) {
+
+    #canchasAdmin .card-img-wrapper {
+        height: 210px;
+    }
+
+}
