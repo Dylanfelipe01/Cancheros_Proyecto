@@ -12,7 +12,7 @@
             background-color: var(--bg-dark);
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding-bottom: 50px;
+            padding-bottom: 0px;
         }
 
         .filter-box {
@@ -322,3 +322,7 @@
     }
 
 }
+
+
+
+
