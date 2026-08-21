@@ -39,13 +39,16 @@ function cargarCanchasAdmin() {
                         ><i class="fa-solid fa-shield"></i> Camerinos VIP</span
                         >
                     </div>
-                    <div class="card-footer-custom">
-                        <div>
-                        <span class="price-label">Desde</span>
-                        <div class="price-value">$${cancha.precio} <span>/hr</span></div>
-                        </div>
-                        <button class="btn btn-reservar">Reservar</button>
-                    </div>
+                     <div class="card-footer-custom">
+    <div>
+        <span class="price-label">Desde</span>
+        <div class="price-value">$${cancha.precio} <span>/hr</span></div>
+    </div>
+
+    <a href="./reservas.html?id=${cancha.id}" class="btn btn-reservar">
+        Reservar
+    </a>
+</div>
                     </div>
                 </div>
             </div>
