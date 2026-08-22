@@ -24,8 +24,11 @@ body {
 }
 
 .logo-cancheros {
-    width: 150px;
+    width: 190px;
     height: auto;
+    display: block;
+     
+    transform-origin: left center; 
 }
 
 .nav-link {

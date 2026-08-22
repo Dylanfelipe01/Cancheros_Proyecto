@@ -101,8 +101,6 @@ function irReservar(){
     
             const idCancha = event.target.dataset.canchaId;
     
-            console.log("Cancha seleccionada:", idCancha);
-    
             window.location.href = `./reservas.html?id=${idCancha}`;
         }
     })
