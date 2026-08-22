@@ -29,15 +29,18 @@ const mostrarCancha = () => {
     
     const cancha = obtenerCancha();
     
-    /*
     if (!cancha) {
 
-        alert("No se encontró la cancha.");
-
-        window.location.href = "./canchas.html";
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se a encontrado la cancha",
+        }).then(() => {
+            window.location.href = "./canchas.html";
+        })
 
         return;
-    }*/
+    }
 
 
     document.getElementById("nombreCancha").textContent =
@@ -79,6 +82,15 @@ const actualizarTotal = () => {
 
     
     if (!cancha) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se a encontrado la cancha",
+        }).then(() => {
+            window.location.href = "./canchas.html";
+        })
+
+        
         return;
     }
 
@@ -140,8 +152,14 @@ document
 
         if (!cancha) {
 
-            alert("No se encontró la cancha.");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se a encontrado la cancha",
+            }).then(() => {
 
+                window.location.href = "./canchas.html";
+            })
             return;
         }
 
