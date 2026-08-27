@@ -10,9 +10,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="./styles/stylesinicio.css">
     <link rel="stylesheet" href="./styles/styleNavbar.css">
+    <link rel="stylesheet" href="styles/preloader.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
+    <body>
+  <div id="preloader" class="preloader">
+    <canvas id="preloader-canvas"></canvas>
+    <div class="preloader-content">
+      <h1 class="preloader-title">CANCHEROS</h1>
+      <p class="preloader-subtitle">Cargando la cancha...</p>
+      <div class="preloader-bar-container">
+        <div class="preloader-progress"></div>
+        <div class="preloader-ball">
+          <i class="fa-solid fa-futbol fa-spin"></i>
+        </div>
+      </div>
+      <div class="preloader-instructions">
+        <p class="instruction-text">Presiona ESPACIO o haz Clic para avanzar</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- El resto del contenido actual de tu index.html va aquí abajo -->
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm py-2">
         <div class="container-fluid px-4">
@@ -484,6 +505,8 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/preloader.js"></script>
+</body>
 </body>
 
 </html>
