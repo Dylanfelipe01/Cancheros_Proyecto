@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   btnSubmit.addEventListener("click", (e) => {
     e.preventDefault();
 
-    // 1. Obtener valores quitando espacios
+    // Obtener valores quitando espacios
     const nombre = nombreInput.value.trim();
     const apellido = apellidoInput.value.trim();
     const email = emailInput.value.trim();
@@ -26,37 +26,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const password2 = password2Input.value;
     const terminos = terminosInput.checked;
 
-    // 2. Validar campos vacíos
+    // Validar campos vacíos
     if (!nombre || !apellido || !email || !telefono || !password || !password2) {
       alert("Por favor, completa todos los campos del formulario.");
       return;
     }
 
-    // 3. Validar formato de correo
+    // Validar formato de correo
     if (!emailRegex.test(email)) {
       alert("Ingresa un correo electrónico válido (ej. usuario@dominio.com).");
       return;
     }
 
-    // 4. Validar formato de contraseña
+    // Validar formato de contraseña
     if (!passwordRegex.test(password)) {
       alert("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.");
       return;
     }
 
-    // 5. Confirmar contraseñas
+    // Confirmar contraseñas
     if (password !== password2) {
       alert("Las contraseñas no coinciden.");
       return;
     }
 
-    // 6. Validar términos
+    // Validar términos
     if (!terminos) {
       alert("Debes aceptar los términos y condiciones para registrarte.");
       return;
     }
 
-    // 7. Persistencia en localStorage
+    // Persistencia en localStorage
     // Obtener lista previa de usuarios o inicializar arreglo vacío
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 

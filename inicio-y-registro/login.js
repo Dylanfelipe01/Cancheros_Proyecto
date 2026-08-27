@@ -4,20 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordInput = document.getElementById("password");
   const rememberCheckbox = document.getElementById("remember");
   
-  // Referencias para la visibilidad de la contraseña
+  
   const toggleBtn = document.querySelector(".toggle-password");
   const iconEye = toggleBtn?.querySelector(".icon-eye");
   const iconEyeOff = toggleBtn?.querySelector(".icon-eye-off");
 
-  // --- LÓGICA MOSTRAR / OCULTAR CONTRASEÑA ---
+  // Ojito de mostrar contraseña
   if (toggleBtn && passwordInput) {
     toggleBtn.addEventListener("click", () => {
       const isPassword = passwordInput.type === "password";
       
-      // Cambiar tipo de input
+      
       passwordInput.type = isPassword ? "text" : "password";
 
-      // Cambiar íconos SVG
+     
       if (isPassword) {
         iconEye.style.display = "none";
         iconEyeOff.style.display = "block";
@@ -30,14 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- PERSISTENCIA 'RECORDARME' ---
+  // Recordarme
   const savedEmail = localStorage.getItem("rememberedEmail");
   if (savedEmail) {
     emailInput.value = savedEmail;
     rememberCheckbox.checked = true;
   }
 
-  // --- MANEJO DEL SUBMIT E INICIO DE SESIÓN ---
+  //Inicio de sesion
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
