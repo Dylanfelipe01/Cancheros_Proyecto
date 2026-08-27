@@ -201,6 +201,38 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 200, 87, 0.18);
 }
 
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 42px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggle-password:hover { color: var(--ink-soft); }
+
+.toggle-password svg {
+  width: 19px;
+  height: 19px;
+}
+
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

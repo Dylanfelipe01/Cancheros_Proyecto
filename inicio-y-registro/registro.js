@@ -87,4 +87,23 @@ document.addEventListener("DOMContentLoaded", () => {
     form.reset();
     window.location.href = "login.html";
   });
+
+  // Mostrar/ocultar contraseña
+  const toggles = document.querySelectorAll(".toggle-password");
+  toggles.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const input = document.getElementById(targetId);
+      const eyeIcon = btn.querySelector(".icon-eye");
+      const eyeOffIcon = btn.querySelector(".icon-eye-off");
+
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
+
+      eyeIcon.style.display = isPassword ? "none" : "block";
+      eyeOffIcon.style.display = isPassword ? "block" : "none";
+
+      btn.setAttribute("aria-label", isPassword ? "Ocultar contraseña" : "Mostrar contraseña");
+    });
+  });
 });
