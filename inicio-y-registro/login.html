@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iniciar sesión · Cancha Lista</title>
+<title>Iniciar sesión - Cancheros</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,8 +16,8 @@
       </div>
 
       <div class="pitch-center">
-        <div class="clock">21:00
-          <small>Próximo turno disponible</small>
+        <div class="clock">4-3-3
+          <small>Próximo cotejo listo, elige tu estrategia</small>
         </div>
       </div>
 
@@ -45,10 +45,21 @@
             <input type="email" id="email" placeholder="tucorreo@ejemplo.com">
           </div>
 
-          <div class="field">
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" placeholder="••••••••">
-          </div>
+         <div class="field">
+  <label for="password">Contraseña</label>
+  <div class="password-wrapper">
+    <input type="password" id="password" placeholder="••••••••">
+    <button type="button" class="toggle-password" data-target="password" aria-label="Mostrar contraseña">
+      <svg class="icon-eye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+      </svg>
+      <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <path d="M3 3l18 18M10.6 10.6a3 3 0 0 0 4.24 4.24M9.88 5.09A10.9 10.9 0 0 1 12 5c7 0 11 7 11 7a13.2 13.2 0 0 1-3.16 3.9M6.6 6.6C3.9 8.3 2 11 2 11s4 7 11 7a10.7 10.7 0 0 0 4.24-.87" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
 
           <div class="form-meta">
             <label class="checkbox">
@@ -58,7 +69,7 @@
             <a href="recuperar-password.html" class="link">¿Olvidaste tu contraseña?</a>
           </div>
 
-          <button type="button" class="btn-primary">Ingresar</button>
+          <button type="submit" class="btn-primary">Ingresar</button>
         </form>
 
         <div class="divider">o</div>
@@ -70,5 +81,6 @@
     </section>
 
   </div>
+  <script src="login.js"></script>
 </body>
 </html>
