@@ -45,12 +45,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = passwordInput.value.trim();
 
     if (!email || !password) {
-      alert("Por favor completa todos los campos.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor completa todos los campos.",
+      });
       return;
     }
 
     if (!email.includes("@")) {
-      alert("Por favor ingresa un correo electrónico válido.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor ingresa un correo electrónico válido.",
+      });
       return;
     }
 
@@ -63,7 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (!userFound) {
-      alert("Correo electrónico o contraseña incorrectos.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Correo electrónico o contraseña incorrectos.",
+      });
+      
       return;
     }
 
@@ -78,7 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("currentUser", JSON.stringify(userFound));
 
-    alert("¡Inicio de sesión exitoso!");
+    Swal.fire({
+        icon: "good",
+        title: "¡Que bien!",
+        text: "¡Inicio de sesión exitoso!",
+      });
 
     // Redirigir al inicio del sitio
     window.location.href = "../index.html";

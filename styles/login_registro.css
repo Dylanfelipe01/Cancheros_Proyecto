@@ -22,7 +22,7 @@
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { height: 80%; }
 
 body {
   margin: 0;
@@ -301,12 +301,23 @@ body {
 
 @media (max-width: 860px) {
   .layout { grid-template-columns: 1fr; }
-  .pitch { min-height: 260px; padding: 32px; }
+  .pitch { min-height: 160px; padding: 32px; }
   .pitch-center .clock { font-size: 56px; }
   .pitch-copy { display: none; }
-  .form-side { padding: 40px 24px; }
+  .form-side { padding: 30px 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+}
+
+.btnTerminos{
+  color: #fff;
+  background-color: none;
+  border: none;
+  background: none;
+  
+}
+.btnTerminos:hover{
+  text-decoration: underline;
 }
