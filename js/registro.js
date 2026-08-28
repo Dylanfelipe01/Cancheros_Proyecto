@@ -28,31 +28,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Validar campos vacíos
     if (!nombre || !apellido || !email || !telefono || !password || !password2) {
-      alert("Por favor, completa todos los campos del formulario.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, completa todos los campos del formulario.",
+      });
       return;
     }
 
     // Validar formato de correo
     if (!emailRegex.test(email)) {
-      alert("Ingresa un correo electrónico válido (ej. usuario@dominio.com).");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Ingresa un correo electrónico válido (ej. usuario@dominio.com).",
+      });
       return;
     }
 
     // Validar formato de contraseña
     if (!passwordRegex.test(password)) {
-      alert("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.",
+      });
       return;
     }
 
     // Confirmar contraseñas
     if (password !== password2) {
-      alert("Las contraseñas no coinciden.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Las contraseñas no coinciden.",
+      });
       return;
     }
 
     // Validar términos
     if (!terminos) {
-      alert("Debes aceptar los términos y condiciones para registrarte.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Debes aceptar los términos y condiciones para registrarte.",
+      });
       return;
     }
 
@@ -63,7 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Verificar si el correo ya existe
     const existeUsuario = usuarios.some(user => user.email === email);
     if (existeUsuario) {
-      alert("El correo electrónico ya se encuentra registrado.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El correo electrónico ya se encuentra registrado.",
+      });
       return;
     }
 
@@ -81,7 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
     usuarios.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-    alert("¡Registro exitoso! Redirigiendo a inicio de sesión...");
+    Swal.fire({
+        icon: "good",
+        title: "¡Que bien!",
+        text: "¡Registro exitoso! Redirigiendo a inicio de sesión...",
+      });
     
     // Limpiar formulario y redirigir
     form.reset();
