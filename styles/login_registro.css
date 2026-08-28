@@ -310,3 +310,14 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+.btnTerminos{
+  color: #fff;
+  background-color: none;
+  border: none;
+  background: none;
+  
+}
+.btnTerminos:hover{
+  text-decoration: underline;
+}
