@@ -25,7 +25,7 @@
     <div class="container-fluid px-4">
 
         <a class="navbar-brand" href="../index.html">
-            <img src="../assets/images/cancheros_letra.png"
+            <img src="../assets/images/logos/cancheros_letra.jpg"
                  alt="Cancheros"
                  class="logo-cancheros">
         </a>
@@ -97,10 +97,11 @@
             <i class="bi bi-person-fill"></i>
         </div>
 
-        <button type="button" class="btn editar-foto">
+        <button type="button" class="btn editar-foto" id="editarFoto">
             <i class="bi bi-pencil-fill"></i>
             Editar foto
         </button>
+        <input type="file" id="inputFoto" accept="image/*" hidden>  <!--input no apareceera visualmente, se utiliza para abrir la ventana de slector de archivos-->
 
     </section>
 
@@ -125,7 +126,7 @@
             <span id="telefonoUsuario"></span>
         </p>
 
-        <button type="button" class="btn editar-datos">
+        <button type="button" class="btn editar-datos" id="editarDatos">
             <i class="bi bi-pencil-fill"></i>
             Editar datos de contacto
         </button>
@@ -166,11 +167,11 @@
 
     <div class="botones-perfil">
 
-        <button type="button" class="btn btn-perfil">
+        <button type="button" class="btn btn-perfil" id="cambiarPassword">
             Cambiar la contraseña
         </button>
 
-        <button type="button" class="btn btn-perfil">
+        <button type="button" class="btn btn-perfil" id="cerrarSesion">
             Cerrar sesión
         </button>
 
@@ -183,7 +184,7 @@
     <div class="container">
       <div class="row gy-4">
         <div class="col-12 col-md-6 col-lg-3 text-center text-lg-start">
-          <img src="../assets/images/logo_cancheros.png" alt="Logo Cancheros" class="footer-logo" />
+          <img src="../assets/images/logos/logo_cancheros.png" alt="Logo Cancheros" class="footer-logo" />
         </div>
 
         <div class="col-12 col-md-12 col-lg-6 text-center">
@@ -232,7 +233,8 @@
       </div>
     </div>
   </footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/perfil.js"></script>
 </body>
 
 </html>
