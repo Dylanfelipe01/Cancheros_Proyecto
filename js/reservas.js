@@ -401,14 +401,7 @@ const mostrarCancha = () => {
     const cancha = obtenerCancha();
     
     if (!cancha) {
-
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "No se a encontrado la cancha",
-        }).then(() => {
-            window.location.href = "./canchas.html";
-        })
+        window.location.href = "./canchas.html";
 
         return;
     }
