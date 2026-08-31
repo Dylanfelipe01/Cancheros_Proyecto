@@ -1,6 +1,7 @@
 import { canchasEstaticas } from "./canchasEstaticas.js";
 
 const canchas = JSON.parse(localStorage.getItem("canchas")) || [];
+const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
 
 const canchasGuardadasConId = canchas.map((cancha, index) => ({
     ...cancha,
@@ -102,10 +103,21 @@ function irReservar(){
 
     document.addEventListener("click", (event) => {
         if (event.target.classList.contains("reserva")) {
+            if(!isLoggedIn){
+                Swal.fire({
+                    icon: "error",
+                    title: "Antes que nada",
+                    text: "Primero tienes que iniciar sesión",
+                }).then(() => {
+                    window.location.href = "./inicio-sesion.html"
+                })
+                
+            }else{
+                const idCancha = event.target.dataset.canchaId;
+        
+                window.location.href = `./reservas.html?id=${idCancha}`;
+            }
     
-            const idCancha = event.target.dataset.canchaId;
-    
-            window.location.href = `./reservas.html?id=${idCancha}`;
         }
     })
 }
