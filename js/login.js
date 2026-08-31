@@ -98,6 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
     // Redirigir al inicio del sitio
-    window.location.href = "../index.html";
+    window.location.href = "./canchas.html";
   });
 });
