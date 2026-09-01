@@ -1,13 +1,6 @@
 import { todasLasCanchas } from "./catalogo.js";
 
-//Detecta el cambio en el historial y elimina
-window.addEventListener("pageshow", (event) => {
 
-    if (event.persisted) {
-        window.location.reload();
-    }
-
-});
 
 
 // =====================================================
@@ -758,6 +751,12 @@ document
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+
+        const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
+
+        if(!isLoggedIn){
+            window.location.href = "./inicio-sesion.html"
+        }
 
         mostrarCancha();
 
