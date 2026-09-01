@@ -1,5 +1,14 @@
 import { todasLasCanchas } from "./catalogo.js";
 
+//Detecta el cambio en el historial y elimina
+window.addEventListener("pageshow", (event) => {
+
+    if (event.persisted) {
+        window.location.reload();
+    }
+
+});
+
 
 // =====================================================
 // OBTENER ID DE LA CANCHA DESDE LA URL
@@ -725,22 +734,19 @@ document
             // Mensaje
             // -----------------------------------------
 
-            if (ocupado) {
+            if (!ocupado) {
 
                 Swal.fire({
                     icon: "good",
                     title: "Exito",
                     text: "Reserva realizada correctamente.",
+                }).then(() => {
+                    // -----------------------------------------
+                    // Regresar
+                    // -----------------------------------------
+                    window.location.href = "./canchas.html";
                 })
             }
-
-
-            // -----------------------------------------
-            // Regresar
-            // -----------------------------------------
-
-            window.location.href =
-                "./canchas.html";
         }
     );
 
