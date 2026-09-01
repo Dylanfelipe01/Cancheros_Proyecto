@@ -10,10 +10,12 @@ salirbtn.addEventListener("click", () => {
     window.location.href = "./inicio-sesion.html"
 })
 
+//Válidar si el usuario esta activo
 if(!isLoggedIn){
     window.location.href = "./inicio-sesion.html"
 }
 
+//Si intentan regresar a una pestaña anterior sin estar logueado lo devuelve al inicio sesión
 window.addEventListener("pageshow", (event) => {
 
     if (event.persisted) {
@@ -22,6 +24,7 @@ window.addEventListener("pageshow", (event) => {
 
 });
 
+//Se obtienen las canchas creadas por el administrador
 const obtenerCanchas = () => {
     return JSON.parse(localStorage.getItem("canchas")) || [];
 };
@@ -59,6 +62,7 @@ const guardarCanchas = (canchas) => {
     localStorage.setItem("canchas", JSON.stringify(canchas));
 };
 
+//Si no hay canchas se muestra mensaje
 const mostrarMensajeSinCancha = () => {
     tablaCanchas.innerHTML = `
         <tr id="sinCanchas">
@@ -102,6 +106,7 @@ const renderizar = () => {
 
 const eliminarCancha = (id) => {
 
+    //Eliminar cancha dese json aún no es con base de datos
     Swal.fire({
         title: "¿Eliminar cancha?",
         text: "Esta acción no se puede deshacer.",
@@ -132,6 +137,7 @@ const eliminarCancha = (id) => {
     });
 };
 
+//Renderizar las canchas desde que recarga la página
 document.addEventListener("DOMContentLoaded", () => {
     renderizar();
 });
@@ -149,6 +155,7 @@ tablaCanchas.addEventListener("click", (event) => {
     eliminarCancha(id);
 });
 
+//Validaciones para que el usuario no coloque datos incorrectos o vacíos
 const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion) => {
     
     if(!validarNombreCancha(nombreCancha)){

@@ -1,4 +1,4 @@
-import { canchasEstaticas } from "./canchasEstaticas.js";
+import { canchasEstaticas } from "./canchasData.js";
 
 window.addEventListener("pageshow", (event) => {
 
@@ -25,9 +25,6 @@ function cargarCanchasAdmin() {
     let contador = 0;
     const contenedor = document.getElementById("containerMain");
 
-    
-    
-    
     if(!contenedor) return;
 
     for(let i = 0; i < 10; i++) {
