@@ -1,10 +1,31 @@
 
+const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"))
 const formCancha = document.getElementById("formCancha");
 const tablaCanchas = document.getElementById("tablaCanchas");
+const salirbtn = document.getElementById("salirbtn");
+const agregarCanchaBtn = document.getElementById("agregarCancha")
+
+salirbtn.addEventListener("click", () => {
+    localStorage.removeItem("isLoggedIn")
+    window.location.href = "./inicio-sesion.html"
+})
+
+if(!isLoggedIn){
+    window.location.href = "./inicio-sesion.html"
+}
+
+window.addEventListener("pageshow", (event) => {
+
+    if (event.persisted) {
+        window.location.reload();
+    }
+
+});
 
 const obtenerCanchas = () => {
     return JSON.parse(localStorage.getItem("canchas")) || [];
 };
+
 
 const agregarCancha = async (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana, mensajeSinCanchas) => {
     const canchas = obtenerCanchas();
@@ -254,6 +275,9 @@ formCancha.addEventListener("submit", async (event) => {
     const cerrarVentana = document.getElementById("cerrarVentana");
     const sinCanchas = document.getElementById("sinCanchas");
     const modal = document.getElementById("agregarCancha");
+
+
+    
     
     if(!validarFormulario(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana)){
         return;
@@ -277,3 +301,4 @@ formCancha.addEventListener("submit", async (event) => {
         icon: "success"
     });
 })
+
