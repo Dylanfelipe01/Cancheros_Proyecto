@@ -1,5 +1,6 @@
 import { canchasEstaticas } from "./canchasData.js";
 const contenedor = document.getElementById("containerMain");
+let contador = 0;
 
 window.addEventListener("pageshow", (event) => {
 
@@ -23,7 +24,6 @@ const todasLasCanchas = [
 ];
 
 function cargarCanchasAdmin() {
-    let contador = 0;
 
     if(!contenedor) return;
 
@@ -180,55 +180,57 @@ const btnBuscar = document.getElementById("btnBuscar");
 const formSelectTipo = document.getElementById("form-select-tipo");
 const precioCancha = document.getElementById("precio-cancha");
 
-let valorFormSelectUbicacion;
-let valorFormSelectTipo;
-let comaUbicacion;
+function filtrarCancha(){
 
-formSelectUbicacion.addEventListener("change", () => {
-    valorFormSelectUbicacion = formSelectUbicacion.value
-})
+    let resultado = todasLasCanchas;
+    
+    if (formSelectUbicacion.value !== "Selecciona localidad") {
+    
+        resultado = resultado.filter(cancha => {
+            const comaUbicacion = cancha.ubicacion.indexOf(",");
+            const ubicacion = cancha.ubicacion.substring(0, comaUbicacion);
+            
+            return ubicacion == formSelectUbicacion.value
+        
+        })
+    }
 
-formSelectTipo.addEventListener("change", () => {
-    valorFormSelectTipo = formSelectTipo.value
-})
+    if(formSelectTipo.value !== "Modalidad"){
+        resultado = resultado.filter(cancha => {
 
-btnBuscar.addEventListener("click", (e) => {
-    e.preventDefault();
+            return cancha.tipo[7] === formSelectTipo.value[1];
+        });
+    }
 
-    const resultado = todasLasCanchas.filter(cancha => {
+    console.log(precioCancha.value);
+    if(precioCancha.value !== ""){
+        resultado = resultado.filter(cancha => {
+            return precioCancha.value >= cancha.precio
+        })
+    }
 
-        const comaUbicacion = cancha.ubicacion.indexOf(",");
-        const ubicacion = cancha.ubicacion.substring(0, comaUbicacion);
 
-        const coincideUbicacion =
-            (valorFormSelectUbicacion || []).length === 0 ||
-            (valorFormSelectUbicacion || []).includes(ubicacion);
-
-        const coincideTipo =
-            (valorFormSelectTipo || []).length === 0 ||
-            (valorFormSelectTipo || []).includes(cancha.tipo);
-
-        const coincidePrecio =
-            precioCancha.value === "" ||
-            cancha.precio === Number(precioCancha.value);
-
-        return coincideUbicacion && coincideTipo && coincidePrecio;
-    });
-
-    const reset = document.getElementById("reset")
-    reset.innerHTML = `
-        <button class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
-            <i class="bi bi-arrow-clockwise"></i>
-        </button>
-    `
+    
+    contenedor.innerHTML = ""
+    contador = 0;
+    if(resultado.length == 0){
+        document.getElementById("conteo").textContent = `Mostrando ${contador} resultados`
+        contenedor.style.minHeight = "500px";
+        contenedor.innerHTML = `
+            <h3 class="fw-bold m-20">No hay canchas con esas especificaciones</h3>
+        `
+        return
+    }
 
     resultado.forEach(cancha => {
-        contenedor.innerHTML = `
+        contador = contador + 1
+        document.getElementById("conteo").textContent = `Mostrando ${contador} resultados`
+        contenedor.innerHTML += `
             <div class="col-lg-4 col-md-6">
                 <div class="cancha-card">
                     <div class="card-img-wrapper">
                         <img src="${cancha.imagen}" alt="La 10 Usaquén" />
-
+    
                         <span class="badge-rating"><i class="fa-solid fa-star"></i> 4.9 (150+)</span>
                     </div>
                     <div class="card-body-custom">
@@ -249,7 +251,7 @@ btnBuscar.addEventListener("click", (e) => {
                                 <span class="price-label">Desde</span>
                                 <div class="price-value">$${cancha.precio} <span>/hr</span></div>
                             </div>
-
+    
                             <div class="d-flex gap-2">
                                 <!-- Botón para abrir el Modal -->
                                 <button class="btn btn-outline-light btn-sm w-50 fw-semibold" data-bs-toggle="modal"
@@ -257,7 +259,7 @@ btnBuscar.addEventListener("click", (e) => {
                                 data-cancha-id="${cancha.id}">
                                 Ver Detalle
                                 </button>
-
+    
                                 <!-- Botón para Redirigir a Reservas -->
                                 <button 
                                     class="reserva btn btn-reservar btn-sm w-50 text-center"
@@ -273,14 +275,24 @@ btnBuscar.addEventListener("click", (e) => {
             
         `;
     })
-
+    
+    const reset = document.getElementById("reset")
+    reset.innerHTML = `
+        <button class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
+            <i class="bi bi-arrow-clockwise"></i>
+        </button>
+    `
+    
     reset.addEventListener("click", () => {
         renderizarCanchas()
     })
-    
-})
+}
 
+formSelectUbicacion.addEventListener("change", filtrarCancha)
 
+formSelectTipo.addEventListener("change", filtrarCancha)
+
+precioCancha.addEventListener("change", filtrarCancha)
 
 document.addEventListener("DOMContentLoaded", function () {
     cargarCanchasAdmin();
