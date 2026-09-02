@@ -49,7 +49,7 @@ const canchasEstaticas = [
         imagen: "../assets/images/canchas/cancha3.jpg",
         rating: 4.8,
         reseñas: "150+",
-        tipo: "Fútbol 7",
+        tipo: "Fútbol 5",
         servicios: [
             {
                 icono: "fa-solid fa-person-shelter",
@@ -104,25 +104,26 @@ const canchasEstaticas = [
         ],
         precio: 150000
     },
+
     {
-    id: 6,
-    nombreCancha: "Cancha La 84",
-    ubicacion: "Barranquilla, Calle 84 #46",
-    imagen: "../assets/images/canchas/cancha6.jpg",
-    rating: 4.7,
-    reseñas: "95+",
-    tipo: "Fútbol 5",
-    servicios: [
-        {
-            icono: "fa-solid fa-person-shelter",
-            nombreCancha: "Camerinos"
-        },
-        {
-            icono: "fa-solid fa-square-parking",
-            nombreCancha: "Parqueadero"
-        }
-    ],
-    precio: 85000
+        id: 6,
+        nombreCancha: "Cancha La 84",
+        ubicacion: "Barranquilla, Calle 84 #46",
+        imagen: "../assets/images/canchas/cancha6.jpg",
+        rating: 4.7,
+        reseñas: "95+",
+        tipo: "Fútbol 11",
+        servicios: [
+            {
+                icono: "fa-solid fa-person-shelter",
+                nombreCancha: "Camerinos"
+            },
+            {
+                icono: "fa-solid fa-square-parking",
+                nombreCancha: "Parqueadero"
+            }
+        ],
+        precio: 85000
     },
 
     {
