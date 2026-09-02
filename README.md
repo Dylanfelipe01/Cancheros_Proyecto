@@ -5,8 +5,8 @@ Aplicación web para la gestión y reserva de canchas de fútbol sintéticas, co
 
 # Estructura
 
-│   .gitignore
-│   index.html
+│   .gitignore <br/
+│   index.html <br/
 │   README.md
 │   vercel.json
 │   
