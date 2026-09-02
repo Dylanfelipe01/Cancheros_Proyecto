@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    console.log("HOLA");
-    
     const estaLogueado = localStorage.getItem("isLoggedIn") === "true";
 
     const usuario = JSON.parse(localStorage.getItem("usuarios"));
@@ -34,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if(userMenu){
 
             const cerrarSesion = document.querySelector(".cerrarSesion");
-            console.log(cerrarSesion);
             
     
             cerrarSesion.addEventListener("click", (e) => {

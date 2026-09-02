@@ -49,6 +49,7 @@ if (usuario) {
             e.preventDefault();
     
             // Validación antes de cerrar sesión
+            
             const estaLogueado =
                 localStorage.getItem("isLoggedIn") === "true";
     

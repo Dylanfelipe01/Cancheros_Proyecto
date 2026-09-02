@@ -176,7 +176,6 @@ function irReservar(){
 }
 
 const formSelectUbicacion = document.getElementById("form-select-ubicacion");
-const btnBuscar = document.getElementById("btnBuscar");
 const formSelectTipo = document.getElementById("form-select-tipo");
 const precioCancha = document.getElementById("precio-cancha");
 
@@ -197,12 +196,10 @@ function filtrarCancha(){
 
     if(formSelectTipo.value !== "Modalidad"){
         resultado = resultado.filter(cancha => {
-
-            return cancha.tipo[7] === formSelectTipo.value[1];
+            return cancha.tipo === formSelectTipo.value;
         });
     }
 
-    console.log(precioCancha.value);
     if(precioCancha.value !== ""){
         resultado = resultado.filter(cancha => {
             return precioCancha.value >= cancha.precio
@@ -288,16 +285,22 @@ function filtrarCancha(){
     })
 }
 
-formSelectUbicacion.addEventListener("change", filtrarCancha)
-
-formSelectTipo.addEventListener("change", filtrarCancha)
-
-precioCancha.addEventListener("change", filtrarCancha)
+if(formSelectUbicacion != null || formSelectTipo != null || precioCancha != null){
+    formSelectUbicacion.addEventListener("change", filtrarCancha)
+    
+    formSelectTipo.addEventListener("change", filtrarCancha)
+    
+    precioCancha.addEventListener("change", filtrarCancha)
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     cargarCanchasAdmin();
     modalCanchas()
+    //formSelectUbicacion.removeEventListener("change", filtrarCancha)
+    //formSelectTipo.removeEventListener("change", filtrarCancha)
+    //precioCancha.removeEventListener("change", filtrarCancha)
     irReservar()
+    
 });
 
 export { todasLasCanchas }
