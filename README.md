@@ -3,12 +3,6 @@
 ### Descripción
 Aplicación web para la gestión y reserva de canchas de fútbol sintéticas, con funcionalidades de registro e inicio de sesión, consulta de disponibilidad, reservas, dashboard y reseñas de usuarios. Proyecto desarrollado bajo un enfoque de trabajo colaborativo y desarrollo Full Stack.
 
-## Tecnologías
-- HTML
-- CSS
-- JS
-- Bootstrap
-
 ### Estructura
 ```
 │   .gitignore
@@ -103,6 +97,12 @@ Aplicación web para la gestión y reserva de canchas de fútbol sintéticas, co
             stylesquienessomos.css
             stylevalores.css
 ```
+
+### Tecnologías
+- HTML
+- CSS
+- JS
+- Bootstrap
 
 ## Integrantes
 - Kevin Soto
