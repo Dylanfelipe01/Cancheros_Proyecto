@@ -337,4 +337,10 @@ body{
     background-color: #ffc107;
 }
 
+.dropdown, .dropdown-center, .dropend, .dropstart, .dropup, .dropup-center {
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+}
+
 
