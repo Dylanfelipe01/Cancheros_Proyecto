@@ -140,6 +140,8 @@ const modalCanchas = () => {
     
     if (canchaModal) {
         canchaModal.addEventListener("shown.bs.modal", (event) => {
+            document.getElementById("modalImagen").src = ""
+            document.getElementById("modalImagen").src = "../assets/images/image.png"
     
             const boton = event.relatedTarget;
             const idCancha = boton.dataset.canchaId;
@@ -154,8 +156,8 @@ const modalCanchas = () => {
 
             const btnReservarModal = canchaModal.querySelector(".reserva");
             btnReservarModal.dataset.canchaId = idCancha;
-        });
 
+        });
     }
 }
 
@@ -227,7 +229,7 @@ function filtrarCancha(){
             <div class="col-lg-4 col-md-6">
                 <div class="cancha-card">
                     <div class="card-img-wrapper">
-                        <img src="${cancha.imagen}" alt="La 10 Usaquén" />
+                        <img src="${cancha.imagen[0]}" alt="La 10 Usaquén" />
                         <span class="badge-rating"><i class="fa-solid fa-star"></i> 4.9 (150+)</span>
                     </div>
                     <div class="card-body-custom">

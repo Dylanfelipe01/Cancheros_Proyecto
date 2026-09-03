@@ -56,7 +56,7 @@ const agregarCancha = async (nombreCancha, precio, disponible, imagenCancha, ubi
         forSelectTipo: forSelectTipo.value,
         precio: precio.value,
         ubicacion: ubicacion.value,
-        imagen: imagen
+        imagen: [imagen]
     }
 
     canchas.push(otraCancha)
@@ -107,7 +107,12 @@ const renderizar = () => {
             <td>
                 <img class="imagenPanel" src="${cancha.imagen}" alt="${cancha.nombreCancha}" width="60" height="60" />
             </td>
-            <td><i class="trash-logo bi bi-trash fs-3" data-id="${cancha.id}"></i></td>
+            <td>
+                <i class="bi bi-pencil-square"  data-id="${cancha.id}"></i>
+            </td>
+            <td>
+                <i class="trash-logo bi bi-trash fs-3" data-id="${cancha.id}"></i>
+            </td>
         `;
 
         tablaCanchas.appendChild(fila);
@@ -147,6 +152,10 @@ const eliminarCancha = (id) => {
     });
 };
 
+const editarCancha = (id) => {
+
+}
+
 //Renderizar las canchas desde que recarga la página
 document.addEventListener("DOMContentLoaded", () => {
     
@@ -161,10 +170,21 @@ tablaCanchas.addEventListener("click", (event) => {
         return;
     }
 
-    const id = Number(botonEliminar.dataset.id);
+    const idEliminar = Number(botonEliminar.dataset.id);
 
-    eliminarCancha(id);
+    eliminarCancha(idEliminar);
 });
+
+tablaCanchas.addEventListener("click", (event) => {
+    const botonEditar = event.target.closest(".bi-pencil-square")
+
+    if(!botonEditar){
+        return;
+    }
+
+    const idEditar = Number(botonEditar.dataset.id);
+    console.log("EDITAR ACTIVADO: ", idEditar);
+})
 
 //Validaciones para que el usuario no coloque datos incorrectos o vacíos
 const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, forSelectTipo) => {
