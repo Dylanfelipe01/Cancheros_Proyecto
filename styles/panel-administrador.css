@@ -201,3 +201,15 @@ textarea{
 .headerModal{
     background-color: #2E7D32;
 }
+
+#agregarCancha .modal-dialog {
+    max-height: 90vh;
+}
+
+#agregarCancha .modal-content {
+    max-height: 90vh;
+}
+
+#agregarCancha .modal-body {
+    overflow-y: auto;
+}

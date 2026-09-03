@@ -53,10 +53,12 @@
                             <th>Referencia</th>
                             <th>Disponible</th>
                             <th>Descripción</th>
-                            <th>Nombre cancha</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
                             <th>Precio</th>
                             <th>Ubicación</th>
                             <th>Fotos</th>
+                            <th><i class="bi bi-pencil-square"></i></th>
                             <th>Eliminar</th>
                         </tr>
                     </thead>
@@ -67,7 +69,7 @@
         </section>
     </main>
     <div class="modal fade" id="agregarCancha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <form id="formCancha">
                     <div class="headerModal modal-header position-relative">
@@ -80,7 +82,7 @@
                                 aria-label="Close">
                         </button>
                     </div>
-                    <div class="modal-body container mt-4">
+                    <div class="modal-body mt-4 ">
                         <div class="row mb-3">
     
                             <div class="col-md-6 d-flex flex-column">
@@ -108,7 +110,7 @@
                                     </div>
     
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="disponible" id="disponibleNo"value="false">
+                                        <input class="form-check-input" type="radio" name="disponible" id="disponibleNo" value="false">
                                         <label class="form-check-label" for="disponibleNo">
                                             Inactiva
                                         </label>
@@ -127,10 +129,23 @@
                                 <label for="" >Ubicación:</label>
                                 <input id="ubicacion" type="text" class="col-md-10 bg-light border p-2 mt-3" placeholder="Carrera 58">
                             </div>
-    
+
                             <div class="col-md-6 d-flex flex-column">
                                 <label for="">Descripción:</label>
                                 <textarea id="descripcion" class="form-control col-md-10 bg-light border p-2 mt-3" rows="4" maxlength="300" placeholder="Hermosa casa sintetica"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 d-flex flex-column">
+                                <label class="form-label text-black fw-bold">Tipo de Cancha</label>
+                                <select id="form-select-tipo" class="form-select custom-input col-md-10 bg-light border p-2 mt-3">
+                                    <option selected disabled>Modalidad</option>
+                                    <option value="Fútbol 5">Fútbol 5</option>
+                                    <option value="Fútbol 8">Fútbol 8</option>
+                                    <option value="Fútbol 7">Fútbol 7</option>
+                                    <option value="Fútbol 11">Fútbol 11</option>
+                                </select>
                             </div>
                         </div>
                     </div>

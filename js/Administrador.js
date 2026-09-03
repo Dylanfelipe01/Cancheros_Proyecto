@@ -1,5 +1,9 @@
+import { correoAdmin } from "./inicio-sesion.js"
+import { claveAdmin } from "./inicio-sesion.js";
 
 const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"))
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
 const formCancha = document.getElementById("formCancha");
 const tablaCanchas = document.getElementById("tablaCanchas");
 const salirbtn = document.getElementById("salirbtn");
@@ -12,6 +16,10 @@ salirbtn.addEventListener("click", () => {
 
 //Válidar si el usuario esta activo
 if(!isLoggedIn){
+    window.location.href = "./inicio-sesion.html"
+}
+
+if(currentUser.email != correoAdmin && currentUser.password != claveAdmin){
     window.location.href = "./inicio-sesion.html"
 }
 
@@ -30,7 +38,7 @@ const obtenerCanchas = () => {
 };
 
 
-const agregarCancha = async (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana, mensajeSinCanchas) => {
+const agregarCancha = async (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, forSelectTipo) => {
     const canchas = obtenerCanchas();
     const archivoImagen = imagenCancha.files[0];
     const imagen = await convertirImagen(archivoImagen);
@@ -45,6 +53,7 @@ const agregarCancha = async (nombreCancha, precio, disponible, imagenCancha, ubi
         disponible: disponible.value,
         descripcion: descripcion.value,
         nombreCancha: nombreCancha.value,
+        forSelectTipo: forSelectTipo.value,
         precio: precio.value,
         ubicacion: ubicacion.value,
         imagen: imagen
@@ -92,6 +101,7 @@ const renderizar = () => {
             <td>${cancha.disponible ? "Si" : "No"}</td>
             <td>${cancha.descripcion}</td>
             <td>${cancha.nombreCancha}</td>
+            <td>${cancha.forSelectTipo}</td>
             <td>$${cancha.precio}</td>
             <td>${cancha.ubicacion}</td>
             <td>
@@ -139,6 +149,7 @@ const eliminarCancha = (id) => {
 
 //Renderizar las canchas desde que recarga la página
 document.addEventListener("DOMContentLoaded", () => {
+    
     renderizar();
 });
 
@@ -156,7 +167,7 @@ tablaCanchas.addEventListener("click", (event) => {
 });
 
 //Validaciones para que el usuario no coloque datos incorrectos o vacíos
-const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion) => {
+const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, forSelectTipo) => {
     
     if(!validarNombreCancha(nombreCancha)){
         Swal.fire({
@@ -220,6 +231,15 @@ const validarFormulario = (nombreCancha, precio, disponible, imagenCancha, ubica
         });
         return false
     }
+
+    if(!validarTipo(forSelectTipo)){
+        Swal.fire({
+            title: "El tipo es obligatorio.",
+            text: "Debes elegir el tipo.",
+            icon: "error"
+        });
+        return false
+    }
     return true
 }
 
@@ -249,6 +269,11 @@ const validarUbicacionCancha = (ubicacion) => {
 
 const validarDescripcionCancha = (descripcion) => {
     return descripcion.value.trim() !== ""
+}
+
+const validarTipo = (forSelectTipo) => {
+    console.log(forSelectTipo.value);
+    return forSelectTipo.value !== ""
 }
 
 const convertirImagen = (archivo) => {
@@ -282,11 +307,9 @@ formCancha.addEventListener("submit", async (event) => {
     const cerrarVentana = document.getElementById("cerrarVentana");
     const sinCanchas = document.getElementById("sinCanchas");
     const modal = document.getElementById("agregarCancha");
-
-
+    const forSelectTipo = document.getElementById("form-select-tipo");
     
-    
-    if(!validarFormulario(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana)){
+    if(!validarFormulario(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, forSelectTipo)){
         return;
     }
 
@@ -294,7 +317,7 @@ formCancha.addEventListener("submit", async (event) => {
         sinCanchas.remove();
     }
     
-    await agregarCancha(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, cerrarVentana);
+    await agregarCancha(nombreCancha, precio, disponible, imagenCancha, ubicacion, descripcion, forSelectTipo);
     
     document.activeElement.blur();
 

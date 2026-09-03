@@ -83,7 +83,7 @@ function cargarCanchasAdmin() {
                     <div class="col-lg-4 col-md-6">
                         <div class="cancha-card">
                         <div class="card-img-wrapper">
-                            <img src="${cancha.imagen}" alt="La 10 Usaquén" />
+                            <img src="${cancha.imagen[0]}" alt="${cancha.nombreCancha}" />
         
                             <span class="badge-rating"><i class="fa-solid fa-star"></i> 4.9 (150+)</span>
                         </div>
@@ -145,7 +145,8 @@ const modalCanchas = () => {
             const idCancha = boton.dataset.canchaId;
             const cancha = todasLasCanchas.find(cancha => String(cancha.id) === String(idCancha));
 
-            document.getElementById("modalImagen").src = cancha.imagen;
+            document.getElementById("modalImagen").src = cancha.imagen[0];
+            document.getElementById("modalImagen2").src = cancha.imagen[1];
             document.getElementById("modalImagen").alt = cancha.nombreCancha;
             document.getElementById("modalNombre").textContent = cancha.nombreCancha;
             document.getElementById("modalUbicacion").textContent = cancha.ubicacion;
@@ -227,7 +228,6 @@ function filtrarCancha(){
                 <div class="cancha-card">
                     <div class="card-img-wrapper">
                         <img src="${cancha.imagen}" alt="La 10 Usaquén" />
-    
                         <span class="badge-rating"><i class="fa-solid fa-star"></i> 4.9 (150+)</span>
                     </div>
                     <div class="card-body-custom">

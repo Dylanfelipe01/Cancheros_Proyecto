@@ -11,16 +11,26 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
     
-    if (estaLogueado) {
+   if (estaLogueado) {
 
         userDropdown.textContent = `Hola, ${usuario[0].nombre}`;
+        console.log();
+        
 
         userMenu.innerHTML = `
             <li>
-                <a class="dropdown-item" href="./perfil.html">
+                <a class="dropdown-item" href="${ruta("perfil.html")}">
                     Mi perfil
                 </a>
             </li>
+
+            <li>
+                <a class="dropdown-item" href="${ruta("mis-reservas.html")}">
+                    Mis reservas
+                </a>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
 
             <li>
                 <button type="button" class="cerrarSesion dropdown-item">
@@ -30,7 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         if(userMenu){
-
+            console.log(userMenu);
+            
             const cerrarSesion = document.querySelector(".cerrarSesion");
             
     
@@ -43,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
                 if (estaLogueado) {
                     localStorage.removeItem("isLoggedIn")
-                    localStorage.removeItem("usuarios")
+                    localStorage.removeItem("currentUser")
                     window.location.href = "../index.html";
                 }
             });
@@ -55,13 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         userMenu.innerHTML = `
             <li>
-                <a class="dropdown-item" href="./inicio-sesion.html">
+                <a class="dropdown-item" href="${ruta("./inicio-sesion.html")}">
                     Iniciar sesión
                 </a>
             </li>
 
             <li>
-                <a class="dropdown-item" href="./registro.html">
+                <a class="dropdown-item" href="${ruta("./registro.html")}">
                     Registrarse
                 </a>
             </li>
@@ -69,3 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+function ruta(pagina) {
+    return window.location.pathname.includes("/html/")
+        ? `./${pagina}`
+        : `./html/${pagina}`;
+}
