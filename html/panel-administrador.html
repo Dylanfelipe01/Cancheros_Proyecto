@@ -41,6 +41,87 @@
                     Consulta y administra las canchas.
                 </p>
 
+                <div id="resumenCanchas" class="row g-3 mt-2 mb-3 justify-content-center">
+
+                    <div class="col-md-2">
+                        <div class="card resumen-card resumen-total">
+                            <div class="card-body">
+
+                                <div class="resumen-icon">
+                                    <i class="bi bi-grid-3x3-gap-fill" style="font-size: 2rem;"></i>
+                                </div>
+
+                                <div>
+                                    <h6>Total de canchas</h6>
+                                    <h3 id="totalCanchas">0</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <div class="card resumen-card resumen-disponibles">
+                            <div class="card-body">
+
+                                <div class="resumen-icon">
+                                    <i class="bi bi-check-circle-fill" style="font-size: 2rem;"></i>
+                                </div>
+
+                                <div>
+                                    <h6>Canchas disponibles</h6>
+                                    <h3 id="canchasDisponibles">0</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <div class="card resumen-card resumen-no-disponibles">
+                            <div class="card-body">
+
+                                <div class="resumen-icon">
+                                    <i class="bi bi-x-circle-fill" style="font-size: 2rem;"></i>></i>
+                                </div>
+
+                                <div>
+                                    <h6>Canchas no disponibles</h6>
+                                    <h3 id="canchasNoDisponibles">0</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--<div class="d-flex flex-wrap gap-2 mb-3">
+
+                    <input
+                        type="text"
+                        id="buscarCancha"
+                        class="form-control"
+                        placeholder="Buscar cancha..."
+                    >
+
+                    <select id="filtroTipo" class="form-select">
+                        <option value="">Todos los tipos</option>
+                        <option value="Fútbol 5">Fútbol 5</option>
+                        <option value="Fútbol 8">Fútbol 8</option>
+                        <option value="Fútbol 11">Fútbol 11</option>
+                    </select>
+
+                    <select id="filtroDisponibilidad" class="form-select">
+                        <option value="">Todas</option>
+                        <option value="true">Disponibles</option>
+                        <option value="false">No disponibles</option>
+                    </select>
+
+                </div>-->
+
                 <button class="btn btn-agregar-cancha d-inline-flex align-items-center mt-5 mb-2" data-bs-toggle="modal" data-bs-target="#agregarCancha">
                     <i class="bi bi-plus-circle me-3"></i>Agregar cancha
                 </button>
@@ -76,7 +157,8 @@
                         <h1 class="modal-title fs-5 w-100 text-center" id="exampleModalLabel">
                             Agregar cancha
                         </h1>
-                        <button type="button"
+                        <button id="btnAgregarCancha"
+                                type="button"
                                 class="btn-close position-absolute end-0 me-3"
                                 data-bs-dismiss="modal"
                                 aria-label="Close">
@@ -118,8 +200,22 @@
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex flex-column mb-3">
-                                <label for="">Fotos:</label>
-                                <input id="imagenCancha" type="file" class="form-control col-md-10 bg-light border p-2 mt-3" accept="image/*" multiple>
+
+                                <label>Imágenes</label>
+
+                                <button
+                                        type="button"
+                                        class="btn btn-outline-secondary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalImagenes"
+                                        id="gestionarImagenes"
+                                >
+
+                                    <i class="bi bi-images me-2"></i>
+                                    Gestionar imágenes
+
+                                </button>
+
                             </div>
                         </div>
     
@@ -156,6 +252,70 @@
                 </form>
             </div>
         </div>
+    </div>
+
+    <!-- Modal para gestionar imágenes -->
+    <div class="modal fade" id="modalImagenes" tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Imágenes de la cancha
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div id="imagenesContainer"
+                        class="d-flex flex-wrap gap-3">
+
+                        <label class="imagen-agregar">
+
+                            <i class="bi bi-plus-lg"></i>
+
+                            <span>Agregar</span>
+
+                            <input type="file"
+                                id="imagenCancha"
+                                accept="image/*"
+                                multiple
+                                hidden>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-primary">
+                        Guardar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script type="module" src="./../js/Administrador.js"></script>

@@ -75,6 +75,7 @@ function cargarCanchasAdmin() {
     function renderizarCanchas(){
         setTimeout(() => {
             contenedor.innerHTML = "";
+            
             todasLasCanchas.forEach(cancha => {
                 contador = contador + 1
                 document.getElementById("conteo").textContent = `Mostrando ${contador} resultados`

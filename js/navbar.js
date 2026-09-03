@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         if(userMenu){
-            console.log(userMenu);
             
             const cerrarSesion = document.querySelector(".cerrarSesion");
             
