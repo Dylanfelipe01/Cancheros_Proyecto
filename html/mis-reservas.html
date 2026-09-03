@@ -25,6 +25,10 @@
 
     <link rel="stylesheet" href="../styles/Navbar.css">
     <link rel="stylesheet" href="../styles/mis-reservas.css">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+>
 
 </head>
 
@@ -371,33 +375,44 @@
 
 
                     <input
-                        type="date"
-                        class="form-control"
-                        id="editarFecha">
+    type="text"
+    id="editarFecha"
+    class="form-control"
+    placeholder="Selecciona una fecha"
+    readonly
+>
 
                 </div>
 
 
 
-                <!-- HORA -->
+                
+<!-- ================= HORA ================= -->
 
-                <div class="mb-3">
+<div class="mb-3">
 
-                    <label
-                        for="editarHora"
-                        class="form-label">
+    <label class="form-label">
+        Horarios disponibles
+    </label>
 
-                        Hora
+    <div
+        id="horariosDisponibles"
+        class="d-flex flex-wrap gap-2">
 
-                    </label>
+        <!--
+            JavaScript mostrará aquí
+            únicamente los horarios disponibles
+        -->
 
+    </div>
 
-                    <input
-                        type="time"
-                        class="form-control"
-                        id="editarHora">
+    <!-- Guarda internamente la hora seleccionada -->
+    <input
+        type="hidden"
+        id="editarHora">
 
-                </div>
+</div>
+
 
 
 
@@ -477,7 +492,7 @@
 
 <script src="../js/mis-reservas.js"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 
 </html>
