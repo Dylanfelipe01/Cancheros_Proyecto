@@ -526,7 +526,7 @@ const mostrarHorariosDisponibles = (
 
 
             horaYaPaso =
-                minutosHora <=
+                minutosHora <
                 minutosAhora;
 
         }
