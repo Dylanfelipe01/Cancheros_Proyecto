@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/canchas";
+const API_URL = "http://localhost:8081/api/canchas";
 
 const contenedor = document.getElementById("containerMain");
 const conteoEl = document.getElementById("conteo");

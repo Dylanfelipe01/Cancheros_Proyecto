@@ -1,6 +1,6 @@
 import { correoAdmin, claveAdmin } from "./inicio-sesion.js";
 
-const API_CANCHAS_URL = "http://localhost:8080/api/canchas";
+const API_CANCHAS_URL = "http://localhost:8081/api/canchas";
 
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 const formCancha = document.getElementById("formCancha");
