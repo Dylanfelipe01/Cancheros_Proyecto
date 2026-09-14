@@ -6,12 +6,10 @@ import { apiFetch } from "./api.js";
 // OBTENER ID DE LA CANCHA DESDE LA URL
 // =====================================================
 
-const parametros =
-    new URLSearchParams(window.location.search);
+const parametros = new URLSearchParams(window.location.search);
+const idCancha = parametros.get("id");
 
-const idCancha =
-    Number(parametros.get("id"));
-
+let canchaActual = null;
 
 // =====================================================
 // OBTENER USUARIO ACTUAL
