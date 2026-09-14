@@ -12,7 +12,6 @@ const convertirHoraAMinutos = (hora) => {
 };
 const calcularHoraFinal = (horaInicio, duracion) => convertirHoraAMinutos(horaInicio) + (duracion * 60);
 
-// Petición Axios con try/catch para traer la cancha desde el backend
 async function cargarDatosCancha() {
     if (!idCancha) {
         window.location.href = "./canchas.html";
@@ -25,11 +24,11 @@ async function cargarDatosCancha() {
         mostrarCancha(canchaActual);
         cargarHorarios();
     } catch (error) {
-        console.error("Error al obtener datos de la cancha:", error);
+        console.error("Error al obtener cancha:", error);
         Swal.fire({
             icon: "error",
             title: "Cancha no encontrada",
-            text: "No se encontró información de la cancha en el servidor."
+            text: "No se pudo recuperar la información de la cancha."
         }).then(() => {
             window.location.href = "./canchas.html";
         });
@@ -40,11 +39,10 @@ const mostrarCancha = (cancha) => {
     document.getElementById("nombreCancha").textContent = cancha.nombreCancha;
     document.getElementById("ubicacionCancha").textContent = cancha.ubicacion;
     document.getElementById("descripcionCancha").textContent = cancha.descripcion || "Cancha sintética profesional.";
-    document.getElementById("precioCancha").textContent = Number(cancha.precio).toLocaleString("es-CO");
+    document.getElementById("precioCancha").textContent = Number(cancha.precioPorHora).toLocaleString("es-CO");
 
-    const imagenUrl = Array.isArray(cancha.imagen) ? cancha.imagen[0] : (cancha.imagen || "../assets/images/canchas/cancha11.jpg");
     const imgEl = document.getElementById("imagenCancha");
-    imgEl.src = imagenUrl;
+    imgEl.src = cancha.imagenUrl || "../assets/images/canchas/cancha11.jpg";
     imgEl.alt = cancha.nombreCancha;
 
     actualizarTotal();
@@ -53,7 +51,7 @@ const mostrarCancha = (cancha) => {
 const actualizarTotal = () => {
     if (!canchaActual) return;
     const duracion = Number(document.getElementById("duracion").value);
-    const total = Number(canchaActual.precio) * duracion;
+    const total = Number(canchaActual.precioPorHora) * duracion;
     document.getElementById("totalReserva").textContent = total.toLocaleString("es-CO");
 };
 
@@ -110,7 +108,6 @@ const cargarHorarios = () => {
     }
 };
 
-// Eventos de formulario
 document.getElementById("fechaReserva").min = new Date().toISOString().split("T")[0];
 document.getElementById("fechaReserva").addEventListener("change", cargarHorarios);
 document.getElementById("duracion").addEventListener("change", () => {
@@ -145,6 +142,8 @@ document.getElementById("formReserva").addEventListener("submit", function (even
         return;
     }
 
+    const total = Number(canchaActual.precioPorHora) * duracion;
+
     const nuevaReserva = {
         id: Date.now(),
         canchaId: canchaActual.id,
@@ -155,8 +154,8 @@ document.getElementById("formReserva").addEventListener("submit", function (even
         fecha,
         hora,
         duracion,
-        precioHora: Number(canchaActual.precio),
-        total: Number(canchaActual.precio) * duracion
+        precioHora: Number(canchaActual.precioPorHora),
+        total: total
     };
 
     const reservas = obtenerReservas();

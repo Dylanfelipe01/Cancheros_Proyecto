@@ -17,7 +17,6 @@ if (salirbtn) {
     });
 }
 
-// Validación de acceso administrador
 if (!currentUser || currentUser.email !== correoAdmin || currentUser.password !== claveAdmin) {
     window.location.href = "./inicio-sesion.html";
 }
@@ -28,7 +27,7 @@ window.addEventListener("pageshow", (event) => {
     }
 });
 
-// GET: Obtener todas las canchas desde el Backend con try/catch
+// GET: Obtener todas las canchas desde el backend
 const obtenerCanchasBackend = async () => {
     try {
         const respuesta = await axios.get(API_CANCHAS_URL);
@@ -44,7 +43,7 @@ const obtenerCanchasBackend = async () => {
     }
 };
 
-// Renderizar tabla
+// Renderizar tabla del panel
 const renderizar = async () => {
     tablaCanchas.innerHTML = `<tr><td colspan="10" class="text-center py-4">Cargando canchas...</td></tr>`;
 
@@ -72,7 +71,7 @@ const renderizar = async () => {
 
     canchas.forEach(cancha => {
         const fila = document.createElement("tr");
-        const fotoUrl = Array.isArray(cancha.imagen) ? cancha.imagen[0] : (cancha.imagen || "../assets/images/canchas/cancha11.jpg");
+        const fotoUrl = cancha.imagenUrl || "../assets/images/canchas/cancha11.jpg";
 
         fila.innerHTML = `
             <td>${cancha.id}</td>
@@ -80,7 +79,7 @@ const renderizar = async () => {
             <td>${cancha.descripcion || "Sin descripción"}</td>
             <td>${cancha.nombreCancha}</td>
             <td>${cancha.tipo}</td>
-            <td>$${Number(cancha.precio).toLocaleString("es-CO")}</td>
+            <td>$${Number(cancha.precioPorHora).toLocaleString("es-CO")}</td>
             <td>${cancha.ubicacion}</td>
             <td>
                 <img class="imagenPanel" src="${fotoUrl}" alt="${cancha.nombreCancha}" width="60" height="60" style="object-fit:cover; border-radius: 4px;" onerror="this.src='../assets/images/image.png'"/>
@@ -96,7 +95,6 @@ const renderizar = async () => {
     });
 };
 
-// Reset de modal para creación
 function nuevaCancha() {
     modalElement.removeAttribute("data-id-editar");
     formCancha.reset();
@@ -104,14 +102,12 @@ function nuevaCancha() {
     document.getElementById("imagenCancha").value = "";
 }
 
-// POST / PUT: Crear o actualizar cancha en backend
+// Guardar cancha (POST / PUT)
 const guardarCanchaBackend = async (payload, idEditar) => {
     try {
         if (idEditar) {
-            // Actualización (PUT)
             await axios.put(`${API_CANCHAS_URL}/${idEditar}`, payload);
         } else {
-            // Creación (POST)
             await axios.post(API_CANCHAS_URL, payload);
         }
         return true;
@@ -126,11 +122,11 @@ const guardarCanchaBackend = async (payload, idEditar) => {
     }
 };
 
-// DELETE: Eliminar cancha con .then() tras confirmación
+// Eliminar cancha (DELETE)
 const eliminarCancha = (id) => {
     Swal.fire({
         title: "¿Eliminar cancha?",
-        text: "Esta acción no se puede deshacer en la base de datos.",
+        text: "Esta acción no se puede deshacer.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Sí, eliminar",
@@ -139,7 +135,6 @@ const eliminarCancha = (id) => {
     }).then((resultado) => {
         if (!resultado.isConfirmed) return;
 
-        // Implementación con axios y .then()/.catch()
         axios.delete(`${API_CANCHAS_URL}/${id}`)
             .then(() => {
                 Swal.fire({
@@ -161,7 +156,7 @@ const eliminarCancha = (id) => {
     });
 };
 
-// GET By ID: Cargar datos en el formulario para editar
+// Cargar datos en el modal para editar (GET by ID)
 const editarCancha = async (id) => {
     try {
         const respuesta = await axios.get(`${API_CANCHAS_URL}/${id}`);
@@ -170,7 +165,7 @@ const editarCancha = async (id) => {
         modalElement.dataset.idEditar = id;
 
         document.getElementById("nombreCancha").value = cancha.nombreCancha;
-        document.getElementById("precio").value = cancha.precio;
+        document.getElementById("precio").value = cancha.precioPorHora;
         document.getElementById("ubicacion").value = cancha.ubicacion;
         document.getElementById("descripcion").value = cancha.descripcion;
         document.getElementById("form-select-tipo").value = cancha.tipo;
@@ -181,15 +176,14 @@ const editarCancha = async (id) => {
         const imagenesContainer = document.getElementById("imagenesContainer");
         imagenesContainer.querySelectorAll(".imagen-box").forEach(img => img.remove());
 
-        const listaFotos = Array.isArray(cancha.imagen) ? cancha.imagen : [cancha.imagen];
-        listaFotos.filter(Boolean).forEach(foto => {
+        if (cancha.imagenUrl) {
             imagenesContainer.insertAdjacentHTML("afterbegin", `
                 <div class="imagen-box">
-                    <img src="${foto}" alt="">
+                    <img src="${cancha.imagenUrl}" alt="">
                     <button type="button"><i class="bi bi-trash"></i></button>
                 </div>
             `);
-        });
+        }
 
         modalBootstrap.show();
     } catch (error) {
@@ -201,23 +195,20 @@ const editarCancha = async (id) => {
     }
 };
 
-// Envío del formulario
 formCancha.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const nombreCancha = document.getElementById("nombreCancha").value.trim();
-    const precio = document.getElementById("precio").value.trim();
+    const precioPorHora = document.getElementById("precio").value.trim();
     const disponible = document.querySelector('input[name="disponible"]:checked')?.value === "true";
     const ubicacion = document.getElementById("ubicacion").value.trim();
     const descripcion = document.getElementById("descripcion").value.trim();
     const tipo = document.getElementById("form-select-tipo").value;
     const idEditar = modalElement.dataset.idEditar;
 
-    const imagenes = Array.from(
-        document.querySelectorAll("#imagenesContainer .imagen-box img")
-    ).map(img => img.src);
+    const primeraImagen = document.querySelector("#imagenesContainer .imagen-box img")?.src || "../assets/images/canchas/cancha11.jpg";
 
-    if (!nombreCancha || !precio || !ubicacion || !tipo) {
+    if (!nombreCancha || !precioPorHora || !ubicacion || !tipo) {
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -226,14 +217,17 @@ formCancha.addEventListener("submit", async (event) => {
         return;
     }
 
+    // Estructura exacta que espera CanchaDTO.java
     const payload = {
         nombreCancha,
-        precio: Number(precio),
+        precioPorHora: parseFloat(precioPorHora),
         disponible,
         ubicacion,
         descripcion,
         tipo,
-        imagen: imagenes.length > 0 ? imagenes : ["../assets/images/canchas/cancha11.jpg"]
+        rating: 4.8,
+        totalResenas: 100,
+        imagenUrl: primeraImagen
     };
 
     const guardadoExitoso = await guardarCanchaBackend(payload, idEditar);
@@ -253,7 +247,6 @@ formCancha.addEventListener("submit", async (event) => {
     }
 });
 
-// Delegación de eventos en la tabla (Editar / Eliminar)
 tablaCanchas.addEventListener("click", (event) => {
     const btnEliminar = event.target.closest(".trash-logo");
     const btnEditar = event.target.closest(".bi-pencil-square");
@@ -265,7 +258,6 @@ tablaCanchas.addEventListener("click", (event) => {
     }
 });
 
-// Lectura de archivos locales para previsualización Base64
 document.getElementById("imagenCancha").addEventListener("change", (event) => {
     Array.from(event.target.files).forEach(archivo => {
         const lector = new FileReader();
@@ -287,5 +279,4 @@ document.getElementById("imagenesContainer").addEventListener("click", (event) =
 });
 
 document.getElementById("btnAgregarCancha")?.addEventListener("click", nuevaCancha);
-
 document.addEventListener("DOMContentLoaded", renderizar);

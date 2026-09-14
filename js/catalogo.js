@@ -48,16 +48,16 @@ function pintarTarjetas(lista) {
     }
 
     lista.forEach(cancha => {
-        const imagenUrl = Array.isArray(cancha.imagen) ? cancha.imagen[0] : (cancha.imagen || "../assets/images/canchas/cancha11.jpg");
+        const imagenUrl = cancha.imagenUrl || "../assets/images/canchas/cancha11.jpg";
         const rating = cancha.rating || 4.8;
-        const resenas = cancha.reseñas || cancha.resenas || "100+";
+        const resenas = cancha.totalResenas || 100;
 
         contenedor.innerHTML += `
             <div class="col-lg-4 col-md-6">
                 <div class="cancha-card">
                     <div class="card-img-wrapper">
                         <img src="${imagenUrl}" alt="${cancha.nombreCancha}" onerror="this.src='../assets/images/image.png'" />
-                        <span class="badge-rating"><i class="fa-solid fa-star"></i> ${rating} (${resenas})</span>
+                        <span class="badge-rating"><i class="fa-solid fa-star"></i> ${rating} (${resenas}+)</span>
                     </div>
                     <div class="card-body-custom">
                         <div class="card-header-info">
@@ -75,7 +75,7 @@ function pintarTarjetas(lista) {
                         <div class="card-footer-custom flex-column align-items-stretch gap-2">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="price-label">Desde</span>
-                                <div class="price-value">$${Number(cancha.precio).toLocaleString("es-CO")} <span>/hr</span></div>
+                                <div class="price-value">$${Number(cancha.precioPorHora).toLocaleString("es-CO")} <span>/hr</span></div>
                             </div>
                             <div class="d-flex gap-2">
                                 <button class="btn btn-outline-light btn-sm w-50 fw-semibold" 
@@ -96,7 +96,6 @@ function pintarTarjetas(lista) {
     });
 }
 
-// Implementación de Axios con try/catch
 async function obtenerCanchas() {
     mostrarSkeletons();
     try {
@@ -132,7 +131,7 @@ function filtrarCancha() {
     }
 
     if (precioCancha && precioCancha.value !== "") {
-        resultado = resultado.filter(c => Number(c.precio) <= Number(precioCancha.value));
+        resultado = resultado.filter(c => Number(c.precioPorHora) <= Number(precioCancha.value));
     }
 
     pintarTarjetas(resultado);
@@ -149,14 +148,22 @@ const modalCanchas = () => {
 
         if (!cancha) return;
 
-        const img1 = Array.isArray(cancha.imagen) ? cancha.imagen[0] : (cancha.imagen || "../assets/images/image.png");
-        const img2 = Array.isArray(cancha.imagen) && cancha.imagen[1] ? cancha.imagen[1] : img1;
+        const foto = cancha.imagenUrl || "../assets/images/image.png";
 
-        document.getElementById("modalImagen").src = img1;
-        document.getElementById("modalImagen2").src = img2;
+        const modalImg1 = document.getElementById("modalImagen");
+        const modalImg2 = document.getElementById("modalImagen2");
+
+        if (modalImg1) {
+            modalImg1.src = foto;
+            modalImg1.alt = cancha.nombreCancha;
+        }
+        if (modalImg2) {
+            modalImg2.src = foto;
+        }
+
         document.getElementById("modalNombre").textContent = cancha.nombreCancha;
         document.getElementById("modalUbicacion").textContent = cancha.ubicacion;
-        document.getElementById("modalPrecio").textContent = `$${Number(cancha.precio).toLocaleString("es-CO")} /hr`;
+        document.getElementById("modalPrecio").textContent = `$${Number(cancha.precioPorHora).toLocaleString("es-CO")} /hr`;
 
         const btnReservarModal = canchaModal.querySelector(".reserva");
         if (btnReservarModal) btnReservarModal.dataset.canchaId = idCancha;
