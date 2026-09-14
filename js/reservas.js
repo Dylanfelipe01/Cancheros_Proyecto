@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { todasLasCanchas } from "./catalogo.js";
 import { apiFetch } from "./api.js";
 
@@ -6,9 +5,7 @@ import { apiFetch } from "./api.js";
 // =====================================================
 // OBTENER ID DE LA CANCHA DESDE LA URL
 // =====================================================
-=======
 const API_URL = "http://localhost:8081/api/canchas";
->>>>>>> 883e1e690baf96c377a96c9e703f15158998c8ce
 
 const parametros = new URLSearchParams(window.location.search);
 const idCancha = parametros.get("id");
