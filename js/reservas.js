@@ -1,766 +1,183 @@
-import { todasLasCanchas } from "./catalogo.js";
-
-
-
-
-// =====================================================
-// OBTENER ID DE LA CANCHA DESDE LA URL
-// =====================================================
+const API_URL = "http://localhost:8080/api/canchas";
 
 const parametros = new URLSearchParams(window.location.search);
+const idCancha = parametros.get("id");
 
-const idCancha = Number(parametros.get("id"));
+let canchaActual = null;
 
-
-// =====================================================
-// OBTENER RESERVAS
-// =====================================================
-
-const obtenerReservas = () => {
-
-    return JSON.parse(
-        localStorage.getItem("reservas")
-    ) || [];
-
-};
-
-
-// =====================================================
-// OBTENER CANCHA
-// =====================================================
-
-const obtenerCancha = () => {
-
-    return todasLasCanchas.find(
-        cancha => Number(cancha.id) === idCancha
-    );
-
-};
-
-
-// =====================================================
-// CONVERTIR HORA A MINUTOS
-// =====================================================
-
+const obtenerReservas = () => JSON.parse(localStorage.getItem("reservas")) || [];
 const convertirHoraAMinutos = (hora) => {
-
-    const [horas, minutos] =
-        hora.split(":").map(Number);
-
+    const [horas, minutos] = hora.split(":").map(Number);
     return (horas * 60) + minutos;
-
 };
+const calcularHoraFinal = (horaInicio, duracion) => convertirHoraAMinutos(horaInicio) + (duracion * 60);
 
-
-// =====================================================
-// CALCULAR HORA FINAL
-// =====================================================
-
-const calcularHoraFinal = (horaInicio, duracion) => {
-
-    const minutosInicio =
-        convertirHoraAMinutos(horaInicio);
-
-    return minutosInicio + (duracion * 60);
-
-};
-
-
-// =====================================================
-// VERIFICAR SI EL HORARIO ESTÁ OCUPADO
-// =====================================================
-
-const horarioEstaOcupado = (
-    canchaId,
-    fecha,
-    hora,
-    duracion
-) => {
-
-    const reservas = obtenerReservas();
-
-    const nuevaHoraInicio =
-        convertirHoraAMinutos(hora);
-
-    const nuevaHoraFinal =
-        calcularHoraFinal(
-            hora,
-            duracion
-        );
-
-
-    return reservas.some(reserva => {
-
-        // -----------------------------------------
-        // 1. Verificar misma cancha
-        // -----------------------------------------
-
-        if (
-            Number(reserva.canchaId) !==
-            Number(canchaId)
-        ) {
-
-            return false;
-
-        }
-
-
-        // -----------------------------------------
-        // 2. Verificar misma fecha
-        // -----------------------------------------
-
-        if (
-            reserva.fecha !== fecha
-        ) {
-
-            return false;
-
-        }
-
-
-        // -----------------------------------------
-        // 3. Hora de inicio de la reserva existente
-        // -----------------------------------------
-
-        const reservaHoraInicio =
-            convertirHoraAMinutos(
-                reserva.hora
-            );
-
-
-        // -----------------------------------------
-        // 4. Hora final de la reserva existente
-        // -----------------------------------------
-
-        const reservaHoraFinal =
-            calcularHoraFinal(
-                reserva.hora,
-                Number(reserva.duracion)
-            );
-
-
-        // -----------------------------------------
-        // 5. COMPROBAR CRUCE DE HORARIOS
-        // -----------------------------------------
-
-        return (
-            nuevaHoraInicio < reservaHoraFinal &&
-            nuevaHoraFinal > reservaHoraInicio
-        );
-
-    });
-
-};
-
-
-// =====================================================
-// CARGAR HORARIOS DISPONIBLES
-// =====================================================
-
-
-const cargarHorarios = () => {
-
-    const fecha =
-        document.getElementById("fechaReserva").value;
-
-    const horaSelect =
-        document.getElementById("horaReserva");
-
-    const duracion =
-        Number(
-            document.getElementById("duracion").value
-        );
-
-    const cancha =
-        obtenerCancha();
-
-
-    // ==========================================
-    // LIMPIAR HORARIOS
-    // ==========================================
-
-    horaSelect.innerHTML = `
-        <option value="">
-            Selecciona una hora
-        </option>
-    `;
-
-
-    // ==========================================
-    // VALIDAR DATOS
-    // ==========================================
-
-    if (!fecha || !cancha || !duracion) {
+async function cargarDatosCancha() {
+    if (!idCancha) {
+        window.location.href = "./canchas.html";
         return;
     }
 
+    try {
+        const respuesta = await axios.get(`${API_URL}/${idCancha}`);
+        canchaActual = respuesta.data;
+        mostrarCancha(canchaActual);
+        cargarHorarios();
+    } catch (error) {
+        console.error("Error al obtener cancha:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Cancha no encontrada",
+            text: "No se pudo recuperar la información de la cancha."
+        }).then(() => {
+            window.location.href = "./canchas.html";
+        });
+    }
+}
 
-    // ==========================================
-    // HORARIO DE LA CANCHA
-    // ==========================================
+const mostrarCancha = (cancha) => {
+    document.getElementById("nombreCancha").textContent = cancha.nombreCancha;
+    document.getElementById("ubicacionCancha").textContent = cancha.ubicacion;
+    document.getElementById("descripcionCancha").textContent = cancha.descripcion || "Cancha sintética profesional.";
+    document.getElementById("precioCancha").textContent = Number(cancha.precioPorHora).toLocaleString("es-CO");
+
+    const imgEl = document.getElementById("imagenCancha");
+    imgEl.src = cancha.imagenUrl || "../assets/images/canchas/cancha11.jpg";
+    imgEl.alt = cancha.nombreCancha;
+
+    actualizarTotal();
+};
+
+const actualizarTotal = () => {
+    if (!canchaActual) return;
+    const duracion = Number(document.getElementById("duracion").value);
+    const total = Number(canchaActual.precioPorHora) * duracion;
+    document.getElementById("totalReserva").textContent = total.toLocaleString("es-CO");
+};
+
+const horarioEstaOcupado = (canchaId, fecha, hora, duracion) => {
+    const reservas = obtenerReservas();
+    const nuevaHoraInicio = convertirHoraAMinutos(hora);
+    const nuevaHoraFinal = calcularHoraFinal(hora, duracion);
+
+    return reservas.some(reserva => {
+        if (Number(reserva.canchaId) !== Number(canchaId)) return false;
+        if (reserva.fecha !== fecha) return false;
+
+        const reservaHoraInicio = convertirHoraAMinutos(reserva.hora);
+        const reservaHoraFinal = calcularHoraFinal(reserva.hora, Number(reserva.duracion));
+
+        return nuevaHoraInicio < reservaHoraFinal && nuevaHoraFinal > reservaHoraInicio;
+    });
+};
+
+const cargarHorarios = () => {
+    const fecha = document.getElementById("fechaReserva").value;
+    const horaSelect = document.getElementById("horaReserva");
+    const duracion = Number(document.getElementById("duracion").value);
+
+    horaSelect.innerHTML = `<option value="">Selecciona una hora</option>`;
+    if (!fecha || !canchaActual || !duracion) return;
 
     const horaInicio = 8;
     const horaFin = 22;
-
-
-    // ==========================================
-    // FECHA Y HORA ACTUAL
-    // ==========================================
-
+    const hoy = new Date().toISOString().split("T")[0];
     const ahora = new Date();
+    const minutosAhora = ahora.getHours() * 60 + ahora.getMinutes();
 
+    for (let hora = horaInicio; hora < horaFin; hora++) {
+        const horaTexto = `${String(hora).padStart(2, "0")}:00`;
+        if (hora + duracion > horaFin) continue;
 
-    const año = ahora.getFullYear();
+        const horaYaPaso = (fecha === hoy) && (hora * 60 <= minutosAhora);
+        const ocupado = horarioEstaOcupado(canchaActual.id, fecha, horaTexto, duracion);
 
-    const mes =
-        String(ahora.getMonth() + 1).padStart(2, "0");
-
-    const dia =
-        String(ahora.getDate()).padStart(2, "0");
-
-
-    const hoy = `${año}-${mes}-${dia}`;
-
-
-    const minutosAhora =
-        ahora.getHours() * 60 +
-        ahora.getMinutes();
-
-
-    // ==========================================
-    // RECORRER HORARIOS
-    // ==========================================
-
-    for (
-        let hora = horaInicio;
-        hora < horaFin;
-        hora++
-    ) {
-
-        const horaTexto =
-            `${String(hora).padStart(2, "0")}:00`;
-
-
-        // Hora final de la reserva
-        const horaFinal =
-            hora + duracion;
-
-
-        // ==========================================
-        // NO SUPERAR LAS 22:00
-        // ==========================================
-
-        if (horaFinal > horaFin) {
-            continue;
-        }
-
-
-        // ==========================================
-        // VERIFICAR SI LA HORA YA PASÓ
-        //
-        // SOLO SE HACE ESTA VALIDACIÓN HOY
-        // ==========================================
-
-        let horaYaPaso = false;
-
-        if (fecha === hoy) {
-
-            const minutosHora =
-                hora * 60;
-
-            horaYaPaso =
-                minutosHora <= minutosAhora;
-        }
-
-
-        // ==========================================
-        // VERIFICAR SI ESTÁ OCUPADA
-        // ==========================================
-
-        const ocupado =
-            horarioEstaOcupado(
-                cancha.id,
-                fecha,
-                horaTexto,
-                duracion
-            );
-
-
-        // ==========================================
-        // CREAR OPCIÓN
-        // ==========================================
-
-        const option =
-            document.createElement("option");
-
+        const option = document.createElement("option");
         option.value = horaTexto;
 
-
-        // ==========================================
-        // HORA PASADA
-        // ==========================================
-
         if (horaYaPaso) {
-
-            option.textContent =
-                `${horaTexto} - ⚫ No disponible`;
-
+            option.textContent = `${horaTexto} - ⚫ No disponible`;
             option.disabled = true;
-        }
-
-
-        // ==========================================
-        // HORA OCUPADA
-        // ==========================================
-
-        else if (ocupado) {
-
-            option.textContent =
-                `${horaTexto} - 🔴 Ocupado`;
-
+        } else if (ocupado) {
+            option.textContent = `${horaTexto} - 🔴 Ocupado`;
             option.disabled = true;
+        } else {
+            option.textContent = `${horaTexto} - 🟢 Disponible`;
         }
-
-
-        // ==========================================
-        // HORA DISPONIBLE
-        // ==========================================
-
-        else {
-
-            option.textContent =
-                `${horaTexto} - 🟢 Disponible`;
-
-            option.disabled = false;
-        }
-
-
         horaSelect.appendChild(option);
     }
 };
-// =====================================================
-// FECHA
-// =====================================================
 
-const fechaReserva =
-    document.getElementById("fechaReserva");
-
-
-// Obtener fecha actual correctamente
-const ahora = new Date();
-
-const año = ahora.getFullYear();
-
-const mes =
-    String(ahora.getMonth() + 1).padStart(2, "0");
-
-const dia =
-    String(ahora.getDate()).padStart(2, "0");
-
-const hoy =
-    `${año}-${mes}-${dia}`;
-
-fechaReserva.min = hoy;
-
-
-// Cuando cambia la fecha
-fechaReserva.addEventListener(
-    "change",
-    () => {
-
-        cargarHorarios();
-
-    }
-);
-
-
-// =====================================================
-// DURACIÓN
-// =====================================================
-
-const duracionInput =
-    document.getElementById("duracion");
-
-
-duracionInput.addEventListener(
-    "change",
-    () => {
-
-        actualizarTotal();
-
-        cargarHorarios();
-
-    }
-);
-
-
-// =====================================================
-// MOSTRAR CANCHA
-// =====================================================
-
-const mostrarCancha = () => {
-    
-    const cancha = obtenerCancha();
-    
-    if (!cancha) {
-        window.location.href = "./canchas.html";
-
-        return;
-    }
-
-
-    document.getElementById(
-        "nombreCancha"
-    ).textContent =
-        cancha.nombreCancha;
-
-
-    document.getElementById(
-        "ubicacionCancha"
-    ).textContent =
-        cancha.ubicacion;
-
-
-    document.getElementById(
-        "descripcionCancha"
-    ).textContent =
-        cancha.descripcion;
-
-
-    document.getElementById(
-        "precioCancha"
-    ).textContent =
-        Number(
-            cancha.precio
-        ).toLocaleString("es-CO");
-
-
-    document.getElementById(
-        "imagenCancha"
-    ).src =
-        cancha.imagen[0];
-
-
-    document.getElementById(
-        "imagenCancha"
-    ).alt =
-        cancha.nombreCancha;
-
-
+document.getElementById("fechaReserva").min = new Date().toISOString().split("T")[0];
+document.getElementById("fechaReserva").addEventListener("change", cargarHorarios);
+document.getElementById("duracion").addEventListener("change", () => {
     actualizarTotal();
+    cargarHorarios();
+});
 
-};
+document.getElementById("formReserva").addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (!canchaActual) return;
 
+    const fecha = document.getElementById("fechaReserva").value;
+    const hora = document.getElementById("horaReserva").value;
+    const duracion = Number(document.getElementById("duracion").value);
 
-// =====================================================
-// CALCULAR TOTAL
-// =====================================================
-
-const actualizarTotal = () => {
-
-    const cancha =
-        obtenerCancha();
-
-
-    if (!cancha) {
+    if (!fecha || !hora) {
         Swal.fire({
             icon: "error",
-            title: "Oops...",
-            text: "No se a encontrado la cancha",
-        })
+            title: "Campos incompletos",
+            text: "Debes seleccionar fecha y horario disponible."
+        });
         return;
     }
 
-
-    const duracion =
-        Number(
-            document.getElementById(
-                "duracion"
-            ).value
-        );
-
-
-    const precio =
-        Number(cancha.precio);
-
-
-    const total =
-        precio * duracion;
-
-
-    document.getElementById(
-        "totalReserva"
-    ).textContent =
-        total.toLocaleString("es-CO");
-
-};
-
-
-// =====================================================
-// CONFIRMAR RESERVA
-// =====================================================
-
-document
-    .getElementById("formReserva")
-    .addEventListener(
-        "submit",
-        function (event) {
-
-        event.preventDefault();
-
-            // -----------------------------------------
-            // Obtener cancha
-            // -----------------------------------------
-
-            const cancha =
-                obtenerCancha();
-
-
-            if (!cancha) {
-
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "No se a encontrado la cancha",
-            })
-            return;
-        }
-
-
-            // -----------------------------------------
-            // Obtener datos
-            // -----------------------------------------
-
-            const nombre =
-                document
-                    .getElementById(
-                        "nombreCliente"
-                    )
-                    .value
-                    .trim();
-
-
-            const email =
-                document
-                    .getElementById(
-                        "emailCliente"
-                    )
-                    .value
-                    .trim();
-
-
-            const telefono =
-                document
-                    .getElementById(
-                        "telefonoCliente"
-                    )
-                    .value
-                    .trim();
-
-
-            const fecha =
-                document
-                    .getElementById(
-                        "fechaReserva"
-                    )
-                    .value;
-
-
-            const hora =
-                document
-                    .getElementById(
-                        "horaReserva"
-                    )
-                    .value;
-
-
-            const duracion =
-                Number(
-                    document
-                        .getElementById(
-                            "duracion"
-                        )
-                        .value
-                );
-
-
-            // -----------------------------------------
-            // Validar fecha
-            // -----------------------------------------
-
-            if (!fecha) {
-
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Debes seleccionar una fecha.",
-                })
-
-                return;
-            }
-            
-
-
-            // -----------------------------------------
-            // Validar hora
-            // -----------------------------------------
-
-            if (!hora) {
-
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Debes seleccionar una hora disponible.",
-                })
-
-                return;
-            }
-
-
-            // =================================================
-            // VALIDACIÓN FINAL DE DISPONIBILIDAD
-            // =================================================
-            //
-            // Esto es MUY importante.
-            //
-            // Aunque el usuario vea la hora como disponible,
-            // otra reserva pudo haberse creado antes.
-            //
-            // Por eso verificamos nuevamente antes de guardar.
-            // =================================================
-
-            const ocupado =
-                horarioEstaOcupado(
-                    cancha.id,
-                    fecha,
-                    hora,
-                    duracion
-                );
-
-            if (ocupado) {
-
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "⚠️ Esta cancha ya está ocupada en ese horario.",
-                })
-
-                cargarHorarios();
-                return;
-            }
-
-
-            // -----------------------------------------
-            // Calcular total
-            // -----------------------------------------
-
-            const total =
-                Number(cancha.precio) *
-                duracion;
-
-
-            // -----------------------------------------
-            // Crear reserva
-            // -----------------------------------------
-
-            const nuevaReserva = {
-
-                id: Date.now(),
-
-                canchaId:
-                    cancha.id,
-
-                nombreCancha:
-                    cancha.nombreCancha,
-
-                cliente:
-                    nombre,
-
-                email:
-                    email,
-
-                telefono:
-                    telefono,
-
-                fecha:
-                    fecha,
-
-                hora:
-                    hora,
-
-                duracion:
-                    duracion,
-
-                precioHora:
-                    Number(cancha.precio),
-
-                total:
-                    total
-
-            };
-
-
-            // -----------------------------------------
-            // Obtener reservas
-            // -----------------------------------------
-
-            const reservas =
-                obtenerReservas();
-
-
-            // -----------------------------------------
-            // Guardar reserva
-            // -----------------------------------------
-
-            reservas.push(
-                nuevaReserva
-            );
-
-
-            localStorage.setItem(
-                "reservas",
-                JSON.stringify(reservas)
-            );
-
-
-            // -----------------------------------------
-            // Mensaje
-            // -----------------------------------------
-
-            if (!ocupado) {
-
-                Swal.fire({
-                    icon: "good",
-                    title: "Exito",
-                    text: "Reserva realizada correctamente.",
-                }).then(() => {
-                    // -----------------------------------------
-                    // Regresar
-                    // -----------------------------------------
-                    window.location.href = "./canchas.html";
-                })
-            }
-        }
-    );
-
-
-// =====================================================
-// INICIAR
-// =====================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
-
-        if(!isLoggedIn){
-            window.location.href = "./inicio-sesion.html"
-        }
-
-        mostrarCancha();
-
+    if (horarioEstaOcupado(canchaActual.id, fecha, hora, duracion)) {
+        Swal.fire({
+            icon: "error",
+            title: "Horario ocupado",
+            text: "Esta cancha acaba de ser reservada para ese horario."
+        });
         cargarHorarios();
-
+        return;
     }
-);
+
+    const total = Number(canchaActual.precioPorHora) * duracion;
+
+    const nuevaReserva = {
+        id: Date.now(),
+        canchaId: canchaActual.id,
+        nombreCancha: canchaActual.nombreCancha,
+        cliente: document.getElementById("nombreCliente").value.trim(),
+        email: document.getElementById("emailCliente").value.trim(),
+        telefono: document.getElementById("telefonoCliente").value.trim(),
+        fecha,
+        hora,
+        duracion,
+        precioHora: Number(canchaActual.precioPorHora),
+        total: total
+    };
+
+    const reservas = obtenerReservas();
+    reservas.push(nuevaReserva);
+    localStorage.setItem("reservas", JSON.stringify(reservas));
+
+    Swal.fire({
+        icon: "success",
+        title: "¡Reserva Exitosa!",
+        text: `Has reservado ${canchaActual.nombreCancha}`,
+        timer: 2000,
+        showConfirmButton: false
+    }).then(() => {
+        window.location.href = "./canchas.html";
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
+    if (!isLoggedIn) {
+        window.location.href = "./inicio-sesion.html";
+        return;
+    }
+    cargarDatosCancha();
+});
