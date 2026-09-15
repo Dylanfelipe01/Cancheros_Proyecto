@@ -1,13 +1,3 @@
-window.addEventListener("pageshow", (event) => {
-
-    if (event.persisted) {
-        window.location.reload();
-    }
-
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    const usuarioGuardado = localStorage.getItem("currentUser"); // obtener el usuario que inició sesión
 import { apiFetch } from "./api.js";
 
 window.addEventListener("pageshow", (event) => {
