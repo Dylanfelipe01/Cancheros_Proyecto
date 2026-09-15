@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const estaLogueado = localStorage.getItem("isLoggedIn") === "true";
 
-    const usuario = JSON.parse(localStorage.getItem("usuarios"));
-
+    // Obtener el usuario actual
+    const usuario = JSON.parse(localStorage.getItem("currentUser"));
     const userDropdown = document.querySelector(".userDropdown");
     const userMenu = document.querySelector(".userMenu");
 
@@ -11,12 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
     
-   if (estaLogueado) {
-
-        userDropdown.textContent = `Hola, ${usuario[0].nombre}`;
-        console.log();
-        
-
+    if (estaLogueado && usuario) {
+        userDropdown.textContent = `Hola, ${usuario.nombre}`;
         userMenu.innerHTML = `
             <li>
                 <a class="dropdown-item" href="${ruta("perfil.html")}">
@@ -40,10 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         if(userMenu){
-            
             const cerrarSesion = document.querySelector(".cerrarSesion");
-            
-    
             cerrarSesion.addEventListener("click", (e) => {
                 e.preventDefault();
     
@@ -52,17 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.getItem("isLoggedIn") === "true";
     
                 if (estaLogueado) {
-                    localStorage.removeItem("isLoggedIn")
-                    localStorage.removeItem("currentUser")
+                    localStorage.removeItem("isLoggedIn");
+                    localStorage.removeItem("currentUser");
+                    localStorage.removeItem("token");
                     window.location.href = "../index.html";
                 }
             });
         }
-
     } else {
-
         userDropdown.textContent = "Entrar";
-
         userMenu.innerHTML = `
             <li>
                 <a class="dropdown-item" href="${ruta("./inicio-sesion.html")}">
@@ -77,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </li>
         `;
     }
-
 });
 
 function ruta(pagina) {
