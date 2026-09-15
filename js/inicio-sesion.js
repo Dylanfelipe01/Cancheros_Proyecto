@@ -1,14 +1,13 @@
+import { apiFetch } from "./api.js";
+
 export const correoAdmin = "admin@dominio.com";
 export const claveAdmin = "admin123456#";
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.querySelector("form");
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
   const rememberCheckbox = document.getElementById("remember");
-  
-  
   const toggleBtn = document.querySelector(".toggle-password");
   const iconEye = toggleBtn?.querySelector(".icon-eye");
   const iconEyeOff = toggleBtn?.querySelector(".icon-eye-off");
@@ -17,11 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (toggleBtn && passwordInput) {
     toggleBtn.addEventListener("click", () => {
       const isPassword = passwordInput.type === "password";
-      
-      
       passwordInput.type = isPassword ? "text" : "password";
 
-     
       if (isPassword) {
         iconEye.style.display = "none";
         iconEyeOff.style.display = "block";
@@ -42,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //Inicio de sesion
-  loginForm.addEventListener("submit", (e) => {
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const email = emailInput.value.trim();
@@ -72,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         email: email, 
         password: password
       }));
+<<<<<<< HEAD:js/inicio-sesion.js
       return;
     }
 
@@ -90,16 +87,15 @@ document.addEventListener("DOMContentLoaded", () => {
         text: "Correo electrónico o contraseña incorrectos.",
       });
       
+=======
+>>>>>>> ramaNuevaDannis:js/login.js
       return;
     }
 
-    // Guardar preferencia de correo
-    if (rememberCheckbox.checked) {
-      localStorage.setItem("rememberedEmail", email);
-    } else {
-      localStorage.removeItem("rememberedEmail");
-    }
+    // Iniciar sesión mediante el backend
+    try {
 
+<<<<<<< HEAD:js/inicio-sesion.js
     // Persistir sesión activa
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("currentUser", JSON.stringify(userFound));
@@ -112,5 +108,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Redirigir al inicio del sitio
     window.location.href = "./canchas.html";
+=======
+      const respuesta = await apiFetch("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      });
+
+      // Guardar preferencia de correo
+      if (rememberCheckbox.checked) {
+        localStorage.setItem("rememberedEmail", email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
+
+      // Guardar token de autenticación
+      localStorage.setItem("token", respuesta.token);
+
+      // Persistir sesión activa
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(respuesta.usuario)
+      );
+
+      Swal.fire({
+          icon: "success",
+          title: "¡Que bien!",
+          text: "¡Inicio de sesión exitoso!",
+          }).then(() => {
+      window.location.href = "../index.html";
+      });
+
+    } catch (error) {
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Correo electrónico o contraseña incorrectos.",
+      });
+
+    }
+>>>>>>> ramaNuevaDannis:js/login.js
   });
 });
