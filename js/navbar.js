@@ -1,15 +1,77 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const botonLogin = document.querySelector(".login-btn");
-    if (!botonLogin) {
+    
+    const estaLogueado = localStorage.getItem("isLoggedIn") === "true";
+
+    // Obtener el usuario actual
+    const usuario = JSON.parse(localStorage.getItem("currentUser"));
+    const userDropdown = document.querySelector(".userDropdown");
+    const userMenu = document.querySelector(".userMenu");
+
+    if (!userDropdown || !userMenu) {
         return;
     }
-    const estaLogueado =   // aqui pregunta si hay una sesión iniciada
-        localStorage.getItem("isLoggedIn") === "true";
-    if (estaLogueado) {  //si la respuesta si entonces manda a mi perfil
-        botonLogin.textContent = "Mi perfil";
-        botonLogin.href = "./perfil.html";
+    
+    if (estaLogueado && usuario) {
+        userDropdown.textContent = `Hola, ${usuario.nombre}`;
+        userMenu.innerHTML = `
+            <li>
+                <a class="dropdown-item" href="${ruta("perfil.html")}">
+                    Mi perfil
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item" href="${ruta("mis-reservas.html")}">
+                    Mis reservas
+                </a>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+                <button type="button" class="cerrarSesion dropdown-item">
+                    Cerrar sesión
+                </button>
+            </li>
+        `;
+
+        if(userMenu){
+            const cerrarSesion = document.querySelector(".cerrarSesion");
+            cerrarSesion.addEventListener("click", (e) => {
+                e.preventDefault();
+    
+                // Validación antes de cerrar sesión
+                const estaLogueado =
+                    localStorage.getItem("isLoggedIn") === "true";
+    
+                if (estaLogueado) {
+                    localStorage.removeItem("isLoggedIn");
+                    localStorage.removeItem("currentUser");
+                    localStorage.removeItem("token");
+                    window.location.href = "../index.html";
+                }
+            });
+        }
     } else {
-        botonLogin.textContent = "Entrar"; //si no manda a entrar y pagina de inicio-sesion
-        botonLogin.href = "./inicio-sesion.html";
+        userDropdown.textContent = "Entrar";
+        userMenu.innerHTML = `
+            <li>
+                <a class="dropdown-item" href="${ruta("./inicio-sesion.html")}">
+                    Iniciar sesión
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item" href="${ruta("./registro.html")}">
+                    Registrarse
+                </a>
+            </li>
+        `;
     }
 });
+
+function ruta(pagina) {
+    return window.location.pathname.includes("/html/")
+        ? `./${pagina}`
+        : `./html/${pagina}`;
+}
