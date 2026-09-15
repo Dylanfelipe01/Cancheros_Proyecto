@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
             </li>
 
-            <li><hr class="dropdown-divider"></li>
+            <li><hr class="dropadown-divider"></li>
 
             <li>
                 <button type="button" class="cerrarSesion dropdown-item">
