@@ -1,16 +1,36 @@
-import API_URL from "./config.js";
+import { API_URL } from "./config.js";
 
-export async function login(email, password) {
-    const response = await fetch(`${API_URL}/auth/login`, {
-        method: "POST",
+export async function apiFetch(endpoint, options = {}) {
+
+    const response = await fetch(`${API_URL}${endpoint}`, {
+        ...options,
+        credentials: "include",
         headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            email,
-            password
-        })
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+        }
     });
 
-    return response;
+    if (response.status === 204) {
+        return null;
+    }
+
+    let data = null;
+
+    try {
+        data = await response.json();
+    } catch {
+        data = null;
+    }
+
+    if (!response.ok) {
+
+        throw new Error(
+            data?.message ||
+            data?.error ||
+            `Error HTTP ${response.status}`
+        );
+    }
+
+    return data;
 }
