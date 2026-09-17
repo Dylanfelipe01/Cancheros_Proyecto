@@ -1,97 +1,216 @@
 import { apiFetch } from "../api/api.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
+async function cargarNavbar() {
 
-    let usuario = null;
+    const userDropdown =
+        document.querySelector(".userDropdown");
+
+    const userMenu =
+        document.querySelector(".userMenu");
+
+    // Si el navbar todavía no existe,
+    // no hacemos nada todavía.
+    if (!userDropdown || !userMenu) {
+        return false;
+    }
 
     try {
 
-        usuario = await apiFetch("/api/perfil");
+        const usuario =
+            await apiFetch("/api/perfil");
+
+        // =============================================
+        // USUARIO AUTENTICADO
+        // =============================================
+
+        if (usuario) {
+
+            userDropdown.textContent =
+                `Hola, ${usuario.nombre}`;
+
+            userMenu.innerHTML = `
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="${ruta("usuario", "perfil.html")}"
+                    >
+                        Mi perfil
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="${ruta("usuario", "mis-reservas.html")}"
+                    >
+                        Mis reservas
+                    </a>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                    <button
+                        type="button"
+                        class="cerrarSesion dropdown-item"
+                    >
+                        Cerrar sesión
+                    </button>
+                </li>
+            `;
+
+            const cerrarSesion =
+                userMenu.querySelector(".cerrarSesion");
+
+            if (cerrarSesion) {
+
+                cerrarSesion.addEventListener(
+                    "click",
+                    async (e) => {
+
+                        e.preventDefault();
+
+                        try {
+
+                            await apiFetch("/auth/logout", {
+                                method: "POST"
+                            });
+
+                            window.location.href =
+                                rutaInicio();
+
+                        } catch (error) {
+
+                            console.error(
+                                "Error al cerrar sesión:",
+                                error
+                            );
+                        }
+                    }
+                );
+            }
+
+        }
+
+        // =============================================
+        // USUARIO NO AUTENTICADO
+        // =============================================
+
+        else {
+
+            userDropdown.textContent =
+                "Entrar";
+
+            userMenu.innerHTML = `
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="${ruta("auth", "inicio-sesion.html")}"
+                    >
+                        Iniciar sesión
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="${ruta("auth", "registro.html")}"
+                    >
+                        Registrarse
+                    </a>
+                </li>
+            `;
+        }
+
+        return true;
 
     } catch (error) {
 
-        console.log("No hay una sesión activa.");
+        console.error(
+            "Error verificando sesión en navbar:",
+            error
+        );
 
-    }
-
-    const userDropdown = document.querySelector(".userDropdown");
-    const userMenu = document.querySelector(".userMenu");
-
-    if (!userDropdown || !userMenu) {
-        return;
-    }
-
-    if (usuario) {
-
-        userDropdown.textContent = `Hola, ${usuario.nombre}`;
+        userDropdown.textContent =
+            "Entrar";
 
         userMenu.innerHTML = `
             <li>
-                <a class="dropdown-item" href="${ruta("usuario", "perfil.html")}">
-                    Mi perfil
-                </a>
-            </li>
-
-            <li>
-                <a class="dropdown-item" href="${ruta("usuario", "mis-reservas.html")}">
-                    Mis reservas
-                </a>
-            </li>
-
-            <li>
-                <hr class="dropdown-divider">
-            </li>
-
-            <li>
-                <button type="button" class="cerrarSesion dropdown-item">
-                    Cerrar sesión
-                </button>
-            </li>
-        `;
-
-        const cerrarSesion = document.querySelector(".cerrarSesion");
-
-        cerrarSesion.addEventListener("click", async (e) => {
-
-            e.preventDefault();
-
-            try {
-
-                await apiFetch("/auth/logout", {
-                    method: "POST"
-                });
-
-                window.location.href = rutaInicio();
-
-            } catch (error) {
-
-                console.error("Error al cerrar sesión:", error);
-
-            }
-
-        });
-
-    } else {
-
-        userDropdown.textContent = "Entrar";
-
-        userMenu.innerHTML = `
-            <li>
-                <a class="dropdown-item" href="${ruta("auth", "inicio-sesion.html")}">
+                <a
+                    class="dropdown-item"
+                    href="${ruta("auth", "inicio-sesion.html")}"
+                >
                     Iniciar sesión
                 </a>
             </li>
 
             <li>
-                <a class="dropdown-item" href="${ruta("auth", "registro.html")}">
+                <a
+                    class="dropdown-item"
+                    href="${ruta("auth", "registro.html")}"
+                >
                     Registrarse
                 </a>
             </li>
         `;
+
+        return true;
+    }
+}
+
+
+// =====================================================
+// ESPERAR A QUE EXISTA EL NAVBAR
+// =====================================================
+
+function iniciarNavbar() {
+
+    // Intentar inmediatamente
+    if (cargarNavbar()) {
+        return;
     }
 
-});
+    // Si todavía no existe, observar cambios en el DOM
+    const observer =
+        new MutationObserver(async () => {
 
+            const cargado =
+                await cargarNavbar();
+
+            if (cargado) {
+                observer.disconnect();
+            }
+        });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
+
+// =====================================================
+// INICIAR
+// =====================================================
+
+if (document.readyState === "loading") {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        iniciarNavbar
+    );
+
+} else {
+
+    iniciarNavbar();
+}
+
+
+// =====================================================
+// RUTAS
+// =====================================================
 
 function ruta(seccion, pagina) {
 

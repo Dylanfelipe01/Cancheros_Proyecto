@@ -173,14 +173,50 @@ const modalCanchas = () => {
     });
 };
 
-function irReservar() {
+async function irReservar() {
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", async (event) => {
+
         const boton = event.target.closest(".reserva");
-        if (!boton) return;
 
-        window.location.href =
-            `./reservas.html?id=${boton.dataset.canchaId}`;
+        if (!boton) {
+            return;
+        }
+
+        // Evitar doble clic
+        if (boton.disabled) {
+            return;
+        }
+
+        boton.disabled = true;
+
+        try {
+
+            // Comprobar sesión
+            await apiFetch("/api/perfil");
+
+            // Usuario autenticado
+            window.location.href =
+                `./reservas.html?id=${boton.dataset.canchaId}`;
+
+        } catch (error) {
+
+            await Swal.fire({
+                icon: "info",
+                title: "Inicia sesión",
+                text: "Debes iniciar sesión para realizar una reserva.",
+                confirmButtonText: "Iniciar sesión"
+            });
+
+            window.location.href =
+                "../auth/inicio-sesion.html";
+
+        } finally {
+
+            setTimeout(() => {
+                boton.disabled = false;
+            }, 3000);
+        }
     });
 }
 

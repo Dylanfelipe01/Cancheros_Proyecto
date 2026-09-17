@@ -19,10 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
   form.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
-    // Obtener valores quitando espacios
+    const btnSubmit =
+        document.querySelector('button[type="submit"]');
 
+    // Obtener valores quitando espacios
     const nombre = nombreInput.value.trim();
     const apellido = apellidoInput.value.trim();
     const email = emailInput.value.trim();
@@ -31,97 +34,193 @@ document.addEventListener("DOMContentLoaded", () => {
     const password2 = password2Input.value;
     const terminos = terminosInput.checked;
 
-    // Validar campos vacíos
 
-    if (!nombre || !apellido || !email || !telefono || !password || !password2) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Por favor, completa todos los campos del formulario.",
-      });
-      return;
+    // =====================================================
+    // VALIDAR CAMPOS VACÍOS
+    // =====================================================
+
+    if (
+        !nombre ||
+        !apellido ||
+        !email ||
+        !telefono ||
+        !password ||
+        !password2
+    ) {
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text:
+                "Por favor, completa todos los campos del formulario.",
+        });
+
+        return;
     }
 
-    // Validar formato de correo
+
+    // =====================================================
+    // VALIDAR FORMATO DE CORREO
+    // =====================================================
 
     if (!emailRegex.test(email)) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Ingresa un correo electrónico válido (ej. usuario@dominio.com).",
-      });
-      return;
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text:
+                "Ingresa un correo electrónico válido (ej. usuario@dominio.com).",
+        });
+
+        return;
     }
 
-    // Validar formato de contraseña
+
+    // =====================================================
+    // VALIDAR FORMATO DE CONTRASEÑA
+    // =====================================================
 
     if (!passwordRegex.test(password)) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.",
-      });
-      return;
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text:
+                "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.",
+        });
+
+        return;
     }
 
-    // Confirmar contraseñas
+
+    // =====================================================
+    // CONFIRMAR CONTRASEÑAS
+    // =====================================================
 
     if (password !== password2) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Las contraseñas no coinciden.",
-      });
-      return;
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text:
+                "Las contraseñas no coinciden.",
+        });
+
+        return;
     }
 
-    // Validar términos
+
+    // =====================================================
+    // VALIDAR TÉRMINOS
+    // =====================================================
 
     if (!terminos) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Debes aceptar los términos y condiciones para registrarte.",
-      });
-      return;
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text:
+                "Debes aceptar los términos y condiciones para registrarte.",
+        });
+
+        return;
     }
 
-    // Registrar usuario en el backend
+
+    // =====================================================
+    // BLOQUEAR BOTÓN ANTES DE ENVIAR
+    // =====================================================
+
+    if (btnSubmit) {
+        btnSubmit.disabled = true;
+    }
+
+
+    // =====================================================
+    // REGISTRAR USUARIO
+    // =====================================================
 
     try {
-      const nuevoUsuario = {
-        nombre,
-        apellido,
-        email,
-        telefono,
-        password
-      };
-      await apiFetch("/auth/registro", {
-        method: "POST",
-        body: JSON.stringify(nuevoUsuario)
-      });
 
-      // Guardar temporalmente el correo para la verificación
+        const nuevoUsuario = {
 
-      sessionStorage.setItem("pendingVerificationEmail", email);
-      Swal.fire({
-        icon: "success",
-        title: "¡Que bien!",
-        text: "¡Registro exitoso! Se ha enviado un código de verificación a tu correo.",
-      }).then(() => {
+            nombre,
+            apellido,
+            email,
+            telefono,
+            password
 
-        // Limpiar formulario y redirigir
-        form.reset();
-        window.location.href = "./verificar-correo.html";
-      });
+        };
+
+
+        await apiFetch("/auth/registro", {
+
+            method: "POST",
+
+            body: JSON.stringify(nuevoUsuario)
+
+        });
+
+
+        // Guardar temporalmente el correo
+        // para la verificación
+
+        sessionStorage.setItem(
+            "pendingVerificationEmail",
+            email
+        );
+
+
+        // =================================================
+        // REGISTRO EXITOSO
+        // =================================================
+
+        Swal.fire({
+
+            icon: "success",
+
+            title: "¡Qué bien!",
+
+            text:
+                "¡Registro exitoso! Se ha enviado un código de verificación a tu correo.",
+
+        }).then(() => {
+
+            form.reset();
+
+            window.location.href =
+                "./verificar-correo.html";
+
+        });
+
+
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.message || "No fue posible registrar el usuario.",
-      });
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Oops...",
+
+            text:
+                error.message ||
+                "No fue posible registrar el usuario.",
+
+        });
+
+
+    } finally {
+
+        setTimeout(() => {
+
+            if (btnSubmit) {
+                btnSubmit.disabled = false;
+            }
+
+        }, 3000);
     }
-  });
+
+});
 
   // Mostrar/ocultar contraseña
 

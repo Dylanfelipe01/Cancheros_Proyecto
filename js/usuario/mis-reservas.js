@@ -6,21 +6,14 @@ import { apiFetch } from "./../api/api.js";
 // OBTENER USUARIO ACTUAL
 // =====================================================
 
-const obtenerUsuarioActual = () => {
-
+const obtenerUsuarioActual = async () => {
     try {
-
-        return JSON.parse(
-            localStorage.getItem("currentUser")
-        );
-
+        return await apiFetch("/api/perfil");
     } catch (error) {
-
         console.error(
             "Error obteniendo usuario:",
             error
         );
-
         return null;
     }
 };
@@ -184,16 +177,12 @@ const formatearPrecio = (
 const obtenerMisReservas = async () => {
 
     const usuario =
-        obtenerUsuarioActual();
-
+    await obtenerUsuarioActual();
 
     if (!usuario || !usuario.id) {
-
         window.location.href =
-            "./inicio-sesion.html";
-
+            "../auth/inicio-sesion.html";
         return [];
-
     }
 
 
@@ -203,14 +192,6 @@ const obtenerMisReservas = async () => {
             await apiFetch(
                 `/api/reservas/mis-reservas?usuarioId=${usuario.id}`
             );
-
-
-        console.log(
-            "Mis reservas:",
-            reservas
-        );
-
-
         return reservas || [];
 
 
@@ -503,8 +484,7 @@ const obtenerDetalleReserva = async (
     reservaId
 ) => {
 
-    const usuario =
-        obtenerUsuarioActual();
+    const usuario = await obtenerUsuarioActual();
 
 
     if (!usuario || !usuario.id) {
@@ -1008,8 +988,7 @@ if (guardarCambios) {
             }
 
 
-            const usuario =
-                obtenerUsuarioActual();
+            const usuario = await obtenerUsuarioActual();
 
 
             if (
@@ -1202,8 +1181,7 @@ const cancelarReserva = async (
     id
 ) => {
 
-    const usuario =
-        obtenerUsuarioActual();
+    const usuario = await obtenerUsuarioActual();
 
 
     if (
@@ -1211,8 +1189,7 @@ const cancelarReserva = async (
         !usuario.id
     ) {
 
-        window.location.href =
-            "./inicio-sesion.html";
+        window.location.href = "../auth/inicio-sesion.html";
 
         return;
 
@@ -1364,8 +1341,7 @@ document.addEventListener(
         // COMPROBAR USUARIO
         // =============================================
 
-        const usuario =
-            obtenerUsuarioActual();
+        const usuario = await obtenerUsuarioActual();
 
 
         if (
@@ -1373,8 +1349,7 @@ document.addEventListener(
             !usuario.id
         ) {
 
-            window.location.href =
-                "./inicio-sesion.html";
+            window.location.href = "../auth/inicio-sesion.html";
 
             return;
 
