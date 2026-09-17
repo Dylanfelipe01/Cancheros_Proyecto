@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,6 +13,7 @@
   <link rel="stylesheet" href="../../styles/inicio.css">
   <link rel="stylesheet" href="../../styles/canchas/canchas.css" />
 </head>
+
 <body>
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light shadow-sm py-2">
@@ -40,14 +42,14 @@
           </li>
           <li class="nav-item ms-lg-3">
             <div class="dropdown">
-                <a class="userDropdown dropdown-toggle btn btn-warning" data-bs-toggle="dropdown" autocomplete="off">
-                  Entrar
-                </a>
+              <a class="userDropdown dropdown-toggle btn btn-warning" data-bs-toggle="dropdown" autocomplete="off">
+                Entrar
+              </a>
 
-                <ul class="userMenu dropdown-menu">
-                    <li><a class="dropdown-item" href="../auth/inicio-sesion.html">Iniciar sesión</a></li>
-                    <li><a class="dropdown-item" href="../auth/registro.html">Registrarse</a></li>
-                </ul>
+              <ul class="userMenu dropdown-menu">
+                <li><a class="dropdown-item" href="../auth/inicio-sesion.html">Iniciar sesión</a></li>
+                <li><a class="dropdown-item" href="../auth/registro.html">Registrarse</a></li>
+              </ul>
             </div>
           </li>
         </ul>
@@ -55,48 +57,48 @@
     </div>
   </nav>
 
-    <!-- Filtro de reserva -->
+  <!-- Filtro de reserva -->
   <section class="booking-filter-section py-4">
-      <div class="container">
-          <div class="card filter-card border-0 shadow-lg p-3 p-md-4">
-              <form class="row g-3 align-items-end">
-                  <div class="col-12 col-md-4">
-                      <label class="form-label text-white fw-bold"><i
-                              class="bi bi-geo-alt-fill me-1 text-success"></i> Ubicación / Zona</label>
-                      <select id="form-select-ubicacion" class="form-select custom-input">
-                          <option selected disabled>Selecciona localidad</option>
-                          <option value="Medellin">Medellin</option>
-                          <option value="Galán">Galán</option>
-                          <option value="Barranquilla">Barranquilla</option>
-                          <option value="Soledad">Soledad</option>
-                          <option value="Bogota">Bogotá</option>
-                      </select>
-                  </div>
-
-                  <div class="col-12 col-md-4">
-                      <label class="form-label text-white fw-bold"><i
-                              class="bi bi-person-arms-up me-1 text-success"></i> Tipo de Cancha</label>
-                      <select id="form-select-tipo" class="form-select custom-input">
-                          <option selected disabled>Modalidad</option>
-                          <option value="Fútbol 5">Fútbol 5 (Sintética)</option>
-                          <option value="Fútbol 8">Fútbol 8 (Sintética)</option>
-                          <option value="Fútbol 7">Fútbol 7 (Sintética)</option>
-                          <option value="Fútbol 11">Fútbol 11 (Sintética)</option>
-                      </select>
-                  </div>
-                  <div class="col-12 col-md-4">
-                      <label class="form-label text-white fw-bold">
-                        <img src="../../assets/images/logos/dollar-sign.svg" alt="">
-                         Precio</label>
-                      <input type="number" id="precio-cancha" class="form-control custom-input">
-                  </div>
-                  <div id="reset" class="col-12 col-lg-3">
-                  </div>
-              </form>
+    <div class="container">
+      <div class="card filter-card border-0 shadow-lg p-3 p-md-4">
+        <form class="row g-3 align-items-end">
+          <div class="col-12 col-md-4">
+            <label class="form-label text-white fw-bold"><i class="bi bi-geo-alt-fill me-1 text-success"></i> Ubicación
+              / Zona</label>
+            <select id="form-select-ubicacion" class="form-select custom-input">
+              <option selected disabled>Selecciona localidad</option>
+              <option value="Medellin">Medellin</option>
+              <option value="Galán">Galán</option>
+              <option value="Barranquilla">Barranquilla</option>
+              <option value="Soledad">Soledad</option>
+              <option value="Bogota">Bogotá</option>
+            </select>
           </div>
+
+          <div class="col-12 col-md-4">
+            <label class="form-label text-white fw-bold"><i class="bi bi-person-arms-up me-1 text-success"></i> Tipo de
+              Cancha</label>
+            <select id="form-select-tipo" class="form-select custom-input">
+              <option selected disabled>Modalidad</option>
+              <option value="Fútbol 5">Fútbol 5 (Sintética)</option>
+              <option value="Fútbol 8">Fútbol 8 (Sintética)</option>
+              <option value="Fútbol 7">Fútbol 7 (Sintética)</option>
+              <option value="Fútbol 11">Fútbol 11 (Sintética)</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label text-white fw-bold">
+              <img src="../../assets/images/logos/dollar-sign.svg" alt="">
+              Precio</label>
+            <input type="number" id="precio-cancha" class="form-control custom-input">
+          </div>
+          <div id="reset" class="col-12 col-lg-3">
+          </div>
+        </form>
       </div>
+    </div>
   </section>
-  
+
 
   <!--Contenido-->
   <div class="container my-4">
@@ -179,12 +181,12 @@
               <div id="canchaCarousel" class="carousel slide w-100 rounded overflow-hidden" data-bs-ride="carousel">
                 <div class="carousel-inner h-100">
                   <div class="carousel-item active h-100">
-                    <img id="modalImagen" src="../../assets/images/image.png" class="d-block w-100 h-100 object-fit-cover"
-                      alt="Imagen no disponible">
+                    <img id="modalImagen" src="./../../assets/images/image.png"
+                      class="d-block w-100 h-100 object-fit-cover" alt="Imagen no disponible">
                   </div>
                   <div class="carousel-item h-100">
-                    <img id="modalImagen2" src="../../assets/images/image.png" class="d-block w-100 h-100 object-fit-cover"
-                      alt="Imagen no disponible">
+                    <img id="modalImagen2" src="./../../assets/images/image.png"
+                      class="d-block w-100 h-100 object-fit-cover" alt="Imagen no disponible">
                   </div>
                 </div>
 
@@ -240,8 +242,7 @@
                   <span class="text-visible-muted small d-block" style="font-size: 0.75rem;">Precio por hora</span>
                   <div id="modalPrecio" class="fs-4 fw-bold text-white line-height-1">$100.000</div>
                 </div>
-                <button
-                  class="reserva btn btn-carrito-modal d-flex align-items-center gap-2 text-decoration-none">
+                <button class="reserva btn btn-carrito-modal d-flex align-items-center gap-2 text-decoration-none">
                   Reservar
                 </button>
               </div>

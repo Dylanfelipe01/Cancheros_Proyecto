@@ -1,11 +1,41 @@
 import { apiFetch } from "../api/api.js";
-
 // =====================================================
 // OBTENER ID DE LA CANCHA DESDE LA URL
 // =====================================================
 
 const parametros = new URLSearchParams(window.location.search);
 const idCancha = parametros.get("id");
+
+// =====================================================
+// VALIDAR SESIÓN
+// =====================================================
+
+const verificarSesion = async () => {
+
+    try {
+
+        const usuario = await apiFetch("/api/perfil");
+
+        if (!usuario || !usuario.id) {
+            throw new Error("Sesión no válida");
+        }
+
+        return usuario;
+
+    } catch (error) {
+
+        await Swal.fire({
+            icon: "info",
+            title: "Inicia sesión",
+            text: "Debes iniciar sesión para realizar una reserva.",
+            confirmButtonText: "Iniciar sesión"
+        });
+
+        window.location.href = "../auth/inicio-sesion.html";
+
+        return null;
+    }
+};
 
 // =====================================================
 // OBTENER USUARIO ACTUAL
@@ -291,15 +321,20 @@ if (formReserva) {
     const usuario = await obtenerUsuarioActual();
 
     if (!usuario || !usuario.id) {
-      Swal.fire({
-        icon: "warning",
-        title: "Inicia sesión",
-        text: "Debes iniciar sesión para realizar una reserva.",
-      }).then(() => {
-        window.location.href = "./inicio-sesion.html";
-      });
 
-      return;
+        Swal.fire({
+            icon: "warning",
+            title: "Inicia sesión",
+            text: "Debes iniciar sesión para realizar una reserva.",
+            confirmButtonText: "Iniciar sesión"
+        }).then(() => {
+
+            window.location.href =
+                "../auth/inicio-sesion.html";
+
+        });
+
+        return;
     }
 
     // =============================================
@@ -447,21 +482,13 @@ if (formReserva) {
   });
 }
 
-// =====================================================
-// INICIAR
-// =====================================================
-
 document.addEventListener("DOMContentLoaded", async () => {
 
-  // -----------------------------------------------
-  // Mostrar cancha
-  // -----------------------------------------------
+    const usuario = await verificarSesion();
 
-  await mostrarCancha();
+    if (!usuario) {
+        return;
+    }
 
-  // -----------------------------------------------
-  // Cargar disponibilidad
-  // -----------------------------------------------
-
-  await cargarHorarios();
+    await mostrarCancha();
 });

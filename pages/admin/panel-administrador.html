@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,14 @@
     <link rel="stylesheet" href="../../styles/admin/panel-administrador.css">
     <link rel="shortcut icon" href="../../assets/images/logos/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
     <nav class="container-fluid py-3">
-    
+
         <div class="d-flex justify-content-between align-items-center">
 
             <div class="d-flex align-items-center">
-                
+
                 <div class="icono-administrador me-2 mx-2">
                     <i class="bi bi-person-fill"></i>
                 </div>
@@ -33,121 +35,222 @@
         </div>
 
     </nav>
-    <main class="container-fluid py-4">
-        <section class="container-fluid py-4">
-            <div class="text-center mb-4">
-                <h2 class="fw-bold">Canchas registradas</h2>
-                <p class="text-muted mb-0">
-                    Consulta y administra las canchas.
-                </p>
+    <main class="panel-admin">
 
-                <div id="resumenCanchas" class="row g-3 mt-2 mb-3 justify-content-center">
+        <!-- ================= SIDEBAR ================= -->
 
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                        <div class="card resumen-card resumen-total">
-                            <div class="card-body">
+        <aside class="sidebar-admin">
 
-                                <div class="resumen-icon">
-                                    <i class="bi bi-grid-3x3-gap-fill" style="font-size: 2rem;"></i>
-                                </div>
+            <nav class="menu-admin">
 
-                                <div>
-                                    <h6>Total de canchas</h6>
-                                    <h3 id="totalCanchas">0</h3>
+                <button type="button" class="opcion-admin activa" data-seccion="canchas">
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                    <span>Canchas</span>
+                </button>
+
+                <button type="button" class="opcion-admin" data-seccion="usuarios">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Usuarios</span>
+                </button>
+
+                <button type="button" class="opcion-admin" data-seccion="reservas">
+                    <i class="bi bi-calendar-check-fill"></i>
+                    <span>Reservas</span>
+                </button>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- ================= CONTENIDO ================= -->
+
+        <section class="contenido-admin">
+
+            <!-- CANCHAS -->
+
+            <div id="seccionCanchas" class="seccion-admin activa">
+
+                <div class="text-center mb-4">
+
+                    <h2 class="fw-bold">
+                        Canchas registradas
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Consulta y administra las canchas.
+                    </p>
+
+                    <div id="resumenCanchas" class="row g-3 mt-2 mb-3 justify-content-center">
+
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+
+                            <div class="card resumen-card resumen-total">
+
+                                <div class="card-body">
+
+                                    <div class="resumen-icon">
+                                        <i class="bi bi-grid-3x3-gap-fill" style="font-size: 2rem;"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <h6>Total de canchas</h6>
+
+                                        <h3 id="totalCanchas">
+                                            0
+                                        </h3>
+
+                                    </div>
+
                                 </div>
 
                             </div>
+
                         </div>
-                    </div>
 
 
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                        <div class="card resumen-card resumen-disponibles">
-                            <div class="card-body">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-2">
 
-                                <div class="resumen-icon">
-                                    <i class="bi bi-check-circle-fill" style="font-size: 2rem;"></i>
-                                </div>
+                            <div class="card resumen-card resumen-disponibles">
 
-                                <div>
-                                    <h6>Canchas disponibles</h6>
-                                    <h3 id="canchasDisponibles">0</h3>
+                                <div class="card-body">
+
+                                    <div class="resumen-icon">
+                                        <i class="bi bi-check-circle-fill" style="font-size: 2rem;"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <h6>Canchas disponibles</h6>
+
+                                        <h3 id="canchasDisponibles">
+                                            0
+                                        </h3>
+
+                                    </div>
+
                                 </div>
 
                             </div>
+
                         </div>
-                    </div>
 
 
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                        <div class="card resumen-card resumen-no-disponibles">
-                            <div class="card-body">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-2">
 
-                                <div class="resumen-icon">
-                                    <i class="bi bi-x-circle-fill" style="font-size: 2rem;"></i></i>
-                                </div>
+                            <div class="card resumen-card resumen-no-disponibles">
 
-                                <div>
-                                    <h6>Canchas no disponibles</h6>
-                                    <h3 id="canchasNoDisponibles">0</h3>
+                                <div class="card-body">
+
+                                    <div class="resumen-icon">
+                                        <i class="bi bi-x-circle-fill" style="font-size: 2rem;"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <h6>Canchas no disponibles</h6>
+
+                                        <h3 id="canchasNoDisponibles">
+                                            0
+                                        </h3>
+
+                                    </div>
+
                                 </div>
 
                             </div>
+
                         </div>
+
                     </div>
+
+
+                    <button class="btn btn-agregar-cancha d-inline-flex align-items-center mt-5 mb-2"
+                        data-bs-toggle="modal" data-bs-target="#agregarCancha">
+                        <i class="bi bi-plus-circle me-3"></i>
+                        Agregar cancha
+                    </button>
 
                 </div>
 
-                <!--<div class="d-flex flex-wrap gap-2 mb-3">
 
-                    <input
-                        type="text"
-                        id="buscarCancha"
-                        class="form-control"
-                        placeholder="Buscar cancha..."
-                    >
+                <div class="table-responsive tabla-contenedor">
 
-                    <select id="filtroTipo" class="form-select">
-                        <option value="">Todos los tipos</option>
-                        <option value="Fútbol 5">Fútbol 5</option>
-                        <option value="Fútbol 8">Fútbol 8</option>
-                        <option value="Fútbol 11">Fútbol 11</option>
-                    </select>
+                    <table class="table align-middle mb-0">
 
-                    <select id="filtroDisponibilidad" class="form-select">
-                        <option value="">Todas</option>
-                        <option value="true">Disponibles</option>
-                        <option value="false">No disponibles</option>
-                    </select>
+                        <thead>
 
-                </div>-->
+                            <tr>
+                                <th>Referencia</th>
+                                <th>Disponible</th>
+                                <th>Descripción</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Precio</th>
+                                <th>Ubicación</th>
+                                <th>Fotos</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
 
-                <button class="btn btn-agregar-cancha d-inline-flex align-items-center mt-5 mb-2" data-bs-toggle="modal" data-bs-target="#agregarCancha">
-                    <i class="bi bi-plus-circle me-3"></i>Agregar cancha
-                </button>
+                        </thead>
+
+                        <tbody id="tablaCanchas"></tbody>
+
+                    </table>
+
+                </div>
+
             </div>
 
-            <div class="table-responsive tabla-contenedor">
-                <table class="table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>Referencia</th>
-                            <th>Disponible</th>
-                            <th>Descripción</th>
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Precio</th>
-                            <th>Ubicación</th>
-                            <th>Fotos</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaCanchas">
-                    </tbody>
-                </table>
+
+            <!-- USUARIOS -->
+
+            <div id="seccionUsuarios" class="seccion-admin">
+
+                <div class="text-center mb-4">
+
+                    <h2 class="fw-bold">
+                        Usuarios
+                    </h2>
+
+                    <p class="text-muted">
+                        Consulta y administra los usuarios registrados.
+                    </p>
+
+                </div>
+
+                <div id="contenidoUsuarios" class="contenido-seccion">
+                    Próximamente gestión de usuarios.
+                </div>
+
             </div>
+
+
+            <!-- RESERVAS -->
+
+            <div id="seccionReservas" class="seccion-admin">
+
+                <div class="text-center mb-4">
+
+                    <h2 class="fw-bold">
+                        Reservas
+                    </h2>
+
+                    <p class="text-muted">
+                        Consulta y administra las reservas realizadas.
+                    </p>
+
+                </div>
+
+                <div id="contenidoReservas" class="contenido-seccion">
+                </div>
+
+            </div>
+
         </section>
+
     </main>
     <div class="modal fade" id="agregarCancha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -157,42 +260,43 @@
                         <h1 class="modal-title fs-5 w-100 text-center" id="exampleModalLabel">
                             Agregar cancha
                         </h1>
-                        <button id="btnAgregarCancha"
-                                type="button"
-                                class="btn-close position-absolute end-0 me-3"
-                                data-bs-dismiss="modal"
-                                aria-label="Close">
+                        <button id="btnAgregarCancha" type="button" class="btn-close position-absolute end-0 me-3"
+                            data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
                     <div class="modal-body mt-4 ">
                         <div class="row mb-3">
-    
+
                             <div class="col-md-6 d-flex flex-column">
-                                <label for="" >Nombre de la cancha:</label>
-                                <input id="nombreCancha" type="text" class="col-md-10 bg-light border p-2 mt-3" minlength="3" maxlength="100" placeholder="Cancheros">
+                                <label for="">Nombre de la cancha:</label>
+                                <input id="nombreCancha" type="text" class="col-md-10 bg-light border p-2 mt-3"
+                                    minlength="3" maxlength="100" placeholder="Cancheros">
                             </div>
-    
+
                             <div class="col-md-6 d-flex flex-column">
                                 <label for="">Precio:</label>
-                                <input id="precio" type="number" class="col-md-10 bg-light border p-2 mt-3" min="0" placeholder="29000">
+                                <input id="precio" type="number" class="col-md-10 bg-light border p-2 mt-3" min="0"
+                                    placeholder="29000">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6 d-flex flex-column">
-                                
+
                                 <label>Estado:</label>
-    
+
                                 <div class="d-flex gap-3 mt-3">
-    
+
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="disponible" id="disponibleSi" value="true">
+                                        <input class="form-check-input" type="radio" name="disponible" id="disponibleSi"
+                                            value="true">
                                         <label class="form-check-label" for="disponibleSi">
                                             Activa
                                         </label>
                                     </div>
-    
+
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="disponible" id="disponibleNo" value="false">
+                                        <input class="form-check-input" type="radio" name="disponible" id="disponibleNo"
+                                            value="false">
                                         <label class="form-check-label" for="disponibleNo">
                                             Inactiva
                                         </label>
@@ -203,13 +307,8 @@
 
                                 <label>Imágenes</label>
 
-                                <button
-                                        type="button"
-                                        class="btn btn-outline-secondary"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalImagenes"
-                                        id="gestionarImagenes"
-                                >
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalImagenes" id="gestionarImagenes">
 
                                     <i class="bi bi-images me-2"></i>
                                     Gestionar imágenes
@@ -218,24 +317,27 @@
 
                             </div>
                         </div>
-    
+
                         <div class="row mb-3">
-    
+
                             <div class="col-md-6 d-flex flex-column">
-                                <label for="" >Ubicación:</label>
-                                <input id="ubicacion" type="text" class="col-md-10 bg-light border p-2 mt-3" placeholder="Carrera 58">
+                                <label for="">Ubicación:</label>
+                                <input id="ubicacion" type="text" class="col-md-10 bg-light border p-2 mt-3"
+                                    placeholder="Carrera 58">
                             </div>
 
                             <div class="col-md-6 d-flex flex-column">
                                 <label for="">Descripción:</label>
-                                <textarea id="descripcion" class="form-control col-md-10 bg-light border p-2 mt-3" rows="4" maxlength="300" placeholder="Hermosa casa sintetica"></textarea>
+                                <textarea id="descripcion" class="form-control col-md-10 bg-light border p-2 mt-3"
+                                    rows="4" maxlength="300" placeholder="Hermosa casa sintetica"></textarea>
                             </div>
 
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6 d-flex flex-column">
                                 <label class="form-label text-black fw-bold">Tipo de Cancha</label>
-                                <select id="form-select-tipo" class="form-select custom-input col-md-10 bg-light border p-2 mt-3">
+                                <select id="form-select-tipo"
+                                    class="form-select custom-input col-md-10 bg-light border p-2 mt-3">
                                     <option selected disabled>Modalidad</option>
                                     <option value="Fútbol 5">Fútbol 5</option>
                                     <option value="Fútbol 8">Fútbol 8</option>
@@ -246,7 +348,8 @@
                         </div>
                     </div>
                     <div class="modal-footer m-2">
-                        <button id="cerrarVentana" type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button id="cerrarVentana" type="button" class="btn btn-danger"
+                            data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn-agregar btn">Agregar</button>
                     </div>
                 </form>
@@ -267,17 +370,14 @@
                         Imágenes de la cancha
                     </h5>
 
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
                     </button>
 
                 </div>
 
                 <div class="modal-body">
 
-                    <div id="imagenesContainer"
-                        class="d-flex flex-wrap gap-3">
+                    <div id="imagenesContainer" class="d-flex flex-wrap gap-3">
 
                         <label class="imagen-agregar">
 
@@ -285,11 +385,7 @@
 
                             <span>Agregar</span>
 
-                            <input type="file"
-                                id="imagenCancha"
-                                accept="image/*"
-                                multiple
-                                hidden>
+                            <input type="file" id="imagenCancha" accept="image/*" multiple hidden>
 
                         </label>
 
@@ -299,14 +395,11 @@
 
                 <div class="modal-footer">
 
-                    <button type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cerrar
                     </button>
 
-                    <button type="button"
-                            class="btn btn-primary">
+                    <button type="button" class="btn btn-primary">
                         Guardar
                     </button>
 
@@ -317,9 +410,15 @@
         </div>
 
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script type="module" src="./../../js/admin/Administrador.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script type="module" src="../../js/admin/Administrador.js"></script>
+    <script type="module" src="../../js/admin/canchas.js"></script>
+    <script type="module" src="../../js/admin/usuarios.js"></script>
+    <script type="module" src="../../js/admin//reservas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
+
 </html>

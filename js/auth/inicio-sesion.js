@@ -36,72 +36,172 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Inicio de sesion
   loginForm.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+    const botonSubmit =
+        loginForm.querySelector('button[type="submit"]');
+
+
+    // =====================================================
+    // OBTENER DATOS
+    // =====================================================
+
+    const email =
+        emailInput.value.trim();
+
+    const password =
+        passwordInput.value.trim();
+
+
+    // =====================================================
+    // VALIDAR CAMPOS
+    // =====================================================
 
     if (!email || !password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Por favor completa todos los campos.",
-      });
-      return;
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text:
+                "Por favor completa todos los campos.",
+        });
+
+        return;
     }
+
+
+    // =====================================================
+    // VALIDAR CORREO
+    // =====================================================
 
     if (!email.includes("@")) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Por favor ingresa un correo electrónico válido.",
-      });
-      return;
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text:
+                "Por favor ingresa un correo electrónico válido.",
+        });
+
+        return;
     }
 
-    // Iniciar sesión mediante el backend
+
+    // =====================================================
+    // BLOQUEAR BOTÓN
+    // =====================================================
+
+    if (botonSubmit) {
+        botonSubmit.disabled = true;
+    }
+
+
+    // =====================================================
+    // INICIAR SESIÓN
+    // =====================================================
+
     try {
 
-      const respuesta = await apiFetch("/auth/login", {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      });
+        const respuesta =
+            await apiFetch("/auth/login", {
 
-      // Guardar preferencia de correo
-      if (rememberCheckbox.checked) {
-        localStorage.setItem("rememberedEmail", email);
-      } else {
-        localStorage.removeItem("rememberedEmail");
-      }
+                method: "POST",
 
-      localStorage.setItem(
-          "currentUser",
-          JSON.stringify(respuesta)
-      );
+                body: JSON.stringify({
 
-      Swal.fire({
-          icon: "success",
-          title: "¡Que bien!",
-          text: "¡Inicio de sesión exitoso!",
-      })
-        .then(
-          () => 
-            {
-              window.location.href = "../../index.html";
-            }
+                    email: email,
+
+                    password: password
+
+                })
+
+            });
+
+
+        // =================================================
+        // RECORDAR CORREO
+        // =================================================
+
+        if (rememberCheckbox.checked) {
+
+            localStorage.setItem(
+                "rememberedEmail",
+                email
+            );
+
+        } else {
+
+            localStorage.removeItem(
+                "rememberedEmail"
+            );
+        }
+
+
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify(respuesta)
         );
+
+
+        // =================================================
+        // LOGIN EXITOSO
+        // =================================================
+
+        Swal.fire({
+
+            icon: "success",
+
+            title: "¡Qué bien!",
+
+            text:
+                "¡Inicio de sesión exitoso!",
+
+        }).then(() => {
+
+            // ADMIN
+            if (respuesta.rol === "ADMIN") {
+
+                window.location.href =
+                    "../admin/panel-administrador.html";
+
+            }
+
+            // CLIENTE
+            else {
+
+                window.location.href =
+                    "../../index.html";
+            }
+
+        });
+
 
     } catch (error) {
 
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.message || "Correo electrónico o contraseña incorrectos.",
-      });
+        Swal.fire({
 
+            icon: "error",
+
+            title: "Oops...",
+
+            text:
+                error.message ||
+                "Correo electrónico o contraseña incorrectos.",
+
+        });
+
+
+    } finally {
+
+        setTimeout(() => {
+
+            if (botonSubmit) {
+                botonSubmit.disabled = false;
+            }
+
+        }, 3000);
     }
+
   });
 });
