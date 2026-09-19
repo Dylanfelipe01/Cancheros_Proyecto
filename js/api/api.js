@@ -2,14 +2,22 @@ import { API_URL } from "./config.js";
 
 export async function apiFetch(endpoint, options = {}) {
 
-    const response = await fetch(`${API_URL}${endpoint}`, {
-        ...options,
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-            ...(options.headers || {})
+    const headers = {
+        ...(options.headers || {})
+    };
+
+    if (options.body && !(options.body instanceof FormData)) {
+        headers["Content-Type"] = "application/json";
+    }
+
+    const response = await fetch(
+        `${API_URL}${endpoint}`,
+        {
+            ...options,
+            credentials: "include",
+            headers
         }
-    });
+    );
 
     if (response.status === 204) {
         return null;
@@ -24,7 +32,6 @@ export async function apiFetch(endpoint, options = {}) {
     }
 
     if (!response.ok) {
-
         throw new Error(
             data?.message ||
             data?.error ||

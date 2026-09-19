@@ -1,5 +1,8 @@
 import { apiFetch } from "../api/api.js";
 
+let imagenesSeleccionadas = [];
+let imagenesExistentes = [];
+
 // =========================================================
 // ELEMENTOS DEL DOM
 // =========================================================
@@ -183,17 +186,20 @@ const renderizar = async () => {
 
 function nuevaCancha() {
 
-    modalElement.removeAttribute("data-id-editar");
+    modalElement.removeAttribute(
+        "data-id-editar"
+    );
 
     formCancha.reset();
 
-    document
-        .querySelectorAll(
-            "#imagenesContainer .imagen-box"
-        )
-        .forEach(imagen => imagen.remove());
+    imagenesSeleccionadas = [];
+    imagenesExistentes = [];
 
-    document.getElementById("imagenCancha").value = "";
+    renderizarImagenes();
+
+    document.getElementById(
+        "imagenCancha"
+    ).value = "";
 }
 
 
@@ -203,32 +209,91 @@ function nuevaCancha() {
 // =========================================================
 
 const guardarCanchaBackend =
-    async (payload, idEditar) => {
+    async (
+        payload,
+        idEditar,
+        archivos
+    ) => {
 
         try {
 
-            if (idEditar) {
+            let cancha;
 
-                await apiFetch(
-                    `/api/canchas/${idEditar}`,
-                    {
-                        method: "PUT",
-                        body: JSON.stringify(payload)
-                    }
-                );
 
-            } else {
+            // =========================================
+            // CREAR
+            // =========================================
 
-                await apiFetch(
+            if (!idEditar) {
+
+                cancha = await apiFetch(
                     "/api/canchas",
                     {
                         method: "POST",
-                        body: JSON.stringify(payload)
+                        body:
+                            JSON.stringify(
+                                payload
+                            )
+                    }
+                );
+
+            }
+
+
+            // =========================================
+            // EDITAR
+            // =========================================
+
+            else {
+
+                cancha = await apiFetch(
+                    `/api/canchas/${idEditar}`,
+                    {
+                        method: "PUT",
+                        body:
+                            JSON.stringify(
+                                payload
+                            )
                     }
                 );
             }
 
-            return true;
+
+            // =========================================
+            // SUBIR IMÁGENES
+            // =========================================
+
+            if (
+                archivos &&
+                archivos.length > 0
+            ) {
+
+                const formData =
+                    new FormData();
+
+                archivos.forEach(
+                    archivo => {
+
+                        formData.append(
+                            "imagenes",
+                            archivo
+                        );
+                    }
+                );
+
+
+                cancha = await apiFetch(
+                    `/api/canchas/${cancha.id}/imagenes`,
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+            }
+
+
+            return cancha;
+
 
         } catch (error) {
 
@@ -242,10 +307,10 @@ const guardarCanchaBackend =
                 title: "Error al guardar",
                 text:
                     error.message ||
-                    "No se pudo sincronizar la cancha con el servidor."
+                    "No se pudo guardar la cancha."
             });
 
-            return false;
+            return null;
         }
     };
 
@@ -465,12 +530,11 @@ formCancha.addEventListener(
         const idEditar =
             modalElement.dataset.idEditar;
 
-
-        const primeraImagen =
-            document.querySelector(
-                "#imagenesContainer .imagen-box img"
-            )?.src ||
-            "../../assets/images/canchas/cancha11.jpg";
+        
+        const archivo =
+            document.getElementById(
+                "imagenCancha"
+            ).files[0] || null;
 
 
         if (
@@ -512,19 +576,16 @@ formCancha.addEventListener(
             rating: 4.8,
 
             totalResenas: 100,
-
-            imagenUrl: primeraImagen
         };
 
-
-        const guardadoExitoso =
+        const canchaGuardada =
             await guardarCanchaBackend(
                 payload,
-                idEditar
+                idEditar,
+                imagenesSeleccionadas
             );
 
-
-        if (guardadoExitoso) {
+        if (canchaGuardada) {
 
             formCancha.reset();
 
@@ -534,7 +595,12 @@ formCancha.addEventListener(
                 "data-id-editar"
             );
 
-            renderizar();
+            imagenesSeleccionadas = [];
+            imagenesExistentes = [];
+
+            renderizarImagenes();
+
+            await renderizar();
 
             Swal.fire({
                 icon: "success",
@@ -589,71 +655,197 @@ tablaCanchas.addEventListener(
 // IMÁGENES
 // =========================================================
 
-document
-    .getElementById("imagenCancha")
-    .addEventListener(
-        "change",
-        event => {
+const inputImagen =
+    document.getElementById("imagenCancha");
 
-            Array
-                .from(event.target.files)
-                .forEach(archivo => {
+const imagenesContainer =
+    document.getElementById(
+        "imagenesContainer"
+    );
 
-                    const lector =
-                        new FileReader();
 
-                    lector.onload = () => {
+// =========================================================
+// RENDERIZAR PREVISUALIZACIONES
+// =========================================================
 
-                        document
-                            .getElementById(
-                                "imagenesContainer"
-                            )
-                            .insertAdjacentHTML(
-                                "afterbegin",
-                                `
-                                <div class="imagen-box">
+const renderizarImagenes = () => {
 
-                                    <img
-                                        src="${lector.result}"
-                                        alt=""
-                                    >
+    imagenesContainer
+        .querySelectorAll(".imagen-box")
+        .forEach(imagen => {
+            imagen.remove();
+        });
 
-                                    <button type="button">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
 
-                                </div>
-                                `
-                            );
-                    };
+    // =============================================
+    // IMÁGENES EXISTENTES
+    // =============================================
 
-                    lector.readAsDataURL(
-                        archivo
+    imagenesExistentes.forEach(url => {
+
+        const caja =
+            document.createElement("div");
+
+        caja.className = "imagen-box";
+
+        caja.innerHTML = `
+            <img
+                src="${url}"
+                alt=""
+            >
+        `;
+
+        imagenesContainer
+            .appendChild(caja);
+    });
+
+
+    // =============================================
+    // IMÁGENES NUEVAS
+    // =============================================
+
+    imagenesSeleccionadas.forEach(
+        (archivo, index) => {
+
+            const lector =
+                new FileReader();
+
+            lector.onload = () => {
+
+                const caja =
+                    document.createElement(
+                        "div"
                     );
-                });
+
+                caja.className =
+                    "imagen-box";
+
+                caja.innerHTML = `
+                    <img
+                        src="${lector.result}"
+                        alt="${archivo.name}"
+                    >
+
+                    <button
+                        type="button"
+                        data-index="${index}"
+                    >
+                        <i class="bi bi-trash"></i>
+                    </button>
+                `;
+
+                imagenesContainer
+                    .appendChild(caja);
+            };
+
+            lector.readAsDataURL(
+                archivo
+            );
         }
+    );
+};
+
+
+// =========================================================
+// SELECCIONAR IMÁGENES
+// =========================================================
+
+inputImagen.addEventListener(
+    "change",
+    event => {
+
+        const archivos =
+            Array.from(
+                event.target.files
+            );
+
+        const totalActual =
+            imagenesExistentes.length +
+            imagenesSeleccionadas.length;
+
+        const espacioDisponible =
+            3 - totalActual;
+
+        if (espacioDisponible <= 0) {
+
+            Swal.fire({
+                icon: "warning",
+                title: "Límite alcanzado",
+                text:
+                    "Una cancha puede tener máximo 3 imágenes."
+            });
+
+            inputImagen.value = "";
+
+            return;
+        }
+
+
+        const nuevosArchivos =
+            archivos.slice(
+                0,
+                espacioDisponible
+            );
+
+
+        imagenesSeleccionadas.push(
+            ...nuevosArchivos
+        );
+
+
+        if (
+            archivos.length >
+            espacioDisponible
+        ) {
+
+            Swal.fire({
+                icon: "info",
+                title: "Máximo 3 imágenes",
+                text:
+                    "Solo se agregaron las imágenes permitidas."
+            });
+        }
+
+
+        // Permitimos volver a seleccionar
+        // los mismos archivos si se desea.
+        inputImagen.value = "";
+
+        renderizarImagenes();
+    }
 );
 
 
-document
-    .getElementById("imagenesContainer")
-    .addEventListener(
-        "click",
-        event => {
+// =========================================================
+// ELIMINAR IMAGEN NUEVA
+// =========================================================
 
-            const boton =
-                event.target.closest(
-                    ".imagen-box button"
-                );
+imagenesContainer.addEventListener(
+    "click",
+    event => {
 
-            if (boton) {
+        const boton =
+            event.target.closest(
+                ".imagen-box button"
+            );
 
-                boton
-                    .closest(".imagen-box")
-                    .remove();
-            }
+        if (!boton) {
+            return;
         }
-    );
+
+        const index =
+            Number(
+                boton.dataset.index
+            );
+
+        imagenesSeleccionadas.splice(
+            index,
+            1
+        );
+
+        renderizarImagenes();
+    }
+);
 
 
 // =========================================================

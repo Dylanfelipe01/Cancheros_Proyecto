@@ -1,5 +1,9 @@
 import { apiFetch } from "../api/api.js";
 
+// =====================================================
+// CARGAR NAVBAR
+// =====================================================
+
 async function cargarNavbar() {
 
     const userDropdown =
@@ -8,8 +12,7 @@ async function cargarNavbar() {
     const userMenu =
         document.querySelector(".userMenu");
 
-    // Si el navbar todavía no existe,
-    // no hacemos nada todavía.
+    // El navbar todavía no existe
     if (!userDropdown || !userMenu) {
         return false;
     }
@@ -19,9 +22,9 @@ async function cargarNavbar() {
         const usuario =
             await apiFetch("/api/perfil");
 
-        // =============================================
+        // =================================================
         // USUARIO AUTENTICADO
-        // =============================================
+        // =================================================
 
         if (usuario) {
 
@@ -94,9 +97,9 @@ async function cargarNavbar() {
 
         }
 
-        // =============================================
+        // =================================================
         // USUARIO NO AUTENTICADO
-        // =============================================
+        // =================================================
 
         else {
 
@@ -128,36 +131,30 @@ async function cargarNavbar() {
 
     } catch (error) {
 
-        console.error(
-            "Error verificando sesión en navbar:",
-            error
-        );
+    userDropdown.textContent = "Entrar";
 
-        userDropdown.textContent =
-            "Entrar";
+    userMenu.innerHTML = `
+        <li>
+            <a
+                class="dropdown-item"
+                href="${ruta("auth", "inicio-sesion.html")}"
+            >
+                Iniciar sesión
+            </a>
+        </li>
 
-        userMenu.innerHTML = `
-            <li>
-                <a
-                    class="dropdown-item"
-                    href="${ruta("auth", "inicio-sesion.html")}"
-                >
-                    Iniciar sesión
-                </a>
-            </li>
+        <li>
+            <a
+                class="dropdown-item"
+                href="${ruta("auth", "registro.html")}"
+            >
+                Registrarse
+            </a>
+        </li>
+    `;
 
-            <li>
-                <a
-                    class="dropdown-item"
-                    href="${ruta("auth", "registro.html")}"
-                >
-                    Registrarse
-                </a>
-            </li>
-        `;
-
-        return true;
-    }
+    return true;
+}
 }
 
 
@@ -165,23 +162,33 @@ async function cargarNavbar() {
 // ESPERAR A QUE EXISTA EL NAVBAR
 // =====================================================
 
-function iniciarNavbar() {
+async function iniciarNavbar() {
 
-    // Intentar inmediatamente
-    if (cargarNavbar()) {
+    // Intentar cargarlo
+    const cargado =
+        await cargarNavbar();
+
+    // Si ya existe, terminamos
+    if (cargado) {
         return;
     }
 
-    // Si todavía no existe, observar cambios en el DOM
+    // Si todavía no existe,
+    // esperamos a que aparezca
     const observer =
         new MutationObserver(async () => {
 
-            const cargado =
-                await cargarNavbar();
+            const elementosNavbar =
+                document.querySelector(".userDropdown") &&
+                document.querySelector(".userMenu");
 
-            if (cargado) {
-                observer.disconnect();
+            if (!elementosNavbar) {
+                return;
             }
+
+            observer.disconnect();
+
+            await cargarNavbar();
         });
 
     observer.observe(document.body, {
