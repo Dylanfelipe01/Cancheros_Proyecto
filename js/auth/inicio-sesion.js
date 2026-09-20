@@ -158,20 +158,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "¡Inicio de sesión exitoso!",
 
         }).then(() => {
+            console.log(respuesta);
+            
 
             // ADMIN
             if (respuesta.rol === "ADMIN") {
-
-                window.location.href =
-                    "../admin/panel-administrador.html";
-
+                window.location.href = "../admin/panel-administrador.html";
             }
-
             // CLIENTE
             else {
-
-                window.location.href =
-                    "../../index.html";
+                window.location.href = "../../index.html";
             }
 
         });
