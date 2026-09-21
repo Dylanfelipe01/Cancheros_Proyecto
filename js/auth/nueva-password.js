@@ -1,5 +1,25 @@
 import { apiFetch } from "../api/api.js";
 
+
+const botonesMostrarPassword = document.querySelectorAll(".toggle-password");
+
+botonesMostrarPassword.forEach((boton) => {
+    boton.addEventListener("click", () => {
+        const idInput = boton.dataset.target;
+        const input = document.getElementById(idInput);
+
+        if (!input) return;
+
+        if (input.type === "password") {
+            input.type = "text";
+            boton.setAttribute("aria-label", "Ocultar contraseña");
+        } else {
+            input.type = "password";
+            boton.setAttribute("aria-label", "Mostrar contraseña");
+        }
+    });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.querySelector("form");
