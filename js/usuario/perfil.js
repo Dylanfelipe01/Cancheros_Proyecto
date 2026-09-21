@@ -338,17 +338,259 @@ if (botonCambiarCorreo) {
         "click",
         async () => {
 
-            await Swal.fire({
+            // ==========================================
+            // PASO 1: PEDIR NUEVO CORREO
+            // ==========================================
 
-                icon: "info",
+            const resultadoCorreo = await Swal.fire({
 
                 title: "Cambiar correo",
 
-                text:
-                    "Aquí conectaremos el proceso de " +
-                    "verificación del nuevo correo."
+                html: `
+                    <p>
+                        Correo actual:
+                        <strong>${usuario.email}</strong>
+                    </p>
+
+                    <input
+                        type="email"
+                        id="nuevoCorreo"
+                        class="swal2-input"
+                        placeholder="Nuevo correo"
+                    >
+                `,
+
+                showCancelButton: true,
+
+                confirmButtonText: "Enviar código",
+
+                cancelButtonText: "Cancelar",
+
+                focusConfirm: false,
+
+                preConfirm: () => {
+
+                    const nuevoCorreo =
+                        document
+                            .getElementById("nuevoCorreo")
+                            .value
+                            .trim();
+
+                    if (!nuevoCorreo) {
+
+                        Swal.showValidationMessage(
+                            "Ingresa el nuevo correo."
+                        );
+
+                        return false;
+                    }
+
+
+                    const correoRegex =
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+                    if (!correoRegex.test(nuevoCorreo)) {
+
+                        Swal.showValidationMessage(
+                            "Ingresa un correo válido."
+                        );
+
+                        return false;
+                    }
+
+
+                    if (
+                        nuevoCorreo.toLowerCase() ===
+                        usuario.email.toLowerCase()
+                    ) {
+
+                        Swal.showValidationMessage(
+                            "El nuevo correo debe ser diferente al actual."
+                        );
+
+                        return false;
+                    }
+
+
+                    return nuevoCorreo;
+                }
 
             });
+
+
+            if (!resultadoCorreo.isConfirmed) {
+                return;
+            }
+
+
+            const nuevoCorreo =
+                resultadoCorreo.value;
+
+
+            // ==========================================
+            // PASO 2: ENVIAR CÓDIGO
+            // ==========================================
+
+            try {
+
+                await apiFetch(
+                    "/api/perfil/cambiar-correo/solicitar",
+                    {
+                        method: "POST",
+
+                        body: JSON.stringify({
+                            nuevoCorreo
+                        })
+                    }
+                );
+
+
+            } catch (error) {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "No se pudo enviar el código",
+                    text: error.message
+                });
+
+                return;
+            }
+
+
+            // ==========================================
+            // PASO 3: PEDIR CÓDIGO
+            // ==========================================
+
+            const resultadoCodigo = await Swal.fire({
+
+                title: "Verificar nuevo correo",
+
+                html: `
+                    <p>
+                        Hemos enviado un código de 6 dígitos a:
+                    </p>
+
+                    <strong>${nuevoCorreo}</strong>
+
+                    <input
+                        type="text"
+                        id="codigoCorreo"
+                        class="swal2-input"
+                        placeholder="Código de verificación"
+                        maxlength="6"
+                    >
+                `,
+
+                showCancelButton: true,
+
+                confirmButtonText: "Verificar",
+
+                cancelButtonText: "Cancelar",
+
+                focusConfirm: false,
+
+                preConfirm: () => {
+
+                    const codigo =
+                        document
+                            .getElementById("codigoCorreo")
+                            .value
+                            .trim();
+
+
+                    if (!codigo) {
+
+                        Swal.showValidationMessage(
+                            "Ingresa el código."
+                        );
+
+                        return false;
+                    }
+
+
+                    if (!/^\d{6}$/.test(codigo)) {
+
+                        Swal.showValidationMessage(
+                            "El código debe tener 6 dígitos."
+                        );
+
+                        return false;
+                    }
+
+
+                    return codigo;
+                }
+
+            });
+
+
+            if (!resultadoCodigo.isConfirmed) {
+                return;
+            }
+
+
+            const codigo =
+                resultadoCodigo.value;
+
+
+            // ==========================================
+            // PASO 4: VERIFICAR Y CAMBIAR CORREO
+            // ==========================================
+
+            try {
+
+                const usuarioActualizado =
+                    await apiFetch(
+                        "/api/perfil/cambiar-correo/verificar",
+                        {
+                            method: "POST",
+
+                            body: JSON.stringify({
+                                nuevoCorreo,
+                                codigo
+                            })
+                        }
+                    );
+
+
+                usuario =
+                    usuarioActualizado;
+
+
+                document.getElementById(
+                    "correoUsuario"
+                ).textContent =
+                    usuario.email;
+
+
+                await Swal.fire({
+
+                    icon: "success",
+
+                    title: "Correo actualizado",
+
+                    text:
+                        "Tu correo electrónico se cambió correctamente."
+
+                });
+
+
+            } catch (error) {
+
+                Swal.fire({
+
+                    icon: "error",
+
+                    title: "No se pudo cambiar el correo",
+
+                    text:
+                        error.message ||
+                        "El código no es válido."
+
+                });
+
+            }
 
         }
     );
@@ -440,200 +682,64 @@ if (botonCambiarCorreo) {
     }
 
 
-    // =========================================================
-    // CAMBIAR CONTRASEÑA
-    // =========================================================
+// =========================================================
+// CAMBIAR CONTRASEÑA
+// =========================================================
 
-    const botonCambiarPassword =
-        document.getElementById("cambiarPassword");
+const botonCambiarPassword =
+    document.getElementById("cambiarPassword");
 
+if (botonCambiarPassword) {
 
-    if (botonCambiarPassword) {
+    botonCambiarPassword.addEventListener("click", async () => {
 
-        botonCambiarPassword.addEventListener("click", () => {
+        const resultado = await Swal.fire({
+            icon: "question",
+            title: "Cambiar contraseña",
+            text:
+                "Te enviaremos un enlace de validación a tu correo electrónico para que puedas crear una nueva contraseña.",
+            showCancelButton: true,
+            confirmButtonText: "Enviar enlace",
+            cancelButtonText: "Cancelar"
+        });
 
-            Swal.fire({
+        if (!resultado.isConfirmed) {
+            return;
+        }
 
-                title: "Cambiar contraseña",
+        try {
 
-                html: `
-                    <input
-                        type="password"
-                        id="passwordActual"
-                        class="swal2-input"
-                        placeholder="Contraseña actual"
-                    >
-
-                    <input
-                        type="password"
-                        id="nuevaPassword"
-                        class="swal2-input"
-                        placeholder="Nueva contraseña"
-                    >
-
-                    <input
-                        type="password"
-                        id="confirmarPassword"
-                        class="swal2-input"
-                        placeholder="Confirmar nueva contraseña"
-                    >
-                `,
-
-                showCancelButton: true,
-
-                confirmButtonText: "Guardar contraseña",
-
-                cancelButtonText: "Cancelar",
-
-                focusConfirm: false,
-
-                preConfirm: () => {
-
-                    const passwordActual =
-                        document.getElementById("passwordActual")
-                            .value;
-
-                    const nuevaPassword =
-                        document.getElementById("nuevaPassword")
-                            .value;
-
-                    const confirmarPassword =
-                        document.getElementById("confirmarPassword")
-                            .value;
-
-
-                    if (
-                        !passwordActual ||
-                        !nuevaPassword ||
-                        !confirmarPassword
-                    ) {
-
-                        Swal.showValidationMessage(
-                            "Completa todos los campos."
-                        );
-
-                        return false;
-                    }
-
-
-                    const passwordRegex =
-                        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
-
-
-                    if (!passwordRegex.test(nuevaPassword)) {
-
-                        Swal.showValidationMessage(
-                            "La nueva contraseña debe tener al menos " +
-                            "8 caracteres, una mayúscula, un número " +
-                            "y un carácter especial."
-                        );
-
-                        return false;
-                    }
-
-
-                    if (nuevaPassword !== confirmarPassword) {
-
-                        Swal.showValidationMessage(
-                            "Las nuevas contraseñas no coinciden."
-                        );
-
-                        return false;
-                    }
-
-
-                    if (nuevaPassword === passwordActual) {
-
-                        Swal.showValidationMessage(
-                            "La nueva contraseña debe ser diferente " +
-                            "a la actual."
-                        );
-
-                        return false;
-                    }
-
-
-                    return {
-                        passwordActual,
-                        nuevaPassword
-                    };
-
+            await apiFetch(
+                "/auth/solicitar-cambio-password",
+                {
+                    method: "POST"
                 }
+            );
 
-            }).then(async (resultado) => {
-
-                if (!resultado.isConfirmed) {
-                    return;
-                }
-
-
-                const datosPassword = resultado.value;
-
-
-                try {
-
-                    // La cookie HttpOnly se envía automáticamente.
-
-                    await apiFetch(
-                        "/auth/cambiar-password",
-                        {
-
-                            method: "POST",
-
-                            body: JSON.stringify({
-
-                                passwordActual:
-                                    datosPassword.passwordActual,
-
-                                nuevaPassword:
-                                    datosPassword.nuevaPassword
-
-                            })
-
-                        }
-                    );
-
-
-                    Swal.fire({
-
-                        icon: "success",
-
-                        title: "¡Contraseña actualizada!",
-
-                        text:
-                            "Tu contraseña se cambió correctamente."
-
-                    });
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Error al cambiar la contraseña:",
-                        error
-                    );
-
-
-                    Swal.fire({
-
-                        icon: "error",
-
-                        title:
-                            "No se pudo cambiar la contraseña",
-
-                        text:
-                            error.message ||
-                            "Verifica tu contraseña actual."
-
-                    });
-
-                }
-
+            await Swal.fire({
+                icon: "success",
+                title: "¡Correo enviado!",
+                text:
+                    "Hemos enviado un enlace de validación a tu correo electrónico. Revisa tu bandeja de entrada para continuar."
             });
 
-        })
+        } catch (error) {
 
-    }
+            console.error(
+                "Error al solicitar cambio de contraseña:",
+                error
+            );
+
+            Swal.fire({
+                icon: "error",
+                title: "No se pudo enviar el enlace",
+                text:
+                    error.message ||
+                    "Ocurrió un error al solicitar el cambio de contraseña."
+            });
+        }
+    });
+}
 
 
     // =========================================================
