@@ -10,8 +10,102 @@ let imagenesExistentes = [];
 const formCancha = document.getElementById("formCancha");
 const tablaCanchas = document.getElementById("tablaCanchas");
 const modalElement = document.getElementById("agregarCancha");
-const modalBootstrap =
-    bootstrap.Modal.getOrCreateInstance(modalElement);
+const modalBootstrap = bootstrap.Modal.getOrCreateInstance(modalElement);
+const modalImagenesElement = document.getElementById("modalImagenes");
+
+const modalImagenesBootstrap =bootstrap.Modal.getOrCreateInstance(modalImagenesElement);
+
+// =========================================================
+// MODAL DE IMÁGENES
+// =========================================================
+
+const gestionarImagenes =
+    document.getElementById(
+        "gestionarImagenes"
+    );
+
+const btnListoImagenes =
+    document.getElementById(
+        "btnListoImagenes"
+    );
+
+const btnCerrarImagenes =
+    document.getElementById(
+        "btnCerrarImagenes"
+    );
+
+const btnCerrarImagenesX =
+    document.getElementById(
+        "btnCerrarImagenesX"
+    );
+
+
+// =========================================================
+// ABRIR MODAL DE IMÁGENES
+// =========================================================
+
+gestionarImagenes?.addEventListener(
+    "click",
+    () => {
+
+        modalElement.addEventListener(
+            "hidden.bs.modal",
+            () => {
+
+                modalImagenesBootstrap.show();
+
+            },
+            { once: true }
+        );
+
+        modalBootstrap.hide();
+    }
+);
+
+
+// =========================================================
+// VOLVER AL MODAL DE CANCHA
+// =========================================================
+
+const volverModalCancha = () => {
+
+    modalImagenesElement.addEventListener(
+        "hidden.bs.modal",
+        () => {
+
+            modalBootstrap.show();
+
+        },
+        { once: true }
+    );
+
+    modalImagenesBootstrap.hide();
+};
+
+
+// =========================================================
+// LISTO
+// =========================================================
+
+btnListoImagenes?.addEventListener(
+    "click",
+    volverModalCancha
+);
+
+
+// =========================================================
+// CERRAR
+// =========================================================
+
+btnCerrarImagenes?.addEventListener(
+    "click",
+    volverModalCancha
+);
+
+btnCerrarImagenesX?.addEventListener(
+    "click",
+    volverModalCancha
+);
 
 
 // =========================================================
@@ -110,9 +204,13 @@ const renderizar = async () => {
 
         const fila = document.createElement("tr");
 
-        const fotoUrl =
-            cancha.imagenUrl ||
-            "../../assets/images/canchas/cancha11.jpg";
+        const imagenes =
+            Array.isArray(cancha.imagenes) &&
+            cancha.imagenes.length > 0
+                ? cancha.imagenes
+                : cancha.imagenUrl
+                    ? [cancha.imagenUrl]
+                    : ["../../assets/images/canchas/cancha11.jpg"];
 
         fila.innerHTML = `
             <td>${cancha.id}</td>
@@ -144,18 +242,24 @@ const renderizar = async () => {
             </td>
 
             <td>
-                <img
-                    class="imagenPanel"
-                    src="${fotoUrl}"
-                    alt="${cancha.nombreCancha}"
-                    width="60"
-                    height="60"
-                    style="
-                        object-fit: cover;
-                        border-radius: 4px;
-                    "
-                    onerror="this.src='../../assets/images/image.png'"
-                >
+                <div class="d-flex gap-2 flex-wrap">
+
+                    ${imagenes.map(imagen => `
+                        <img
+                            class="imagenPanel"
+                            src="${imagen}"
+                            alt="${cancha.nombreCancha}"
+                            width="60"
+                            height="60"
+                            style="
+                                object-fit: cover;
+                                border-radius: 4px;
+                            "
+                            onerror="this.src='../../assets/images/image.png'"
+                        >
+                    `).join("")}
+
+                </div>
             </td>
 
             <td>
@@ -431,36 +535,16 @@ const editarCancha = async (id) => {
         }
 
 
-        const imagenesContainer =
-            document.getElementById(
-                "imagenesContainer"
-            );
+        imagenesSeleccionadas = [];
 
-        imagenesContainer
-            .querySelectorAll(".imagen-box")
-            .forEach(imagen => imagen.remove());
+        imagenesExistentes =
+            Array.isArray(cancha.imagenes)
+                ? [...cancha.imagenes]
+                : cancha.imagenUrl
+                    ? [cancha.imagenUrl]
+                    : [];
 
-
-        if (cancha.imagenUrl) {
-
-            imagenesContainer.insertAdjacentHTML(
-                "afterbegin",
-                `
-                <div class="imagen-box">
-
-                    <img
-                        src="${cancha.imagenUrl}"
-                        alt=""
-                    >
-
-                    <button type="button">
-                        <i class="bi bi-trash"></i>
-                    </button>
-
-                </div>
-                `
-            );
-        }
+        renderizarImagenes();
 
 
         modalBootstrap.show();
@@ -529,12 +613,6 @@ formCancha.addEventListener(
 
         const idEditar =
             modalElement.dataset.idEditar;
-
-        
-        const archivo =
-            document.getElementById(
-                "imagenCancha"
-            ).files[0] || null;
 
 
         if (
