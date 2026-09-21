@@ -111,12 +111,13 @@ btnCerrarImagenesX?.addEventListener(
 // =========================================================
 // OBTENER CANCHAS
 // =========================================================
-
 const obtenerCanchasBackend = async () => {
 
     try {
 
-        return await apiFetch("/api/canchas");
+        const respuesta = await apiFetch("/api/canchas");
+
+        return respuesta.content;
 
     } catch (error) {
 
@@ -134,6 +135,7 @@ const obtenerCanchasBackend = async () => {
         return [];
     }
 };
+
 
 
 // =========================================================
@@ -169,6 +171,8 @@ const renderizar = async () => {
     }
 
     if (disponiblesEl) {
+        console.log(canchas);
+        
         disponiblesEl.textContent =
             canchas.filter(
                 cancha => cancha.disponible === true

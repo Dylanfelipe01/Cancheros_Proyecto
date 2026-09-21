@@ -126,19 +126,10 @@ document.addEventListener(
             const usuario =
                 await apiFetch("/api/perfil");
 
-            console.log(
-                "Usuario recibido:",
-                usuario
-            );
-
-
             // El backend nos devuelve el rol
             // del usuario autenticado.
 
             if (!usuario || usuario.rol !== "ADMIN") {
-                console.log(
-                    "El usuario no tiene rol ADMIN"
-                );
 
                 window.location.href =
                     "../../index.html";
@@ -147,11 +138,6 @@ document.addEventListener(
             }
 
         } catch (error) {
-
-            console.error(
-                "Error al verificar acceso:",
-                error
-            );
 
             window.location.href =
                 "../auth/inicio-sesion.html";

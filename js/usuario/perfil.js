@@ -55,45 +55,58 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    // =========================================================
-    // MOSTRAR DATOS DEL USUARIO
-    // =========================================================
-
-    document.getElementById("nombreUsuario").textContent =
-        `${usuario.nombre} ${usuario.apellido}`;
-
-    document.getElementById("correoUsuario").textContent =
-        usuario.email;
-
-    document.getElementById("telefonoUsuario").textContent =
-        usuario.telefono;
-
-
-    // =========================================================
-    // HISTORIAL DE RESERVAS
-    // =========================================================
-
-    mostrarHistorialReservas(usuario);
-
-
-
-    // =========================================================
-// EDITAR DATOS
+ // =========================================================
+// MOSTRAR DATOS DEL USUARIO
 // =========================================================
 
-const parametros = new URLSearchParams(window.location.search);
-const editToken = parametros.get("editToken");
+document.getElementById("nombreUsuario").textContent =
+    usuario.nombre;
+
+document.getElementById("apellidoUsuario").textContent =
+    usuario.apellido;
+
+document.getElementById("correoUsuario").textContent =
+    usuario.email;
+
+document.getElementById("telefonoUsuario").textContent =
+    usuario.telefono;
+
+
+// =========================================================
+// HISTORIAL DE RESERVAS
+// =========================================================
+
+mostrarHistorialReservas(usuario);
+
+
+// =========================================================
+// DATOS PERSONALES
+// =========================================================
+
+const parametros =
+    new URLSearchParams(window.location.search);
+
+const editToken =
+    parametros.get("editToken");
 
 const botonEditarDatos =
     document.getElementById("editarDatos");
+
+const botonCambiarCorreo =
+    document.getElementById("cambiarCorreo");
+
+
+// =========================================================
+// EDITAR NOMBRE, APELLIDO Y TELÉFONO
+// =========================================================
 
 if (botonEditarDatos) {
 
     botonEditarDatos.addEventListener("click", async () => {
 
-        // =====================================================
-        // SI NO TIENE TOKEN, SOLICITAR VALIDACIÓN POR CORREO
-        // =====================================================
+        // -----------------------------------------
+        // Solicitar enlace de edición
+        // -----------------------------------------
 
         if (!editToken) {
 
@@ -106,40 +119,35 @@ if (botonEditarDatos) {
                     }
                 );
 
-                Swal.fire({
+                await Swal.fire({
                     icon: "info",
                     title: "Valida tu correo",
                     text:
-                        "Hemos enviado un enlace a tu correo electrónico. " +
-                        "Debes validar la solicitud antes de poder editar tus datos."
+                        "Hemos enviado un enlace a tu correo " +
+                        "para poder editar tus datos."
                 });
 
             } catch (error) {
 
-                console.error(
-                    "Error al solicitar edición:",
-                    error
-                );
-
                 Swal.fire({
                     icon: "error",
-                    title: "No se pudo solicitar la edición",
-                    text:
-                        error.message ||
-                        "No fue posible enviar el enlace de validación."
+                    title: "Error",
+                    text: error.message
                 });
+
             }
 
             return;
         }
 
-        // =====================================================
-        // SI TIENE TOKEN, ABRIR MODAL DE EDICIÓN
-        // =====================================================
 
-        Swal.fire({
+        // -----------------------------------------
+        // Formulario de edición
+        // -----------------------------------------
 
-            title: "Editar datos",
+        const resultado = await Swal.fire({
+
+            title: "Editar datos personales",
 
             html: `
                 <input
@@ -168,26 +176,33 @@ if (botonEditarDatos) {
             `,
 
             showCancelButton: true,
+
             confirmButtonText: "Guardar cambios",
+
             cancelButtonText: "Cancelar",
+
             focusConfirm: false,
 
             preConfirm: () => {
 
                 const nombre =
-                    document.getElementById("nuevoNombre")
+                    document
+                        .getElementById("nuevoNombre")
                         .value
                         .trim();
 
                 const apellido =
-                    document.getElementById("nuevoApellido")
+                    document
+                        .getElementById("nuevoApellido")
                         .value
                         .trim();
 
                 const telefono =
-                    document.getElementById("nuevoTelefono")
+                    document
+                        .getElementById("nuevoTelefono")
                         .value
                         .trim();
+
 
                 if (!nombre || !apellido || !telefono) {
 
@@ -198,6 +213,7 @@ if (botonEditarDatos) {
                     return false;
                 }
 
+
                 return {
                     nombre,
                     apellido,
@@ -205,75 +221,138 @@ if (botonEditarDatos) {
                 };
             }
 
-        }).then(async (resultado) => {
-
-            if (!resultado.isConfirmed) {
-                return;
-            }
-
-            const nuevosDatos = resultado.value;
-
-            try {
-
-                const usuarioActualizado =
-                    await apiFetch(
-                        "/api/perfil",
-                        {
-                            method: "PUT",
-                            body: JSON.stringify({
-                                nombre: nuevosDatos.nombre,
-                                apellido: nuevosDatos.apellido,
-                                telefono: nuevosDatos.telefono,
-                                token: editToken
-                            })
-                        }
-                    );
-
-                usuario = usuarioActualizado;
-
-                // Actualizar información visible
-
-                document.getElementById("nombreUsuario")
-                    .textContent =
-                    `${usuario.nombre} ${usuario.apellido}`;
-
-                document.getElementById("telefonoUsuario")
-                    .textContent =
-                    usuario.telefono;
-
-                Swal.fire({
-                    icon: "success",
-                    title: "Datos actualizados",
-                    text:
-                        "Tus datos se actualizaron correctamente."
-                });
-
-                // El token ya fue utilizado.
-                // Quitamos editToken de la URL.
-
-                window.history.replaceState(
-                    {},
-                    document.title,
-                    window.location.pathname
-                );
-
-            } catch (error) {
-
-                console.error(
-                    "Error al actualizar el perfil:",
-                    error
-                );
-
-                Swal.fire({
-                    icon: "error",
-                    title: "No se pudo actualizar",
-                    text:
-                        error.message ||
-                        "No fue posible actualizar tus datos."
-                });
-            }
         });
+
+
+        // -----------------------------------------
+        // Si canceló
+        // -----------------------------------------
+
+        if (!resultado.isConfirmed) {
+            return;
+        }
+
+
+        const nuevosDatos =
+            resultado.value;
+
+
+        // -----------------------------------------
+        // Actualizar en backend
+        // -----------------------------------------
+
+        try {
+
+            const usuarioActualizado =
+                await apiFetch(
+                    "/api/perfil",
+                    {
+                        method: "PUT",
+
+                        body: JSON.stringify({
+                            nombre:
+                                nuevosDatos.nombre,
+
+                            apellido:
+                                nuevosDatos.apellido,
+
+                            telefono:
+                                nuevosDatos.telefono,
+
+                            token:
+                                editToken
+                        })
+                    }
+                );
+
+
+            // Actualizar usuario en memoria
+
+            usuario =
+                usuarioActualizado;
+
+
+            // Actualizar información visible
+
+            document.getElementById(
+                "nombreUsuario"
+            ).textContent =
+                usuario.nombre;
+
+            document.getElementById(
+                "apellidoUsuario"
+            ).textContent =
+                usuario.apellido;
+
+            document.getElementById(
+                "telefonoUsuario"
+            ).textContent =
+                usuario.telefono;
+
+
+            await Swal.fire({
+                icon: "success",
+                title: "Datos actualizados",
+                text:
+                    "Tus datos personales fueron " +
+                    "actualizados correctamente."
+            });
+
+
+            // El token ya fue utilizado.
+            // Lo quitamos de la URL.
+
+            window.history.replaceState(
+                {},
+                document.title,
+                window.location.pathname
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Error al editar perfil:",
+                error
+            );
+
+            Swal.fire({
+                icon: "error",
+                title: "No se pudieron actualizar los datos",
+                text: error.message
+            });
+        }
+
     });
+
+}
+
+
+// =========================================================
+// CAMBIAR CORREO
+// =========================================================
+
+if (botonCambiarCorreo) {
+
+    botonCambiarCorreo.addEventListener(
+        "click",
+        async () => {
+
+            await Swal.fire({
+
+                icon: "info",
+
+                title: "Cambiar correo",
+
+                text:
+                    "Aquí conectaremos el proceso de " +
+                    "verificación del nuevo correo."
+
+            });
+
+        }
+    );
+
 }
 
 
