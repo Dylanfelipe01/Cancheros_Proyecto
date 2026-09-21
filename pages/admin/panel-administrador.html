@@ -166,7 +166,7 @@
                     </div>
 
 
-                    <button class="btn btn-agregar-cancha d-inline-flex align-items-center mt-5 mb-2"
+                    <button id="btnNuevaCancha" class="btn btn-agregar-cancha d-inline-flex align-items-center mt-5 mb-2"
                         data-bs-toggle="modal" data-bs-target="#agregarCancha">
                         <i class="bi bi-plus-circle me-3"></i>
                         Agregar cancha
@@ -253,7 +253,7 @@
 
     </main>
     <div class="modal fade" id="agregarCancha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-cancha">
             <div class="modal-content">
                 <form id="formCancha">
                     <div class="headerModal modal-header position-relative">
@@ -307,9 +307,7 @@
 
                                 <label>Imágenes</label>
 
-                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#modalImagenes" id="gestionarImagenes">
-
+                                <button type="button" class="btn btn-outline-secondary" id="gestionarImagenes">
                                     <i class="bi bi-images me-2"></i>
                                     Gestionar imágenes
 
@@ -370,7 +368,7 @@
                         Imágenes de la cancha
                     </h5>
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="btnCerrarImagenesX" aria-label="Cerrar">
                     </button>
 
                 </div>
@@ -394,11 +392,11 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" id="btnCerrarImagenes">
                         Cerrar
                     </button>
 
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-primary" id="btnListoImagenes">
                         Listo
                     </button>
                 </div>

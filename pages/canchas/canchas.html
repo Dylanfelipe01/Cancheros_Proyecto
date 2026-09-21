@@ -68,9 +68,9 @@
             <select id="form-select-ubicacion" class="form-select custom-input">
               <option selected disabled>Selecciona localidad</option>
               <option value="Medellin">Medellin</option>
-              <option value="Galán">Galán</option>
+              <option value="Cali">Cali</option>
               <option value="Barranquilla">Barranquilla</option>
-              <option value="Soledad">Soledad</option>
+              <option value="Bucaramanga">Bucaramanga</option>
               <option value="Bogota">Bogotá</option>
             </select>
           </div>
@@ -111,6 +111,13 @@
       <!-- CANCHAS CREADAS -->
     </div>
   </div>
+  <nav aria-label="Paginación de canchas">
+      <ul
+          id="paginacionCanchas"
+          class="pagination justify-content-center"
+      >
+      </ul>
+  </nav>
   <!-- ================= FOOTER ================= -->
   <footer class="footer-moderno">
     <div class="container">
@@ -178,31 +185,90 @@
 
             <!-- AQUÍ PEGAS EL BLOQUE DE LA GALERÍA / CARRUSEL -->
             <div class="col-md-6 d-flex">
-              <div id="canchaCarousel" class="carousel slide w-100 rounded overflow-hidden" data-bs-ride="carousel">
-                <div class="carousel-inner h-100">
-                  <div class="carousel-item active h-100">
-                    <img id="modalImagen" src="./../../assets/images/image.png"
-                      class="d-block w-100 h-100 object-fit-cover" alt="Imagen no disponible">
-                  </div>
-                  <div class="carousel-item h-100">
-                    <img id="modalImagen2" src="./../../assets/images/image.png"
-                      class="d-block w-100 h-100 object-fit-cover" alt="Imagen no disponible">
-                  </div>
-                </div>
+              <div
+                  id="canchaCarousel"
+                  class="carousel slide w-100 rounded overflow-hidden"
+                  data-bs-ride="false"
+              >
+                  <div class="carousel-inner h-100">
 
-                <!-- Controles para cambiar de foto -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#canchaCarousel"
-                  data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#canchaCarousel"
-                  data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Siguiente</span>
-                </button>
+                      <!-- Imagen 1 -->
+                      <div class="carousel-item active h-100">
+
+                          <div
+                              id="placeholderImagen1"
+                              class="placeholder-glow h-100"
+                          >
+                              <span class="placeholder w-100 h-100 d-block"></span>
+                          </div>
+
+                          <img
+                              id="modalImagen"
+                              src=""
+                              class="d-none d-block w-100 h-100 object-fit-cover"
+                              alt="Imagen no disponible"
+                          >
+                      </div>
+
+                      <!-- Imagen 2 -->
+                      <div class="carousel-item h-100">
+
+                          <div
+                              id="placeholderImagen2"
+                              class="placeholder-glow h-100"
+                          >
+                              <span class="placeholder w-100 h-100 d-block"></span>
+                          </div>
+
+                          <img
+                              id="modalImagen2"
+                              src=""
+                              class="d-none w-100 h-100 object-fit-cover"
+                              alt="Imagen no disponible"
+                          >
+                      </div>
+
+                      <!-- Imagen 3 -->
+                      <div class="carousel-item h-100">
+
+                          <div
+                              id="placeholderImagen3"
+                              class="placeholder-glow h-100"
+                          >
+                              <span class="placeholder w-100 h-100 d-block"></span>
+                          </div>
+
+                          <img
+                              id="modalImagen3"
+                              src=""
+                              class="d-none w-100 h-100 object-fit-cover"
+                              alt="Imagen no disponible"
+                          >
+                      </div>
+
+                  </div>
+
+                  <button
+                      class="carousel-control-prev"
+                      type="button"
+                      data-bs-target="#canchaCarousel"
+                      data-bs-slide="prev"
+                  >
+                      <span class="carousel-control-prev-icon"></span>
+                      <span class="visually-hidden">Anterior</span>
+                  </button>
+
+                  <button
+                      class="carousel-control-next"
+                      type="button"
+                      data-bs-target="#canchaCarousel"
+                      data-bs-slide="next"
+                  >
+                      <span class="carousel-control-next-icon"></span>
+                      <span class="visually-hidden">Siguiente</span>
+                  </button>
               </div>
-            </div>
+          </div>
 
             <!-- Información de la Cancha (Lado derecho) -->
             <div class="col-md-6 d-flex flex-column justify-content-between">

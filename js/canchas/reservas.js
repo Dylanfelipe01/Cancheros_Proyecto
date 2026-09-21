@@ -461,7 +461,7 @@ if (formReserva) {
         text: `Tu reserva para ${cancha.nombreCancha} fue creada correctamente.`,
         confirmButtonText: "Ver mis reservas",
       }).then(() => {
-        window.location.href = "./mis-reservas.html";
+        window.location.href = "./../usuario/mis-reservas.html";
       });
     } catch (error) {
       console.error("Error creando reserva:", error);

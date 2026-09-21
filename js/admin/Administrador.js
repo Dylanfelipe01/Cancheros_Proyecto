@@ -126,7 +126,6 @@ document.addEventListener(
             const usuario =
                 await apiFetch("/api/perfil");
 
-
             // El backend nos devuelve el rol
             // del usuario autenticado.
 
@@ -139,11 +138,6 @@ document.addEventListener(
             }
 
         } catch (error) {
-
-            console.error(
-                "Error al verificar acceso:",
-                error
-            );
 
             window.location.href =
                 "../auth/inicio-sesion.html";
